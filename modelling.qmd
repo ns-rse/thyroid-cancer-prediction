@@ -23,3 +23,22 @@ R and adopting good practices.
 
 There are a wealth of options when it comes to "Machine Learning", these days even logistic regression is grouped into
 the term! There are however a large number of more sophisticated methods for analysing the data. Their utility
+
+### Model Assessment
+
+When considering the utility of prediction there are a number of metrics that can be used to determine how useful a
+model is. These focus on a number of terms which have very specific statistical meaning such as [Sensitivity and
+Specificity](https://en.wikipedia.org/wiki/Sensitivity_and_specificity).
+
+|                 | Test Positive       | Test Negative       |
+|-----------------|---------------------|---------------------|
+| Actual Positive | True Positive (TP)  | False Negative (FN) |
+| Actual Negative | False Positive (FP) | True Negative (TN)  |
+
+There are a wealth of metrics based on combinations of these True/False Positive/Negative including precision, recall
+and so forth (refer to the above linked article for further details).
+
+### Receiver Operating Characteristics
+
+The [Receiver Operating Characteristic (ROC)](https://en.wikipedia.org/wiki/Receiver_operating_characteristic) is a
+useful graphical tool for potting the false positive rate v's the true positive rate (sensitivity).
