@@ -132,6 +132,8 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#tidymodelling" id="toc-tidymodelling" class="nav-link active" data-scroll-target="#tidymodelling">TidyModelling</a>
   <ul class="collapse">
   <li><a href="#methods-to-consider" id="toc-methods-to-consider" class="nav-link" data-scroll-target="#methods-to-consider">Methods to Consider</a></li>
+  <li><a href="#model-assessment" id="toc-model-assessment" class="nav-link" data-scroll-target="#model-assessment">Model Assessment</a></li>
+  <li><a href="#receiver-operating-characteristics" id="toc-receiver-operating-characteristics" class="nav-link" data-scroll-target="#receiver-operating-characteristics">Receiver Operating Characteristics</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -168,6 +170,36 @@ ul.task-list li input[type="checkbox"] {
 <section id="methods-to-consider" class="level3">
 <h3 class="anchored" data-anchor-id="methods-to-consider">Methods to Consider</h3>
 <p>There are a wealth of options when it comes to “Machine Learning”, these days even logistic regression is grouped into the term! There are however a large number of more sophisticated methods for analysing the data. Their utility</p>
+</section>
+<section id="model-assessment" class="level3">
+<h3 class="anchored" data-anchor-id="model-assessment">Model Assessment</h3>
+<p>When considering the utility of prediction there are a number of metrics that can be used to determine how useful a model is. These focus on a number of terms which have very specific statistical meaning such as <a href="https://en.wikipedia.org/wiki/Sensitivity_and_specificity">Sensitivity and Specificity</a>.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th>Test Positive</th>
+<th>Test Negative</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Actual Positive</td>
+<td>True Positive (TP)</td>
+<td>False Negative (FN)</td>
+</tr>
+<tr class="even">
+<td>Actual Negative</td>
+<td>False Positive (FP)</td>
+<td>True Negative (TN)</td>
+</tr>
+</tbody>
+</table>
+<p>There are a wealth of metrics based on combinations of these True/False Positive/Negative including precision, recall and so forth (refer to the above linked article for further details).</p>
+</section>
+<section id="receiver-operating-characteristics" class="level3">
+<h3 class="anchored" data-anchor-id="receiver-operating-characteristics">Receiver Operating Characteristics</h3>
+<p>The <a href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic">Receiver Operating Characteristic (ROC)</a> is a useful graphical tool for potting the false positive rate v’s the true positive rate (sensitivity).</p>
 
 
 </section>
