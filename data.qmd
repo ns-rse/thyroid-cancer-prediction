@@ -19,7 +19,6 @@ defining what each field is nor its type available yet.
 **NB** Some of the column headers have commas (`,`) in the variable names, this can cause problems when reading CSV
 files. Such strings should be double-quoted which appears to be the case but something to check carefully.
 
-
 | Variable (as received)                                                                                                                                                 | Type   | Description                      | Renamed to...       |
 |------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------|----------------------------------|---------------------|
 | `Record ID`                                                                                                                                                            | `str`  | Unique identifier.               | `record_id`         |
