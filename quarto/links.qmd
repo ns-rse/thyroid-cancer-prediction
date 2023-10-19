@@ -1,0 +1,18 @@
+---
+title: "Links"
+---
+
+
+## Thyroid Prediction Tools
+
++ [Thyroid Nodule App](https://aace-thyroid.deontics.com/dwe/int/public/welcome.jsp)
+
+## Software
+
++ [R](https://www.r-project.org)
++ [RStudio](https://posit.co/download/rstudio-desktop/)
++ [Quarto](https://quarto.org)
++ [Let’s Git started | Happy Git and GitHub for the useR](https://happygitwithr.com/)
++ [R for Data Science (2e)](https://r4ds.hadley.nz/)
++ [Tidy Modeling with R](https://www.tmwr.org/)
++ [R for Non-Programmers: A Guide for Social Scientists](https://bookdown.org/daniel_dauber_io/r4np_book/)

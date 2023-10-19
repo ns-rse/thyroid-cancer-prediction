@@ -1,0 +1,46 @@
+---
+title: "Reproducibility"
+---
+
+## Open and Reproducible Work
+
+It is good practice to conduct research in an open and reproducible manner, it improves trust in the research output and
+allows constructive feedback on the approaches taken.
+
+### Open Science
+
+Open scientific research means being transparent about all steps taken in the analysis of data, from reading the raw
+data in, tidying it (renaming variables and deriving variables) through to running models, estimating parameters and
+making predictions.
+
+Ideally work should also aim to adhere to the [FAIR Principles](https://www.nature.com/articles/sdata201618) and where
+software is developed, as is the case here where code for analysis is being produced, the [FAIR4RS
+Principles](https://www.nature.com/articles/s41597-022-01710-x) too.
+
+FAIR means research output is Findable, Accessible, Interoperable and Reusable. To help with this all work should on
+completion be added to the University of Sheffield [Online Research Data Archive (ORDA)](https://figshare.shef.ac.uk/).
+
+### Reproducibility
+
+Reproducibility aids transparency and openness of research. By using scripted analysis and embedding code within
+literate documents we can streamline the work process and provide an accurate record of how we reached our conclusions
+from the data provided and the methods used. Further by version controlling the development of the scripts throughout
+their life-cycle we have a record of how the code has changed over time.
+
+To aid with this the free open-source software [R](https://www.r-project.org) will be used to undertake data
+cleaning/preparation, statistical modelling and report writing. It integrates with the open-source scientific publishing
+system [Quarto](https://quarto.org/) and as all scripts are based on text files they can be version controlled using
+[Git](https://git.scm). We will work collaboratively using the [GitHub](https://github.com/) forge.
+
+Because R packages evolve over time as bugs are fixed and new features introduced we will use
+[`renv`](https://rstudio.github.io/renv/articles/renv.html) to define a consistent set of packages that are used for
+analyses.
+
+Getting setup with R, RStudio and Git/GitHub can be done following the excellent guide [Let’s Git started | Happy Git
+and GitHub for the useR](https://happygitwithr.com/) by Jenny Bryan.
+
+### References and Citations
+
+Included in this repository is the file [`references.bib`](references.bib) which is a [BibTex](https://www.bibtex.org/)
+formatted ASCII text file of citations related to this work. BibTex works well with Quarto and make including citations
+in work straight-forward (see [documentation](https://quarto.org/docs/authoring/footnotes-and-citations.html)).

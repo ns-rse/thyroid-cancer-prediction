@@ -1,0 +1,43 @@
+---
+title: "Literature"
+---
+
+Reviews of the existing literature around predictive modelling of Thyroid cancer are detailed below.
+
+## [Improving the diagnosis of thyroid cancer by machine learning and clinical data](<https://www.nature.com/articles/s41598-022-15342-z>)
+
+Used a range of models (logistic regression, gradient boosting, linear discriminant analysis, support vector machine and
+random forest) to predict malignancy based on 18 predictor variables. Assessed via accuracy, precision, sensitivity and
+specificity and Area Under the [Recevier Operating Characteristic
+(ROC)](https://en.wikipedia.org/wiki/Receiver_operating_characteristic).
+
+### Methods
+
+10-fold cross validation (splitting data into ten subsets)
+
+### Performance
+
+| Model | Accuracy | AUROC | Sensitivity | Specificity | Precision |
+|---------------|----------|--------|-------------|-------------|-----------|
+| GBM | 0.7741 | 0.8497 | **0.8750** | 0.5741 | 0.8029 |
+| Logistic | 0.7834 | 0.8422 | 0.8352 | **0.6806** | 0.8384 |
+| LDA | 0.7790 | 0.8394 | 0.8452 | 0.6477 | 0.8263 |
+| SVM (Radial) | 0.7688 | 0.8237 | 0.8435 | 0.6206 | 0.8149 |
+| SVM (Linear) | 0.7661 | 0.8200 | 0.8322 | 0.6349 | 0.8186 |
+| Random Forest | 0.7931 | 0.8541 | 0.8629 | 0.6547 | 0.8321 |
+
+[Table 2](https://www.nature.com/articles/s41598-022-15342-z/tables/2)
+
+![[Figure
+3](https://www.nature.com/articles/s41598-022-15342-z/figures/3)](https://media.springernature.com/full/springer-static/image/art%3A10.1038%2Fs41598-022-15342-z/MediaObjects/41598_2022_15342_Fig3_HTML.png)
+
+### Variable Importance
+
+Interesting approach using [permutation prediction
+importance](https://link.springer.com/article/10.1023/A:1010933404324).
+
+Six most important variables are shown in table 6 and are all features of the nodules, no other biological features such
+as gender or age.
+
+![[Figure
+4](https://www.nature.com/articles/s41598-022-15342-z/figures/4)](https://media.springernature.com/full/springer-static/image/art%3A10.1038%2Fs41598-022-15342-z/MediaObjects/41598_2022_15342_Fig4_HTML.png)

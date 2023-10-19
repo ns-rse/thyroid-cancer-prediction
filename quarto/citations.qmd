@@ -1,0 +1,19 @@
+---
+title: "Citations"
+---
+
+For BibTeX references see [`references.bib`](references.bib)
+
++ [Cohort Analysis of Clinical and Ultrasound Variables Predicting Cancer Risk in 20,001 Consecutive Thyroid
+  Nodules](https://academic.oup.com/jcem/article/104/11/5665/5532036)
+
++ [Improving the diagnosis of thyroid cancer by machine learning and clinical data | Scientific
+  Reports](https://www.nature.com/articles/s41598-022-15342-z)
++ [McGill Thyroid Nodule Score (MTNS): &quot;rating the risk,&quot; a novel predictive scheme for cancer risk
+  determination. - Abstract - Europe PMC](https://europepmc.org/article/med/21453655)
++ [Nomogram for predicting malignancy in thyroid nodules using clinical, biochemical, ultrasonographic, and cytologic
+  features - ScienceDirect](https://www.sciencedirect.com/science/article/pii/S0039606010005222?via%3Dihub)
++ [The TNAPP web-based algorithm improves thyroid nodule management in clinical practice: A retrospective validation
+  study](https://www.frontiersin.org/articles/10.3389/fendo.2022.1080159/full)
++ [The FAIR Guiding Principles for scientific data management and stewardship | Scientific
+  Data](https://www.nature.com/articles/sdata201618)

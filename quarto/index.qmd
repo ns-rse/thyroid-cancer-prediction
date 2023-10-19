@@ -1,0 +1,13 @@
+---
+title: "Thyroid Cancer Prediction"
+---
+
+This project details work on the prediction of thyroid cancer.
+
++ [Literature](literature.qmd)
++ [Data](data.qmd)
++ [Modelling](modelling.qmd)
++ [Citations](citations.qmd)
++ [Links](links.qmd)
+
+The site is written in [Quarto](https://quarto.org) and published via [GitHub Pages](https://pages.github.com/).

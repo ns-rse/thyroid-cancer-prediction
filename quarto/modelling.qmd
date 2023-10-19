@@ -1,0 +1,25 @@
+---
+title: "Modelling"
+---
+
+## TidyModelling
+
+The [R](https://www.r-project.org) packages included in the [Tidymodels](https://www.tidymodels.org/) provide an
+excellent framework for undertaking the modelling aspect of the work.
+
+A very useful training workshop was held 2023-10-18 as part of the [R in Pharma](https://rinpharma.com/) event. [Nicola
+Rennie](https://nrennie.rbind.io/) has made her material is available on-line and it provides a good starting point for
+applying the various modelling methodologies to prediction of Thyroid cancer.
+
++ [Slides](https://nrennie.github.io/r-pharma-2023-tidymodels/#/title-slide)
++ [GitHub Repo](https://github.com/nrennie/r-pharma-2023-tidymodels)
+
+Whilst this provides an excellent introduction to the Tidy Modelling framework the book [Tidy Modeling with
+R](https://www.tmwr.org/) goes deeper into the methods and options available. Another useful reference on which this
+books builds is [R for Data Science (2e)](https://r4ds.hadley.nz/) which should serve as a useful reference for learning
+R and adopting good practices.
+
+### Methods to Consider
+
+There are a wealth of options when it comes to "Machine Learning", these days even logistic regression is grouped into
+the term! There are however a large number of more sophisticated methods for analysing the data. Their utility

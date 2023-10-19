@@ -1,0 +1,8 @@
+---
+title: "About"
+---
+
+This work is being undertaken by [Ovie Edafe](mailto:oedafe1@sheffield.ac.uk) as part of a PhD under the supervision of
+[Karen Sisley](mailto:k.sisley@sheffield.ac.uk) and [Sabapathy
+Balasubramanian](mailto:s.p.balasubramanian@sheffield.ac.uk) at [The University of
+Sheffield](https://www.sheffield.ac.uk) and in collaboration with [Neil Shephard](mailto:n.shephard@sheffield.ac.uk).
