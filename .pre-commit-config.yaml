@@ -47,7 +47,7 @@ repos:
     - id: check-added-large-files
       args: ['--maxkb=200']
     - id: end-of-file-fixer
-      exclude: '\.Rd'
+      exclude: '\.Rd|.lintr'
     - id: check-yaml
     - id: trailing-whitespace
     - id: check-merge-conflict
