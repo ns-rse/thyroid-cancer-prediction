@@ -620,6 +620,14 @@ df <- df |>
 ## routine_review_management_revised_reason
 ## routine_review_confirm_management_plan
 ## thyroid_surgery
+df_raw$thyroid_surgery|> table()
+df<- df |> dplyr::mutate(
+  thyroid_surgery = case_when(
+    thyroid_surgery == "Total thyroidectomy (Include completion thyroidectomy)" ~ "total thyroidectomy",
+  .default = as.character(thyroid_surgery)))
+df$thyroid_surgery|> table()
+
+
 ## thyroid_surgery_lymph_node_pathology
 
 
