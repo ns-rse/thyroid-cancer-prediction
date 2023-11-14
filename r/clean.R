@@ -375,11 +375,14 @@ check_cols <- c(
   "thyroid_surgery_complete"
 )
 df <- df |>
-  dplyr::mutate(dplyr::across(dplyr::all_of(check_cols), ~ dplyr::recode(.x,
-    "Checked" = 1,
-    "Unchecked" = 0,
-    "Not Known" = NA_real_
-  )))
+  dplyr::mutate(dplyr::across(
+    dplyr::all_of(check_cols),
+    ~ dplyr::recode(.x,
+      "Checked" = 1,
+      "Unchecked" = 0,
+      "Not Known" = NA_real_
+    )
+  ))
 ## Other columns are Yes/Now/Unknown so we tidy those up now too in the same manner.
 check_cols <- c(
   "previous_neck_irradiation",
@@ -400,17 +403,20 @@ check_cols <- c(
   "routine_review_patient_signposting_information"
 )
 df <- df |>
-  dplyr::mutate(across(all_of(check_cols), ~ dplyr::recode(.x,
-    "Yes" = 1,
-    "No" = 0,
-    "Not Known" = NA_real_
-  )))
+  dplyr::mutate(across(
+    all_of(check_cols),
+    ~ dplyr::recode(.x,
+      "Yes" = 1,
+      "No" = 0,
+      "Not Known" = NA_real_
+    )
+  ))
 ## Its good practice to check that your encoding has been done correctly, as you wrote you want to make sure its
 ## worked. Because we have stored the original in df_raw we can compare variables.
 ##
 ## If we tabulate the same variable from each data frame we should have the same numbers...
-df_raw$iodine_scan |> table()
-df$iodine_scan |> table()
+df_raw$iodine_scan |> table(useNA = "ifany")
+df$iodine_scan |> table(useNA = "ifany")
 
 
 ## Categorical variables
@@ -421,8 +427,18 @@ df$iodine_scan |> table()
 df <- df |>
   dplyr::mutate(
     data_access_group = as.factor(data_access_group),
-    asa_score = recode("Not known" = NA_real_),
-    asa_score = as.factor(asa_score)
+    asa_score = dplyr::case_when(asa_score == "Not known" ~ NA_character_,
+      .default = as.character(asa_score)
+    ),
+    asa_score = as.factor(asa_score),
+    smoking_status = dplyr::case_when(smoking_status == "Not known" ~ NA_character_,
+      .default = as.character(smoking_status)
+    ),
+    smoking_status = as.factor(smoking_status),
+    smoking_status = relevel(smoking_status, ref = "Non-smoker"),
+    clinical_assessment = dplyr::case_when(clinical_assessment == "Not known" ~ NA_character_,
+      .default = as.character(clinical_assessment)
+    ),
   )
 
 ## ToDo - Inspect each of the variables listed below and determine how they need handling to convert to a factor.
@@ -437,20 +453,152 @@ df$referral_source_other |> table()
 ##
 ## ...and so you are likely to want to correct this first as with the above asa_score being recoded first.
 ##
+## You can look at a cross-tabulation
+df |>
+  dplyr::select(clinic_recruiting_other, clinic_recruiting) |>
+  table(useNA = "ifany")
+##
 ## Its unlikely this particular value is needed but you may want to create a level in df$referral_source that is "GP"
-## based on the multiple different values of df$referral_source_other
+## based on the multiple different values of df$referral_source_other.
+##
+## To do this we need to replace clinic_recruiting with "GP" whenever any of the variants of GP appear in
+## clinic_recruiting_other i.e. when its "gp", "Gp", "GP", "Gp Practice" and so forth. This could be done manually but
+## there is an easier way using Regular Expressions which match string patterns. In this case we want to match any
+## string in clinic_recruiting_other that starts with "gp" regardless of the case.
+## We use the stringr::str_match() which will return a vector (think of it as a column) of TRUE/FALSE depending on
+## whether the regular expression has been matched. To see this in action run
+stringr::str_detect(df$clinic_recruiting_other, regex("^gp", ignore_case = TRUE))
+## We combine this with dplyr::mutate() and case_when() the later takes conditions on the left-hand side of '~' and when
+## that condition is TRUE returns the value after '~' in this case "GP", if the condition isn't meant then the .default
+## is returned which we set to be as.character(clinic_recruiting) which just means it remains the same value. In essence
+## this replaces "Other" in clinic_recruiting with "GP" when that other is one of the variants of GP noted above.
+df <- df |>
+  dplyr::mutate(clinic_recruiting = case_when(
+    stringr::str_detect(
+      clinic_recruiting_other,
+      regex("^gp", ignore_case = TRUE)
+    ) ~ "GP",
+    .default = as.character(clinic_recruiting)
+  ))
 
+## Check this has worked by comparing raw values to the newly updated clinic_recruiting and the above cross-tabulation
+df_raw$clinic_recruiting |> table(useNA = "ifany")
+df$clinic_recruiting |> table(useNA = "ifany")
 
-## data_access_group
-## clinic_recruiting
-## clinic_recruiting_other
-## referral_source
-## referral_source_other
+## We now repeat this for the other variables
+##
+## referral_source/_other
+df |>
+  dplyr::select(referral_source_other, referral_source) |>
+  table(useNA = "ifany")
+df <- df |>
+  dplyr::mutate(referral_source = case_when(
+    stringr::str_detect(
+      referral_source_other,
+      regex("^A.E",
+        ignore_case = TRUE
+      )
+    ) ~ "A&E",
+    stringr::str_detect(
+      referral_source_other,
+      regex("acute",
+        ignore_case = TRUE
+      )
+    ) ~ "Acute Medicine",
+    stringr::str_detect(
+      referral_source_other,
+      regex("^Cardio",
+        ignore_case = TRUE
+      )
+    ) ~ "Cardiology",
+    stringr::str_detect(
+      referral_source_other,
+      regex("Endocrin",
+        ignore_case = TRUE
+      )
+    ) ~ "Endocrinology",
+    stringr::str_detect(
+      referral_source_other,
+      regex("Gastro",
+        ignore_case = TRUE
+      )
+    ) ~ "Gastroenterology",
+    stringr::str_detect(
+      referral_source_other,
+      regex("^Gynaecology",
+        ignore_case = TRUE
+      )
+    ) ~ "Gynaecology",
+    stringr::str_detect(
+      referral_source_other,
+      regex("^Haem",
+        ignore_case = TRUE
+      )
+    ) ~ "Heamatology",
+    stringr::str_detect(
+      referral_source_other,
+      regex("^Inpatient",
+        ignore_case = TRUE
+      )
+    ) ~ "Inpatient",
+    stringr::str_detect(
+      referral_source_other,
+      regex("^Max",
+        ignore_case = TRUE
+      )
+    ) ~ "Oral & Maxillofacial",
+    stringr::str_detect(
+      referral_source_other,
+      regex("^Onco",
+        ignore_case = TRUE
+      )
+    ) ~ "Oncology",
+    stringr::str_detect(
+      referral_source_other,
+      regex("^Oral",
+        ignore_case = TRUE
+      )
+    ) ~ "Oral & Maxillofacial",
+    stringr::str_detect(
+      referral_source_other,
+      regex("^OMFS",
+        ignore_case = TRUE
+      )
+    ) ~ "Oral & Maxillofacial",
+    stringr::str_detect(
+      referral_source_other,
+      regex("^Oral",
+        ignore_case = TRUE
+      )
+    ) ~ "Oral & Maxillofacial",
+    stringr::str_detect(
+      referral_source_other,
+      regex("^Resp",
+        ignore_case = TRUE
+      )
+    ) ~ "Respiratory",
+    stringr::str_detect(
+      referral_source_other,
+      regex("^Rheumatology",
+        ignore_case = TRUE
+      )
+    ) ~ "Rheumatology",
+    stringr::str_detect(
+      referral_source_other,
+      regex("^Terti",
+        ignore_case = TRUE
+      )
+    ) ~ "Rheumatology",
+    stringr::str_detect(
+      referral_source_other,
+      regex("^Uro",
+        ignore_case = TRUE
+      )
+    ) ~ "Urology",
+    .default = as.character(referral_source)
+  ))
 ## two_week_wait_referral
-## smoking_status
 ## previous_neck_irradiation
-## asa_score (possibly numeric)
-## presentation_other_value
 ## symptoms_other_value
 ## incidental_imaging_type
 ## clinical_assessment
@@ -466,7 +614,7 @@ df$referral_source_other |> table()
 ## routine_review_offered
 ## routine_review_offered_interval_weeks
 ## routine_review_ultrasound
-## routine_review_dna
+## routine_review_fna
 ## routine_review_management_strategy_review
 ## routine_review_management_revised
 ## routine_review_management_revised_reason
