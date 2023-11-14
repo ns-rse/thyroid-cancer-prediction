@@ -555,7 +555,7 @@ df <- df |>
     ) ~ "Oncology",
     stringr::str_detect(
       referral_source_other,
-      regex("^Onco",
+      regex("^Oral",
         ignore_case = TRUE
       )
     ) ~ "Oral & Maxillofacial",
