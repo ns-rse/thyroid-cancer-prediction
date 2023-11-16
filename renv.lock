@@ -107,7 +107,7 @@
     },
     "Matrix": {
       "Package": "Matrix",
-      "Version": "1.6-3",
+      "Version": "1.6-2",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
