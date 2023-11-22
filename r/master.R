@@ -11,6 +11,7 @@ library(tidyverse)
 base_dir <- getwd()
 data_dir <- paste(base_dir, "data", sep = "/")
 csv_dir <- paste(data_dir, "csv", sep = "/")
+r_dir <- paste(data_dir, "r", sep = "/")
 r_scripts <- paste(base_dir, "r", sep = "/")
 
 ## Clean the data

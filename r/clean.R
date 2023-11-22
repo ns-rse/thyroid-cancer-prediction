@@ -630,3 +630,6 @@ df <- df |>
 ## presentation
 ## routine_review_management_revised_reason_other
 ## thyroid_surgery_lymph_node_pathology_other_type
+
+## Finally save the data
+saveRDS(df, file = paste(r_dir, "clean.rds", sep = "/"))
