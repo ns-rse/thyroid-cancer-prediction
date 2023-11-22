@@ -14,5 +14,8 @@ globs:
   - "**/*.md"
   - "**/*.qmd"
 
+ignores:
+  - "renv/*"
+
 # Fix any fixable errors
 fix: true
