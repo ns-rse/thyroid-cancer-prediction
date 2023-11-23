@@ -5,7 +5,7 @@ title: "Thyroid Cancer Prediction"
 This project details work on the prediction of thyroid cancer.
 
 + [Literature](literature.qmd)
-+ [Data](data.qmd)
++ [Data Description](data.qmd)
 + [Modelling](modelling.qmd)
 + [Citations](citations.qmd)
 + [Links](links.qmd)
