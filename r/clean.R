@@ -315,8 +315,26 @@ df <- df |>
 df <- df |>
   mutate(
     bmi = as.numeric(bmi),
-    nodule_maxmimum_diameter_mm = as.numeric(nodule_maxmimum_diameter_mm)
   )
+
+## Tidy the nodule_maximum_diameter_mm variable, this needs special care beacuse it hasn't always been captured as a
+## numeric variable, there are instances of 'mm', sometimes three dimensions are recorded separated by 'x' and others
+## have free text.
+df <- df |>
+  dplyr::mutate(nodule_maxmimum_diameter_mm = stringr::str_replace(nodule_maxmimum_diameter_mm, "mm", "")) |>
+  tidyr::separate(nodule_maxmimum_diameter_mm, into = c("x", "y", "z"), "x") |>
+  dplyr::mutate(
+    x = as.numeric(x),
+    y = as.numeric(y),
+    z = as.numeric(z),
+    nodule_maxmimum_diameter_mm = pmax(x, y, z, na.rm = TRUE)
+  ) |>
+  dplyr::select(!c(x, y, z))
+
+df_raw$nodule_maxmimum_diameter_mm |> table()
+
+df$nodule_maxmimum_diameter_mm |> table()
+
 
 ## Convert all binary variables Checked/Unchecked/Not Known to TRUE/FALSE/NA
 ## This uses dplyr::mutate() and instead of muitating every variable we use dply::across() to repeat the dplyr::recode()

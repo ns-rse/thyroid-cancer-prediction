@@ -1,19 +1,21 @@
 ---
-title: "Data"
+title: "Data Description"
+warning: false
+message: false
+sidebar:
+  contents: auto
 ---
 
 Details of the data set.
 
-## Data Description
-
-### Source
+## Source
 
 The data is derived from specialist Thyroid cancer units where patients presenting with symptoms (e.g. nodules) are
 assessed in greater detail and decisions are made as to whether imaging or further biopsies are required.
 
-### Data
+## Data
 
-An ASCII CSV file (`Thy3000_DATA_LABELS_Raw.csv`** with data on 584 cases has been provided. There is no data dictionary
+An ASCII CSV file (`Thy3000_DATA_LABELS_Raw.csv`) with data on 584 cases has been provided. There is no data dictionary
 defining what each field is nor its type available yet.
 
 **NB** Some of the column headers have commas (`,`) in the variable names, this can cause problems when reading CSV
@@ -46,15 +48,15 @@ files. Such strings should be double-quoted which appears to be the case but som
 | `3.1. Presentation (choice=Symptoms of abnormal thyroid function)`                                                                                                     |        |                                  |                     |
 | `3.1. Presentation (choice=Not known)`                                                                                                                                 |        |                                  |                     |
 | `3.1. Presentation (choice=Other)`                                                                                                                                     |        |                                  |                     |
-| `If other please specify"`                                                                                                                                                      |        |                                  |                     |
+| `If other please specify"`                                                                                                                                             |        |                                  |                     |
 | `3.1.1 Symptomatology (choice=No symptoms)`                                                                                                                            |        |                                  |                     |
-| `"3.1.1 Symptomatology (choice=Neck lump (noted by patient family or doctor))"`                                                                                                                                                  |        |                                  |                     |
+| `"3.1.1 Symptomatology (choice=Neck lump (noted by patient family or doctor))"`                                                                                        |        |                                  |                     |
 | `3.1.1 Symptomatology (choice=Compressive symptoms (breathing or swallowing difficulty or voice change))`                                                              |        |                                  |                     |
 | `3.1.1 Symptomatology (choice=Symptoms of thyroid dysfunction)`                                                                                                        |        |                                  |                     |
 | `3.1.1 Symptomatology (choice=Other)`                                                                                                                                  |        |                                  |                     |
-| `"If other please specify"`                                                                                                                                                      |        |                                  |                     |
+| `"If other please specify"`                                                                                                                                            |        |                                  |                     |
 | `3.1.2 Was this nodule found incidentally on imaging?`                                                                                                                 |        |                                  |                     |
-| `"If yes what imaging"`                                                                                                                                                        |        |                                  |                     |
+| `"If yes what imaging"`                                                                                                                                                |        |                                  |                     |
 | `3.2 Clinical Assessment`                                                                                                                                              |        |                                  |                     |
 | `3.2.1 Retrosternal on clinical examination`                                                                                                                           |        |                                  |                     |
 | `3.2.2 Palpable lymphadenopathy`                                                                                                                                       |        |                                  |                     |
@@ -71,52 +73,38 @@ files. Such strings should be double-quoted which appears to be the case but som
 | `was lymphadenopathy documented"`                                                                                                                                      |        |                                  |                     |
 | `3.5.6 Elastography performed`                                                                                                                                         |        |                                  |                     |
 | `3.5.7 CT neck performed`                                                                                                                                              |        |                                  |                     |
-| `"3.5.8 If CT neck performed`                                                                                                                                          |        |                                  |                     |
-| `reason for performing it (choice=Extrathyroid extention/local invasion)"`                                                                                             |        |                                  |                     |
-| `"3.5.8 If CT neck performed`                                                                                                                                          |        |                                  |                     |
-| `reason for performing it (choice=Retrosternal extension/plan surgical approach)"`                                                                                     |        |                                  |                     |
-| `"3.5.8 If CT neck performed`                                                                                                                                          |        |                                  |                     |
-| `reason for performing it (choice=Extent of lymphadenopathy)"`                                                                                                         |        |                                  |                     |
-| `"3.5.8 If CT neck performed`                                                                                                                                          |        |                                  |                     |
-| `reason for performing it (choice=Tracheal compression)"`                                                                                                              |        |                                  |                     |
-| `"3.5.8 If CT neck performed`                                                                                                                                          |        |                                  |                     |
-| `reason for performing it (choice=Not known)"`                                                                                                                         |        |                                  |                     |
-| `"3.5.8 If CT neck performed`                                                                                                                                          |        |                                  |                     |
-| `reason for performing it (choice=Unrelated to thyroid pathology)"`                                                                                                    |        |                                  |                     |
+| `3.5.8 If CT neck performed reason for performing it (choice=Extrathyroid extention/local invasion)`                                                                   |        |                                  |                     |
+| `3.5.8 If CT neck performed reason for performing it (choice=Retrosternal extension/plan surgical approach)`                                                           |        |                                  |                     |
+| `3.5.8 If CT neck performed reason for performing it (choice=Extent of lymphadenopathy)`                                                                               |        |                                  |                     |
+| `3.5.8 If CT neck performed reason for performing it (choice=Tracheal compression)`                                                                                    |        |                                  |                     |
+| `3.5.8 If CT neck performed reason for performing it (choice=Not known)`                                                                                               |        |                                  |                     |
+| `3.5.8 If CT neck performed reason for performing it (choice=Unrelated to thyroid pathology)`                                                                          |        |                                  |                     |
 | `3.5.9 MRI neck performed`                                                                                                                                             |        |                                  |                     |
-| `"3.5.10 If MRI neck performed`                                                                                                                                        |        |                                  |                     |
-| `reason for performing it (choice=Extrathyroid extention/local invasion)"`                                                                                             |        |                                  |                     |
-| `"3.5.10 If MRI neck performed`                                                                                                                                        |        |                                  |                     |
-| `reason for performing it (choice=Retrosternal extension/plan surgical approach)"`                                                                                     |        |                                  |                     |
-| `"3.5.10 If MRI neck performed`                                                                                                                                        |        |                                  |                     |
-| `reason for performing it (choice=Extent of lymphadenopathy)"`                                                                                                         |        |                                  |                     |
-| `"3.5.10 If MRI neck performed`                                                                                                                                        |        |                                  |                     |
-| `reason for performing it (choice=Tracheal compression)"`                                                                                                              |        |                                  |                     |
-| `"3.5.10 If MRI neck performed`                                                                                                                                        |        |                                  |                     |
-| `reason for performing it (choice=Not known)"`                                                                                                                         |        |                                  |                     |
-| `"3.5.10 If MRI neck performed`                                                                                                                                        |        |                                  |                     |
-| `reason for performing it (choice=Unrelated to thyroid pathology)"`                                                                                                    |        |                                  |                     |
+| `3.5.10 If MRI neck performed reason for performing it (choice=Extrathyroid extention/local invasion)`                                                                 |        |                                  |                     |
+| `3.5.10 If MRI neck performed reason for performing it (choice=Retrosternal extension/plan surgical approach)`                                                         |        |                                  |                     |
+| `3.5.10 If MRI neck performed reason for performing it (choice=Extent of lymphadenopathy)`                                                                             |        |                                  |                     |
+| `3.5.10 If MRI neck performed reason for performing it (choice=Tracheal compression)`                                                                                  |        |                                  |                     |
+| `3.5.10 If MRI neck performed reason for performing it (choice=Not known)`                                                                                             |        |                                  |                     |
+| `3.5.10 If MRI neck performed reason for performing it (choice=Unrelated to thyroid pathology)`                                                                        |        |                                  |                     |
 | `3.5.11 Iodine-123 scan performed`                                                                                                                                     |        |                                  |                     |
-| `"3.6. FNA of thyroid nodule performed (either at time of ultrasound or later)"`                                                                                       |        |                                  |                     |
-| `"3.6.1 If FNA performed`                                                                                                                                              |        |                                  |                     |
-| `was Thy or Bethesda stage reported"`                                                                                                                                  |        |                                  |                     |
+| `3.6. FNA of thyroid nodule performed (either at time of ultrasound or later)`                                                                                         |        |                                  |                     |
+| `3.6.1 If FNA performed was Thy or Bethesda stage reported"`                                                                                                           |        |                                  |                     |
 | `3.6.1.1 Thy result`                                                                                                                                                   |        |                                  |                     |
 | `3.6.1.2 Bethesda result`                                                                                                                                              |        |                                  |                     |
 | `3.7 Core biopsy performed`                                                                                                                                            |        |                                  |                     |
 | `3.8 FNA of lymph node performed`                                                                                                                                      |        |                                  |                     |
-| `"3.8.1 If FNA lymph node performed`                                                                                                                                   |        |                                  |                     |
-| `result"`                                                                                                                                                              |        |                                  |                     |
+| `3.8.1 If FNA lymph node performed result`                                                                                                                             |        |                                  |                     |
 | `Complete?`                                                                                                                                                            |        |                                  |                     |
 | `4.1 Initial management decision`                                                                                                                                      |        |                                  |                     |
 | `4.2 Date of decision (either clinic letter or MDT date)`                                                                                                              |        |                                  |                     |
 | `4.3 Date of surgery or start of other treatment (if interventional)`                                                                                                  |        |                                  |                     |
-| `"4.4. In case of no intervention was a routine review offered"`                                                                                                                                        |        |                                  |                     |
-| `"4.4.1 If yes what was the planned interval (in weeks)"`                                                                                                                            |        |                                  |                     |
+| `4.4. In case of no intervention was a routine review offered`                                                                                                         |        |                                  |                     |
+| `4.4.1 If yes what was the planned interval (in weeks)`                                                                                                                |        |                                  |                     |
 | `4.4.2 Was Ultrasound repeated at routine review?`                                                                                                                     |        |                                  |                     |
 | `4.4.3 Was FNA repeated at routine review`                                                                                                                             |        |                                  |                     |
-| `"4.4.4 If routine review performed was management strategy changed at review"`                                                                                                                           |        |                                  |                     |
-| `"4.4.4.1 If management strategy changed at review revised management decision"`                                                                                                                                         |        |                                  |                     |
-| `"4.4.4.2 If yes reason for change in management"`                                                                                                                                     |        |                                  |                     |
+| `4.4.4 If routine review performed was management strategy changed at review`                                                                                          |        |                                  |                     |
+| `4.4.4.1 If management strategy changed at review revised management decision`                                                                                         |        |                                  |                     |
+| `"4.4.4.2 If yes reason for change in management"`                                                                                                                     |        |                                  |                     |
 | `If other`                                                                                                                                                             |        |                                  |                     |
 | `4.4.4.3 If no change in management decision: date last seen by 'thyroid' team`                                                                                        |        |                                  |                     |
 | `"4.4.4.4 If no change in management strategy at review`                                                                                                               |        |                                  |                     |
@@ -126,31 +114,211 @@ files. Such strings should be double-quoted which appears to be the case but som
 | `5.1 Type of thyroid surgery`                                                                                                                                          |        |                                  |                     |
 | `5.1.1 Lymph node dissection done at this surgery`                                                                                                                     |        |                                  |                     |
 | `5.1.2 Pathology`                                                                                                                                                      |        |                                  |                     |
-| `"If other cancer/other diagnosis please state"`                                                                                                                                                        |        |                                  |                     |
+| `"If other cancer/other diagnosis please state"`                                                                                                                       |        |                                  |                     |
 | `Complete?`                                                                                                                                                            |        |                                  |                     |
 
-### Categorical Variables
+```{r}
+#| label: read-data
+#| eval: true
+#| echo: false
+#| output: false
+library(dplyr)
+library(ggplot2)
+library(ggdark)
+library(knitr)
+library(tidyr)
 
-Details of the categorical variables are given below
+## Two options we can either source the cleaning file...
+# source("r/master.R")
+## Or we can load the file that is saved at the end and use that
+df <- readRDS("data/r/clean.rds")
 
-| Variable            | Values                                          |
-|---------------------|-------------------------------------------------|
-| `recruiting_clinic` | `ENT`                                           |
-|                     | `Medicine`                                      |
-|                     | `General surgery (including endocrine surgery)` |
-|                     | `Joint thyroid`                                 |
-|                     | `Other`                                         |
-| `center`            | `Barnsley`                                      |
-|                     | `Sheffield Teaching Hospitals Foundation Trust` |
-|                     | `NHS_Tayside`                                   |
-|                     | `Norfolk & Norwich`                             |
-|                     | `NHS Dumfries and Galloway`                     |
-|                     | `Cardiff and Vale`                              |
-|                     | `University Hospitals of North Midlands`        |
-|                     | `Hull`                                          |
-|                     | `Wirrall`                                       |
-|                     | `Royal Berkshire`                               |
-|                     | `Doncaster`                                     |
-|                     | `Wye Valley Trust`                              |
-|                     | `Salfrod`                                       |
-|                     | `Portsmouth`                                    |
+n_observations <- df |>
+  dplyr::select(study_id) |>
+  dplyr::distinct() |>
+  count()
+n_centres <- df |>
+  dplyr::select(data_access_group) |>
+  dplyr::distinct() |>
+  count()
+```
+
+Tabular and graphical summaries of the data provided in `Thy3000_DATA_LABELS_Raw.csv` after cleaning we can summarise
+the data. In total there were `r n_observations` recorded from a total of `r n_centres`.
+
+## Quantitative Variables
+
+### Statistics
+
+```{r}
+#| label: quantitve-summary
+#| tbl-cap: "Summary statistics for quantitative variables"
+#| eval: true
+#| echo: false
+#| output: true
+
+
+## We select the varaibles we wish to summarise and check they are numeric and within each we calculate the mean,
+## standard deviation (sd), meidan, inter-quartile range (p25 and p75), minimum and maximum
+df_sum <- df |>
+  dplyr::select(age, bmi) |> # , nodule_maximum_diameter_mm) |>
+  dplyr::summarise(dplyr::across(
+    dplyr::where(is.numeric),
+    list(
+      Mean = ~ mean(.x, na.rm = TRUE),
+      SD = ~ sd(.x, na.rm = TRUE),
+      Median = ~ median(.x, na.rm = TRUE),
+      "Lower IQR" = ~ quantile(.x, probs = c(0.25), na.rm = TRUE),
+      "Upper IQR" = ~ quantile(.x, probs = c(0.75), na.rm = TRUE),
+      Min = ~ min(.x, na.rm = TRUE),
+      Max = ~ max(.x, na.rm = TRUE)
+    )
+  ))
+
+## This gives us a very wide data frame so we need to reshape this using the tidyr package.
+df_sum |>
+  tidyr::gather(stat, val) |>
+  # dplyr::mutate(stat = stringr::str_replace("nodule_maximum_diameter") ) |>
+  tidyr::separate(stat, into = c("Variable", "Statistic"), sep = "_") |>
+  tidyr::spread(Statistic, val) |>
+  dplyr::select(Variable, Mean, SD, "Lower IQR", Median, "Upper IQR", Min, Max) |>
+  knitr::kable(digits = 3)
+```
+
+### Age
+
+```{r}
+#| label: age-hist
+#| fig-cap: "Distribution of Ages at referral"
+#| eval: true
+#| echo: false
+#| output: true
+
+df |> ggplot(aes(age)) +
+  geom_histogram() +
+  labs(x = "Age", y = "N") +
+  dark_theme_minimal()
+```
+
+### Body Mass Index (BMI)
+
+```{r}
+#| label: bmi-hist
+#| fig-cap: "Distribution of Body Mass Index (BMI)"
+#| eval: true
+#| echo: false
+#| output: true
+
+df |> ggplot(aes(bmi)) +
+  geom_histogram() +
+  labs(x = "BMI", y = "N") +
+  dark_theme_minimal()
+```
+
+### Nodule Maximum Diameter
+
+```{r}
+#| label: nodule-maximum-diameter-hist
+#| fig-cap: "Distribution of Nodule Maximum Diameter (mm)"
+#| eval: true
+#| echo: false
+#| output: true
+
+df |> ggplot(aes(nodule_maxmimum_diameter_mm)) +
+  geom_histogram() +
+  labs(x = "Nodule Maximum Diameter (mm)", y = "N") +
+  dark_theme_minimal()
+```
+
+## Categorical Variables
+
+### ASA Score
+
+```{r}
+#| label: asa-bar
+#| fig-cap: "Reported ASA score"
+#| eval: true
+#| echo: false
+#| output: true
+
+df |> ggplot(aes(asa_score, fill = asa_score)) +
+  geom_bar() +
+  labs(x = "ASA Score", y = "N") +
+  scale_fill_discrete(guide = "none") +
+  dark_theme_minimal()
+```
+
+```{r}
+#| label: asa-table
+#| tbl-cap: "Reported ASA score"
+#| eval: true
+#| echo: false
+#| output: true
+
+df |>
+  dplyr::count(asa_score) |>
+  dplyr::mutate("%" = prop.table(n) * 100) |>
+  knitr::kable(digits = 3)
+```
+
+### Data Access Group
+
+```{r}
+#| label: data-access-group-bar
+#| fig-cap: "Data Access Group"
+#| eval: true
+#| echo: false
+#| output: true
+
+df |> ggplot(aes(data_access_group, fill = data_access_group)) +
+  geom_bar() +
+  labs(x = "Data Access Group", y = "N") +
+  scale_fill_discrete(guide = "none") +
+  dark_theme_minimal() +
+  ## We rotate the text on the x-axis by 90 degrees so it is legible
+  theme(axis.text.x = element_text(angle = 90))
+```
+
+```{r}
+#| label: data-access-group-table
+#| tbl-cap: "Data Access Group"
+#| eval: true
+#| echo: false
+#| output: true
+
+df |>
+  dplyr::count(data_access_group) |>
+  dplyr::mutate("%" = prop.table(n) * 100) |>
+  knitr::kable(digits = 3)
+```
+
+### Recruiting Clinic
+
+```{r}
+#| label: recruiting-clinic-bar
+#| fig-cap: "Recruiting Clinic"
+#| eval: true
+#| echo: false
+#| output: true
+
+df |> ggplot(aes(clinic_recruiting, fill = clinic_recruiting)) +
+  geom_bar() +
+  labs(x = "Recruiting Clinic", y = "N") +
+  scale_fill_discrete(guide = "none") +
+  dark_theme_minimal() +
+  ## Here we wrap the text of the long labels
+  scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = 15))
+```
+
+```{r}
+#| label: recruiting-clinic-table
+#| tbl-cap: "Recruiting Clinic"
+#| eval: true
+#| echo: false
+#| output: true
+
+df |>
+  dplyr::count(clinic_recruiting) |>
+  dplyr::mutate("%" = prop.table(n) * 100) |>
+  knitr::kable(digits = 3)
+```
