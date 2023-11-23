@@ -1,1 +1,1 @@
-Sitemap: https://github.com/ns-rse/thyroid-cancer-prediction/sitemap.xml
+Sitemap: https://ns-rse.github.io/thyroid-cancer-prediction/sitemap.xml

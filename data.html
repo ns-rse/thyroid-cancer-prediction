@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Thyroid Cancer Prediction - Data</title>
+<title>Thyroid Cancer Prediction - Data Description</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,7 +64,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-sidebar floating nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -95,7 +95,7 @@ ul.task-list li input[type="checkbox"] {
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="./data.html" rel="" target="" aria-current="page">
- <span class="menu-text">Data</span></a>
+ <span class="menu-text">Data Description</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./modelling.html" rel="" target="">
@@ -119,21 +119,43 @@ ul.task-list li input[type="checkbox"] {
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Data Description</li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+    </div>
+  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#data-description" id="toc-data-description" class="nav-link active" data-scroll-target="#data-description">Data Description</a>
-  <ul class="collapse">
-  <li><a href="#source" id="toc-source" class="nav-link" data-scroll-target="#source">Source</a></li>
+  <li><a href="#source" id="toc-source" class="nav-link active" data-scroll-target="#source">Source</a></li>
   <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
-  <li><a href="#categorical-variables" id="toc-categorical-variables" class="nav-link" data-scroll-target="#categorical-variables">Categorical Variables</a></li>
+  <li><a href="#quantitative-variables" id="toc-quantitative-variables" class="nav-link" data-scroll-target="#quantitative-variables">Quantitative Variables</a>
+  <ul class="collapse">
+  <li><a href="#statistics" id="toc-statistics" class="nav-link" data-scroll-target="#statistics">Statistics</a></li>
+  <li><a href="#age" id="toc-age" class="nav-link" data-scroll-target="#age">Age</a></li>
+  <li><a href="#body-mass-index-bmi" id="toc-body-mass-index-bmi" class="nav-link" data-scroll-target="#body-mass-index-bmi">Body Mass Index (BMI)</a></li>
+  <li><a href="#nodule-maximum-diameter" id="toc-nodule-maximum-diameter" class="nav-link" data-scroll-target="#nodule-maximum-diameter">Nodule Maximum Diameter</a></li>
+  </ul></li>
+  <li><a href="#categorical-variables" id="toc-categorical-variables" class="nav-link" data-scroll-target="#categorical-variables">Categorical Variables</a>
+  <ul class="collapse">
+  <li><a href="#asa-score" id="toc-asa-score" class="nav-link" data-scroll-target="#asa-score">ASA Score</a></li>
+  <li><a href="#data-access-group" id="toc-data-access-group" class="nav-link" data-scroll-target="#data-access-group">Data Access Group</a></li>
+  <li><a href="#recruiting-clinic" id="toc-recruiting-clinic" class="nav-link" data-scroll-target="#recruiting-clinic">Recruiting Clinic</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -143,7 +165,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Data</h1>
+<h1 class="title">Data Description</h1>
 </div>
 
 
@@ -159,14 +181,12 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 <p>Details of the data set.</p>
-<section id="data-description" class="level2">
-<h2 class="anchored" data-anchor-id="data-description">Data Description</h2>
-<section id="source" class="level3">
-<h3 class="anchored" data-anchor-id="source">Source</h3>
+<section id="source" class="level2">
+<h2 class="anchored" data-anchor-id="source">Source</h2>
 <p>The data is derived from specialist Thyroid cancer units where patients presenting with symptoms (e.g.&nbsp;nodules) are assessed in greater detail and decisions are made as to whether imaging or further biopsies are required.</p>
 </section>
-<section id="data" class="level3">
-<h3 class="anchored" data-anchor-id="data">Data</h3>
+<section id="data" class="level2">
+<h2 class="anchored" data-anchor-id="data">Data</h2>
 <p>An ASCII CSV file (<code>Thy3000_DATA_LABELS_Raw.csv</code>** with data on 584 cases has been provided. There is no data dictionary defining what each field is nor its type available yet.</p>
 <p><strong>NB</strong> Some of the column headers have commas (<code>,</code>) in the variable names, this can cause problems when reading CSV files. Such strings should be double-quoted which appears to be the case but something to check carefully.</p>
 <table class="table">
@@ -486,73 +506,37 @@ ul.task-list li input[type="checkbox"] {
 <td></td>
 </tr>
 <tr class="odd">
-<td><code>"3.5.8 If CT neck performed</code></td>
+<td><code>3.5.8 If CT neck performed reason for performing it (choice=Extrathyroid extention/local invasion)</code></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
 <tr class="even">
-<td><code>reason for performing it (choice=Extrathyroid extention/local invasion)"</code></td>
+<td><code>3.5.8 If CT neck performed reason for performing it (choice=Retrosternal extension/plan surgical approach)</code></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
 <tr class="odd">
-<td><code>"3.5.8 If CT neck performed</code></td>
+<td><code>3.5.8 If CT neck performed reason for performing it (choice=Extent of lymphadenopathy)</code></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
 <tr class="even">
-<td><code>reason for performing it (choice=Retrosternal extension/plan surgical approach)"</code></td>
+<td><code>3.5.8 If CT neck performed reason for performing it (choice=Tracheal compression)</code></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
 <tr class="odd">
-<td><code>"3.5.8 If CT neck performed</code></td>
+<td><code>3.5.8 If CT neck performed reason for performing it (choice=Not known)</code></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
 <tr class="even">
-<td><code>reason for performing it (choice=Extent of lymphadenopathy)"</code></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><code>"3.5.8 If CT neck performed</code></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><code>reason for performing it (choice=Tracheal compression)"</code></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><code>"3.5.8 If CT neck performed</code></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><code>reason for performing it (choice=Not known)"</code></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><code>"3.5.8 If CT neck performed</code></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><code>reason for performing it (choice=Unrelated to thyroid pathology)"</code></td>
+<td><code>3.5.8 If CT neck performed reason for performing it (choice=Unrelated to thyroid pathology)</code></td>
 <td></td>
 <td></td>
 <td></td>
@@ -564,73 +548,37 @@ ul.task-list li input[type="checkbox"] {
 <td></td>
 </tr>
 <tr class="even">
-<td><code>"3.5.10 If MRI neck performed</code></td>
+<td><code>3.5.10 If MRI neck performed reason for performing it (choice=Extrathyroid extention/local invasion)</code></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
 <tr class="odd">
-<td><code>reason for performing it (choice=Extrathyroid extention/local invasion)"</code></td>
+<td><code>3.5.10 If MRI neck performed reason for performing it (choice=Retrosternal extension/plan surgical approach)</code></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
 <tr class="even">
-<td><code>"3.5.10 If MRI neck performed</code></td>
+<td><code>3.5.10 If MRI neck performed reason for performing it (choice=Extent of lymphadenopathy)</code></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
 <tr class="odd">
-<td><code>reason for performing it (choice=Retrosternal extension/plan surgical approach)"</code></td>
+<td><code>3.5.10 If MRI neck performed reason for performing it (choice=Tracheal compression)</code></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
 <tr class="even">
-<td><code>"3.5.10 If MRI neck performed</code></td>
+<td><code>3.5.10 If MRI neck performed reason for performing it (choice=Not known)</code></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
 <tr class="odd">
-<td><code>reason for performing it (choice=Extent of lymphadenopathy)"</code></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><code>"3.5.10 If MRI neck performed</code></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><code>reason for performing it (choice=Tracheal compression)"</code></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><code>"3.5.10 If MRI neck performed</code></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><code>reason for performing it (choice=Not known)"</code></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><code>"3.5.10 If MRI neck performed</code></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><code>reason for performing it (choice=Unrelated to thyroid pathology)"</code></td>
+<td><code>3.5.10 If MRI neck performed reason for performing it (choice=Unrelated to thyroid pathology)</code></td>
 <td></td>
 <td></td>
 <td></td>
@@ -642,55 +590,43 @@ ul.task-list li input[type="checkbox"] {
 <td></td>
 </tr>
 <tr class="odd">
-<td><code>"3.6. FNA of thyroid nodule performed (either at time of ultrasound or later)"</code></td>
+<td><code>3.6. FNA of thyroid nodule performed (either at time of ultrasound or later)</code></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
 <tr class="even">
-<td><code>"3.6.1 If FNA performed</code></td>
+<td><code>3.6.1 If FNA performed was Thy or Bethesda stage reported"</code></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
 <tr class="odd">
-<td><code>was Thy or Bethesda stage reported"</code></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
 <td><code>3.6.1.1 Thy result</code></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>3.6.1.2 Bethesda result</code></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>3.7 Core biopsy performed</code></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>3.8 FNA of lymph node performed</code></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
-<tr class="even">
-<td><code>"3.8.1 If FNA lymph node performed</code></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
 <tr class="odd">
-<td><code>result"</code></td>
+<td><code>3.8.1 If FNA lymph node performed result</code></td>
 <td></td>
 <td></td>
 <td></td>
@@ -720,13 +656,13 @@ ul.task-list li input[type="checkbox"] {
 <td></td>
 </tr>
 <tr class="even">
-<td><code>"4.4. In case of no intervention was a routine review offered"</code></td>
+<td><code>4.4. In case of no intervention was a routine review offered</code></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
 <tr class="odd">
-<td><code>"4.4.1 If yes what was the planned interval (in weeks)"</code></td>
+<td><code>4.4.1 If yes what was the planned interval (in weeks)</code></td>
 <td></td>
 <td></td>
 <td></td>
@@ -744,13 +680,13 @@ ul.task-list li input[type="checkbox"] {
 <td></td>
 </tr>
 <tr class="even">
-<td><code>"4.4.4 If routine review performed was management strategy changed at review"</code></td>
+<td><code>4.4.4 If routine review performed was management strategy changed at review</code></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
 <tr class="odd">
-<td><code>"4.4.4.1 If management strategy changed at review revised management decision"</code></td>
+<td><code>4.4.4.1 If management strategy changed at review revised management decision</code></td>
 <td></td>
 <td></td>
 <td></td>
@@ -829,100 +765,327 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
+<p>Tabular and graphical summaries of the data provided in <code>Thy3000_DATA_LABELS_Raw.csv</code> after cleaning follow. In total there were 549 recorded from a total of 15.</p>
 </section>
-<section id="categorical-variables" class="level3">
-<h3 class="anchored" data-anchor-id="categorical-variables">Categorical Variables</h3>
-<p>Details of the categorical variables are given below</p>
-<table class="table">
+<section id="quantitative-variables" class="level2">
+<h2 class="anchored" data-anchor-id="quantitative-variables">Quantitative Variables</h2>
+<section id="statistics" class="level3">
+<h3 class="anchored" data-anchor-id="statistics">Statistics</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Summary statistics for quantitative variables </caption>
 <colgroup>
-<col style="width: 30%">
-<col style="width: 70%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 10%">
+<col style="width: 15%">
+<col style="width: 7%">
+<col style="width: 6%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Variable</th>
-<th>Values</th>
+<th style="text-align: left;">Variable</th>
+<th style="text-align: right;">Mean</th>
+<th style="text-align: right;">SD</th>
+<th style="text-align: right;">Lower IQR</th>
+<th style="text-align: right;">Median</th>
+<th style="text-align: right;">Upper IQR</th>
+<th style="text-align: right;">Min</th>
+<th style="text-align: right;">Max</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>recruiting_clinic</code></td>
-<td><code>ENT</code></td>
+<td style="text-align: left;">age</td>
+<td style="text-align: right;">54.37177</td>
+<td style="text-align: right;">16.652001</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: right;">54.0</td>
+<td style="text-align: right;">68.000</td>
+<td style="text-align: right;">12.0</td>
+<td style="text-align: right;">91</td>
 </tr>
 <tr class="even">
-<td></td>
-<td><code>Medicine</code></td>
-</tr>
-<tr class="odd">
-<td></td>
-<td><code>General surgery (including endocrine surgery)</code></td>
-</tr>
-<tr class="even">
-<td></td>
-<td><code>Joint thyroid</code></td>
-</tr>
-<tr class="odd">
-<td></td>
-<td><code>Other</code></td>
-</tr>
-<tr class="even">
-<td><code>center</code></td>
-<td><code>Barnsley</code></td>
-</tr>
-<tr class="odd">
-<td></td>
-<td><code>Sheffield Teaching Hospitals Foundation Trust</code></td>
-</tr>
-<tr class="even">
-<td></td>
-<td><code>NHS_Tayside</code></td>
-</tr>
-<tr class="odd">
-<td></td>
-<td><code>Norfolk &amp; Norwich</code></td>
-</tr>
-<tr class="even">
-<td></td>
-<td><code>NHS Dumfries and Galloway</code></td>
-</tr>
-<tr class="odd">
-<td></td>
-<td><code>Cardiff and Vale</code></td>
-</tr>
-<tr class="even">
-<td></td>
-<td><code>University Hospitals of North Midlands</code></td>
-</tr>
-<tr class="odd">
-<td></td>
-<td><code>Hull</code></td>
-</tr>
-<tr class="even">
-<td></td>
-<td><code>Wirrall</code></td>
-</tr>
-<tr class="odd">
-<td></td>
-<td><code>Royal Berkshire</code></td>
-</tr>
-<tr class="even">
-<td></td>
-<td><code>Doncaster</code></td>
-</tr>
-<tr class="odd">
-<td></td>
-<td><code>Wye Valley Trust</code></td>
-</tr>
-<tr class="even">
-<td></td>
-<td><code>Salfrod</code></td>
-</tr>
-<tr class="odd">
-<td></td>
-<td><code>Portsmouth</code></td>
+<td style="text-align: left;">bmi</td>
+<td style="text-align: right;">27.77239</td>
+<td style="text-align: right;">5.708315</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">27.1</td>
+<td style="text-align: right;">30.975</td>
+<td style="text-align: right;">17.1</td>
+<td style="text-align: right;">50</td>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+</section>
+<section id="age" class="level3">
+<h3 class="anchored" data-anchor-id="age">Age</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="data_files/figure-html/age-hist-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Distribution of Ages at referral</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="body-mass-index-bmi" class="level3">
+<h3 class="anchored" data-anchor-id="body-mass-index-bmi">Body Mass Index (BMI)</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="data_files/figure-html/bmi-hist-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Distribution of Body Mass Index (BMI)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="nodule-maximum-diameter" class="level3">
+<h3 class="anchored" data-anchor-id="nodule-maximum-diameter">Nodule Maximum Diameter</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="data_files/figure-html/nodule-maximum-diameter-hist-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Distribution of Nodule Maximum Diameter (mm)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="categorical-variables" class="level2">
+<h2 class="anchored" data-anchor-id="categorical-variables">Categorical Variables</h2>
+<section id="asa-score" class="level3">
+<h3 class="anchored" data-anchor-id="asa-score">ASA Score</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="data_files/figure-html/asa-bar-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Reported ASA score</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Reported ASA score </caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">asa_score</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">I</td>
+<td style="text-align: right;">189</td>
+<td style="text-align: right;">32.363</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">II</td>
+<td style="text-align: right;">204</td>
+<td style="text-align: right;">34.932</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">III</td>
+<td style="text-align: right;">72</td>
+<td style="text-align: right;">12.329</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">IV</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.514</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">116</td>
+<td style="text-align: right;">19.863</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="data-access-group" class="level3">
+<h3 class="anchored" data-anchor-id="data-access-group">Data Access Group</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="data_files/figure-html/data-access-group-bar-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Data Access Group</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Data Access Group </caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">data_access_group</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Barnsley</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">5.993</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cardiff and Vale</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">7.534</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Doncaster</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">3.253</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hull</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">5.308</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NHS Dumfries and Galloway</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.685</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NHS Tayside</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">5.137</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Norfolk &amp; Norwich</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">5.137</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Portsmouth</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">5.479</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Royal Berkshire</td>
+<td style="text-align: right;">106</td>
+<td style="text-align: right;">18.151</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Salford</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">6.849</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sheffield Teaching Hospitals Foundation Trust</td>
+<td style="text-align: right;">116</td>
+<td style="text-align: right;">19.863</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">University Hospitals of North Midlands</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">9.589</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Wirral</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.685</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Wye Valley Trust</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">5.651</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.685</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="recruiting-clinic" class="level3">
+<h3 class="anchored" data-anchor-id="recruiting-clinic">Recruiting Clinic</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="data_files/figure-html/recruiting-clinic-bar-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Recruiting Clinic</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Recruiting Clinic </caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">clinic_recruiting</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ENT</td>
+<td style="text-align: right;">280</td>
+<td style="text-align: right;">47.945</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">GP</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">4.281</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">General surgery (including endocrine surgery)</td>
+<td style="text-align: right;">131</td>
+<td style="text-align: right;">22.432</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Joint thyroid</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">12.842</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Medicine</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">10.103</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Other</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">1.884</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.514</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 
 
 </section>
