@@ -337,7 +337,7 @@ df <- df |>
     ## take a long time of copying and pasting and changing the variable names, a bit boring and tedious.
   )
 
-## The following is a more succinct way (there are often more succinct ways of doing things than writing them all out,
+## The following its a more succinct way (there are often more succinct ways of doing things than writing them all out,
 ## the trick is learning them).
 ##
 ## 1. Make a list of variables tha are Checked/Unchecked/Not Known
@@ -383,7 +383,7 @@ df <- df |>
       "Not Known" = NA_real_
     )
   ))
-## Other columns are Yes/Now/Unknown so we tidy those up now too in the same manner.
+## Other columns are Yes/No/Unknown so we tidy those up now too in the same manner.
 check_cols <- c(
   "previous_neck_irradiation",
   "incidental_imaging",
@@ -416,6 +416,7 @@ df <- df |>
 ##
 ## If we tabulate the same variable from each data frame we should have the same numbers...
 df_raw$iodine_scan |> table(useNA = "ifany")
+df_raw$iodine_scan |> table()
 df$iodine_scan |> table(useNA = "ifany")
 
 
@@ -598,6 +599,15 @@ df <- df |>
     .default = as.character(referral_source)
   ))
 ## two_week_wait_referral
+## trying to change "Not sure" to "NA" thus it is used as system missing
+df_raw |>
+  dplyr::select(two_week_wait_referral) |>
+  table()
+class(df_raw$two_week_wait_referral)
+df_raw$two_week_wait_referral[df_raw$two_week_wait_referral == "(Not sure)"] <- "Not provided"
+df_raw |>
+  dplyr::select(two_week_wait_referral) |>
+  table()
 ## previous_neck_irradiation
 ## symptoms_other_value
 ## incidental_imaging_type
@@ -615,6 +625,9 @@ df <- df |>
 ## routine_review_offered_interval_weeks
 ## routine_review_ultrasound
 ## routine_review_fna
+df_raw |>
+  dplyr::select(nodule_ultrasound_u_stage) |>
+  table()
 ## routine_review_management_strategy_review
 ## routine_review_management_revised
 ## routine_review_management_revised_reason
@@ -628,7 +641,7 @@ df <- df |> dplyr::mutate(
   )
 )
 df$thyroid_surgery |> table()
-
+df$nodule_ultrasound_tirads |> table()
 
 ## thyroid_surgery_lymph_node_pathology
 
@@ -640,3 +653,4 @@ df$thyroid_surgery |> table()
 ## presentation
 ## routine_review_management_revised_reason_other
 ## thyroid_surgery_lymph_node_pathology_other_type
+## checking if codes run fines

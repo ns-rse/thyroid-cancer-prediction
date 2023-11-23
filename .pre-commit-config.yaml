@@ -2,7 +2,7 @@
 # R specific hooks: https://github.com/lorenzwalthert/precommit
 repos:
   - repo: https://github.com/lorenzwalthert/precommit
-    rev: v0.3.2.9023
+    rev: v0.3.2.9027
     hooks:
     - id: style-files
       args: [--style_pkg=styler, --style_fun=tidyverse_style]
@@ -67,7 +67,7 @@ repos:
       # `exclude: <regex>` to allow committing specific files
 
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: v0.7.1
+    rev: v0.11.0
     hooks:
       - id: markdownlint-cli2
         args: []
