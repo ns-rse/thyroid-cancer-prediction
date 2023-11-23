@@ -8,7 +8,6 @@ sidebar:
 
 Details of the data set.
 
-
 ## Source
 
 The data is derived from specialist Thyroid cancer units where patients presenting with symptoms (e.g. nodules) are
@@ -118,8 +117,6 @@ files. Such strings should be double-quoted which appears to be the case but som
 | `"If other cancer/other diagnosis please state"`                                                                                                                       |        |                                  |                     |
 | `Complete?`                                                                                                                                                            |        |                                  |                     |
 
-
-
 ```{r}
 #| label: read-data
 #| eval: true
@@ -203,7 +200,6 @@ df |> ggplot(aes(age)) +
   dark_theme_minimal()
 ```
 
-
 ### Body Mass Index (BMI)
 
 ```{r}
@@ -234,10 +230,7 @@ df |> ggplot(aes(nodule_maxmimum_diameter_mm)) +
   dark_theme_minimal()
 ```
 
-
-
 ## Categorical Variables
-
 
 ### ASA Score
 
@@ -300,7 +293,6 @@ df |>
 ```
 
 ### Recruiting Clinic
-
 
 ```{r}
 #| label: recruiting-clinic-bar
