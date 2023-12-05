@@ -129,9 +129,9 @@ library(knitr)
 library(tidyr)
 
 ## Two options we can either source the cleaning file...
-# source("r/master.R")
+source("r/master.R")
 ## Or we can load the file that is saved at the end and use that
-df <- readRDS("data/r/clean.rds")
+## df <- readRDS("data/r/clean.rds")
 
 n_observations <- df |>
   dplyr::select(study_id) |>
@@ -292,6 +292,21 @@ df |>
   knitr::kable(digits = 3)
 ```
 
+### referral source
+
+```{r}
+#| label: referral_source-bar
+#| fig-cap: "referral_source"
+#| eval: true
+#| echo: false
+#| output: true
+df |> ggplot(aes(referral_source, fill = referral_source)) +
+  geom_bar() +
+  labs(x = "referral_source", y = "N") +
+  scale_fill_discrete(guide = "none") +
+  scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = 15))
+```
+
 ### Recruiting Clinic
 
 ```{r}
@@ -300,7 +315,6 @@ df |>
 #| eval: true
 #| echo: false
 #| output: true
-
 df |> ggplot(aes(clinic_recruiting, fill = clinic_recruiting)) +
   geom_bar() +
   labs(x = "Recruiting Clinic", y = "N") +
@@ -308,6 +322,18 @@ df |> ggplot(aes(clinic_recruiting, fill = clinic_recruiting)) +
   dark_theme_minimal() +
   ## Here we wrap the text of the long labels
   scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = 15))
+```
+
+df |> ggplot(aes(clinic_recruiting, fill = clinic_recruiting)) +
+  geom_bar() +
+  labs(x = "Recruiting Clinic", y = "N") +
+  scale_fill_discrete(guide = "none") +
+  dark_theme_minimal() +
+
+## Here we wrap the text of the long labels
+
+  scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = 15))
+
 ```
 
 ```{r}

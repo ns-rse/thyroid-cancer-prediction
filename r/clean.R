@@ -645,19 +645,47 @@ df <- df |> dplyr::mutate(
     .default = as.character(thyroid_surgery)
   )
 )
-df$thyroid_surgery |> table()
-
-
-## thyroid_surgery_lymph_node_pathology
-
-
-
-
 ## Free text fields
 ##
 ## presentation
 ## routine_review_management_revised_reason_other
 ## thyroid_surgery_lymph_node_pathology_other_type
+transform(df,
+  referral_source = factor(replace(as.character(referral_source),
+    list = !referral_source %in% c("GP"),
+    values = "secondary care"
+  ))
+)
+## converting other sources of referral to secondary care
+df$referral_source[df$referral_source %in% c("A&E", "Acute Medicine", "Cardiology", "Endocrinology", "Gastroenterology", "Gynaecology", "Heamatology", "Inpatient", "Oncology", "Oral & Maxillofacial", "Other", "Respiratory", "Rheumatology", "Urology")] <- "secondary care"
+table(df$referral_source)
+df$nodule_ultrasound_u_stage[df$nodule_ultrasound_u_stage %in% c("Not reported")] <- "NA"
+df$nodule_fna_thy[df$nodule_fna_thy %in% c("Not Applicable")] <- "NA"
+df$nodule_fna_thy[df$nodule_fna_thy %in% c("Thy1", "Thy1c")] <- "Thy1"
+df$nodule_fna_thy[df$nodule_fna_thy %in% c("Thy2", "Thy2c")] <- "Thy2"
+## need to recode the values with cancer in thyroid_surgery_lymph_node_pathology_other_type varible to malignant in the thyroid_surgery_lymph_node_pathology variable
+table(df$thyroid_surgery_lymph_node_pathology) #
+## how to add a new variable to an existing data frame, new variable will be called final_pathology
+df$final_pathology <- df$thyroid_surgery_lymph_node_pathology
+df$final_pathology[df$final_pathology %in% c("Anaplastic cancer", "Follicular thyroid cancer", "Hürthle cell/oncocytic carcinoma", "Medullary thyroid cancer", "Papillary thyroid cancer")] <- "Malignant"
+df$final_pathology[df$final_pathology %in% c("Auto immune thyroiditis", "Colloid adenoma", "Colloid goitre", "Follicular adenoma", "Graves' disease", "Hürthle cell/oncocytic adenoma", "Simple cyst")] <- "Benign"
+## need to recode some observations in thyroid_surgery_lymph_node_pathology_other_type as "Malignant" or "Benign" in the new variable final_pathology
+df <- within(df, final_pathology[thyroid_surgery_lymph_node_pathology_other_type == "with Papillary Micropapillary carcinoma pT1"] <- "Malignant")
+df <- within(df, final_pathology[thyroid_surgery_lymph_node_pathology_other_type == "with microscopic PTC"] <- "Malignant")
+df <- within(df, final_pathology[thyroid_surgery_lymph_node_pathology_other_type == "nodular colloid goitre with two foci of micro PTC, larger being 1.5mm"] <- "Malignant")
+df <- within(df, final_pathology[thyroid_surgery_lymph_node_pathology_other_type == "MNG with micropapillary PTC"] <- "Malignant")
+df <- within(df, final_pathology[thyroid_surgery_lymph_node_pathology_other_type == "incidental microPTC x 2"] <- "Malignant")
+df <- within(df, final_pathology[thyroid_surgery_lymph_node_pathology_other_type == "Non conclusive with suggestion of papillary thyroid carcinoma but not confirmed"] <- "Malignant")
+## Need to recode observations with the value Thy2 in nodule_fna_thy & NA in final_pathology to Benign in final pathology
+df <- within(df, final_pathology[nodule_fna_thy == "Thy2" & final_pathology == "NA"] <- "Benign")
+## unsure why above code does not work, should have more benign cases in final_pathology
+table(df$final_pathology)
+df$final_pathology_pragmatic <- df$final_pathology
+df <- within(df, final_pathology_pragmatic[nodule_fna_thy == "Thy2"] <- "Benign")
+table(df$final_pathology_pragmatic)
+table(df$data_access_group)
+## need to remove NHS Dumfries and Galloway & Wirral from analysis as only include 4 patients
+
 
 ## Finally save the data
 saveRDS(df, file = paste(r_dir, "clean.rds", sep = "/"))
