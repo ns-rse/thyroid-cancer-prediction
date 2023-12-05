@@ -293,6 +293,7 @@ df |>
 ```
 
 ### referral source
+
 ```{r}
 #| label: referral_source-bar
 #| fig-cap: "referral_source"
@@ -328,8 +329,11 @@ df |> ggplot(aes(clinic_recruiting, fill = clinic_recruiting)) +
   labs(x = "Recruiting Clinic", y = "N") +
   scale_fill_discrete(guide = "none") +
   dark_theme_minimal() +
-  ## Here we wrap the text of the long labels
+
+## Here we wrap the text of the long labels
+
   scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = 15))
+
 ```
 
 ```{r}
