@@ -650,8 +650,6 @@ df <- df |> dplyr::mutate(
 ## presentation
 ## routine_review_management_revised_reason_other
 ## thyroid_surgery_lymph_node_pathology_other_type
-## Finally save the data
-saveRDS(df, file = paste(r_dir, "clean.rds", sep = "/"))
 transform(df,
   referral_source = factor(replace(as.character(referral_source),
     list = !referral_source %in% c("GP"),
@@ -687,3 +685,7 @@ df <- within(df, final_pathology_pragmatic[nodule_fna_thy == "Thy2"] <- "Benign"
 table(df$final_pathology_pragmatic)
 table(df$data_access_group)
 ## need to remove NHS Dumfries and Galloway & Wirral from analysis as only include 4 patients
+
+
+## Finally save the data
+saveRDS(df, file = paste(r_dir, "clean.rds", sep = "/"))
