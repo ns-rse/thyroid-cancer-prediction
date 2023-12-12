@@ -457,8 +457,47 @@ df <- df |>
     clinical_assessment = dplyr::case_when(clinical_assessment == "Not known" ~ NA_character_,
       .default = as.character(clinical_assessment)
     ),
+    nodule_fna_thy = dplyr::case_when(nodule_fna_thy == "Not Applicable" ~ NA_character_,
+      .default = stringr::str_sub(nodule_fna_thy, 1, 4)
+    )
   )
 
+## Define malignant and benign classifications for the thyroid_surgery_lymph_mode_pathology and use these to derive a
+## final_pathology variable
+malignant <- c(
+  "Anaplastic cancer",
+  "Follicular thyroid cancer",
+  "Hürthle cell/oncocytic carcinoma",
+  "MNG with micropapillary PTC",
+  "Medullary thyroid cancer",
+  "Non conclusive with suggestion of papillary thyroid carcinoma but not confirmed",
+  "Papillary thyroid cancer",
+  "incidental microPTC x 2",
+  "nodular colloid goitre with two foci of micro PTC, larger being 1.5mm",
+  "with Papillary Micropapillary carcinoma pT1",
+  "with microscopic PTC"
+)
+benign <- c(
+  "Auto immune thyroiditis",
+  "Colloid adenoma",
+  "Colloid goitre",
+  "Follicular adenoma",
+  "Graves' disease",
+  "Hürthle cell/oncocytic adenoma",
+  "Simple cyst"
+)
+df <- df |>
+  dplyr::mutate(
+    final_pathology = dplyr::case_when(thyroid_surgery_lymph_node_pathology %in% malignant ~ "Malignant",
+      thyroid_surgery_lymph_node_pathology %in% benign ~ "Benign",
+      .default = NA_character_
+    ),
+    ## If no surgical pathology but Thyroid Nodule DNA is Thy2 then Benign
+    final_pathology = dplyr::case_when(is.nan(final_pathology) & nodule_fna_thy == "Thy2" ~ "Benign",
+      .default = final_pathology
+    )
+  )
+df$final_pathology |> table(useNA = "ifany")
 ## ToDo - Inspect each of the variables listed below and determine how they need handling to convert to a factor.
 ##
 ## This can be done for example by looking at the values using table()
