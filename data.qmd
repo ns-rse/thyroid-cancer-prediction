@@ -292,6 +292,34 @@ df |>
   knitr::kable(digits = 3)
 ```
 
+### Referral Source
+
+# | label: referral-source-bar
+# | fig-cap: "Referral Source"
+# | eval: true
+# | echo: false
+# | output: true
+df |> ggplot(aes(referral_source, fill = referral_source)) +
+  geom_bar() +
+  labs(x = "referral_source", y = "N") +
+  scale_fill_discrete(guide = "none") +
+  scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = 15))
+
+```
+
+```{r}
+#| label: referral-source-table
+#| tbl-cap: "Referral Source"
+#| eval: true
+#| echo: false
+#| output: true
+
+df |>
+  dplyr::count(referral_source) |>
+  dplyr::mutate("%" = prop.table(n) * 100) |>
+  knitr::kable(digits = 3)
+```
+
 ### Recruiting Clinic
 
 ```{r}
@@ -320,5 +348,141 @@ df |> ggplot(aes(clinic_recruiting, fill = clinic_recruiting)) +
 df |>
   dplyr::count(clinic_recruiting) |>
   dplyr::mutate("%" = prop.table(n) * 100) |>
+  knitr::kable(digits = 3)
+```
+
+### Thyroid Nodule FNA
+
+```{r}
+#| label: nodule-fna-thy-bar
+#| fig-cap: "Thyroid Nodule FNA"
+#| eval: true
+#| echo: false
+#| output: true
+
+df |> ggplot(aes(module_fna_thy, fill = module_fna_thy)) +
+  geom_bar() +
+  labs(x = "Thyroid Nodule FNA", y = "N") +
+  scale_fill_discrete(guide = "none") +
+  dark_theme_minimal() +
+  ## Here we wrap the text of the long labels
+  scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = 15))
+```
+
+```{r}
+#| label: nodule-fna-thy-table
+#| tbl-cap: "Thyroid Nodule FNA"
+#| eval: true
+#| echo: false
+#| output: true
+
+df |>
+  dplyr::count(module_fna_thy) |>
+  dplyr::mutate("%" = prop.table(n) * 100) |>
+  knitr::kable(digits = 3)
+```
+
+### Final Pathology
+
+```{r}
+#| label: final-pathology-bar
+#| fig-cap: "Final Pathology"
+#| eval: true
+#| echo: false
+#| output: true
+
+df |> ggplot(aes(final_pathology, fill = final_pathology)) +
+  geom_bar() +
+  labs(x = "Final Pathology", y = "N") +
+  scale_fill_discrete(guide = "none") +
+  dark_theme_minimal() +
+  ## Here we wrap the text of the long labels
+  scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = 15))
+```
+
+```{r}
+#| label: final-pathology-table
+#| tbl-cap: "Final Pathology"
+#| eval: true
+#| echo: false
+#| output: true
+
+df |>
+  dplyr::count(final_pathology) |>
+  dplyr::mutate("%" = prop.table(n) * 100) |>
+  knitr::kable(digits = 3)
+```
+
+### Final Pathology x Thyroid Nodule FNA
+
+It is useful to check that the rules we have derived for classifying Final Pathology, which are based on
+`thyroid_surgery_lymph_node_pathology` when available and `nodule_fna_thy` when not are correct. We can do this by
+plotting and tabulating the data.
+
+```{r}
+#| label: nodule-fna-thy-bar
+#| fig-cap: "Thyroid Nodule FNA"
+#| eval: true
+#| echo: false
+#| output: true
+
+df |> ggplot(aes(final_pathology, fill = final_pathology)) +
+  geom_bar() +
+  labs(x = "Thyroid Nodule FNA", y = "N") +
+  scale_fill_discrete(guide = "none") +
+  dark_theme_minimal() +
+  ## Here we wrap the text of the long labels
+  scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = 15))
+```
+
+```{r}
+#| label: surgery-pathology-nodule-fna-thy-table
+#| tbl-cap: "Surgical Lymp Node Pathology and Thyroid Nodule FNA. Percentages are by Pathology"
+#| eval: true
+#| echo: false
+#| output: true
+
+df |>
+  dplyr::group_by(thyroid_surgery_lymph_node_pathology) |>
+  dplyr::count(nodule_fna_thy) |>
+  dplyr::mutate(
+    percent = prop.table(n) * 100,
+    "N (%)" = paste0(n, " (", format(round(percent, 3), nsmall = 3), ")")
+  ) |>
+  ## NB - No need to include thyroid_surgery_lymph_node_pathology as we have group_by that variable
+  dplyr::select(nodule_fna_thy, "N (%)") |>
+  tidyr::spread(nodule_fna_thy, "N (%)") |>
+  setNames(c(
+    "Thyroid Surgery Lymph Node Pathology", "Thy1 (%)", "Thy2 (%)", "Thy3 (%)", "Thy4 (%)", "Thy5 (%)",
+    "Missing (%)"
+  )) |>
+  knitr::kable(digits = 3)
+```
+
+We may be interested in the percentages across all observations though.
+
+```{r}
+#| label: surgery-pathology-nodule-fna-thy-table
+#| tbl-cap: "Surgical Lymp Node Pathology and Thyroid Nodule FNA. Percentages are across all observations."
+#| eval: true
+#| echo: false
+#| output: true
+
+df |>
+  dplyr::group_by(thyroid_surgery_lymph_node_pathology) |>
+  dplyr::count(nodule_fna_thy) |>
+  ## We ungroup the data to get percentages across all pathologies
+  dplyr::ungroup() |>
+  dplyr::mutate(
+    percent = prop.table(n) * 100,
+    "N (%)" = paste0(n, " (", format(round(percent, 3), nsmall = 3), ")")
+  ) |>
+  ## NB - We MUST now include thyroid_surgery_lymph_node_pathology as the data is not grouped
+  dplyr::select(thyroid_surgery_lymph_node_pathology, nodule_fna_thy, "N (%)") |>
+  tidyr::spread(nodule_fna_thy, "N (%)") |>
+  setNames(c(
+    "Thyroid Surgery Lymph Node Pathology", "Thy1 (%)", "Thy2 (%)", "Thy3 (%)", "Thy4 (%)", "Thy5 (%)",
+    "Missing (%)"
+  )) |>
   knitr::kable(digits = 3)
 ```
