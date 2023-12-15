@@ -294,16 +294,17 @@ df |>
 
 ### Referral Source
 
-#| label: referral-source-bar
-#| fig-cap: "Referral Source"
-#| eval: true
-#| echo: false
-#| output: true
+# | label: referral-source-bar
+# | fig-cap: "Referral Source"
+# | eval: true
+# | echo: false
+# | output: true
 df |> ggplot(aes(referral_source, fill = referral_source)) +
   geom_bar() +
   labs(x = "referral_source", y = "N") +
   scale_fill_discrete(guide = "none") +
   scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = 15))
+
 ```
 
 ```{r}
@@ -318,7 +319,6 @@ df |>
   dplyr::mutate("%" = prop.table(n) * 100) |>
   knitr::kable(digits = 3)
 ```
-
 
 ### Recruiting Clinic
 
@@ -382,7 +382,6 @@ df |>
   knitr::kable(digits = 3)
 ```
 
-
 ### Final Pathology
 
 ```{r}
@@ -414,12 +413,12 @@ df |>
   knitr::kable(digits = 3)
 ```
 
-
 ### Final Pathology x Thyroid Nodule FNA
 
 It is useful to check that the rules we have derived for classifying Final Pathology, which are based on
 `thyroid_surgery_lymph_node_pathology` when available and `nodule_fna_thy` when not are correct. We can do this by
 plotting and tabulating the data.
+
 ```{r}
 #| label: nodule-fna-thy-bar
 #| fig-cap: "Thyroid Nodule FNA"
@@ -461,6 +460,7 @@ df |>
 ```
 
 We may be interested in the percentages across all observations though.
+
 ```{r}
 #| label: surgery-pathology-nodule-fna-thy-table
 #| tbl-cap: "Surgical Lymp Node Pathology and Thyroid Nodule FNA. Percentages are across all observations."
