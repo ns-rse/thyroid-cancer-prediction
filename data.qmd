@@ -360,7 +360,7 @@ df |>
 #| echo: false
 #| output: true
 
-df |> ggplot(aes(module_fna_thy, fill = module_fna_thy)) +
+df |> ggplot(aes(nodule_fna_thy, fill = nodule_fna_thy)) +
   geom_bar() +
   labs(x = "Thyroid Nodule FNA", y = "N") +
   scale_fill_discrete(guide = "none") +
@@ -377,7 +377,7 @@ df |> ggplot(aes(module_fna_thy, fill = module_fna_thy)) +
 #| output: true
 
 df |>
-  dplyr::count(module_fna_thy) |>
+  dplyr::count(nodule_fna_thy) |>
   dplyr::mutate("%" = prop.table(n) * 100) |>
   knitr::kable(digits = 3)
 ```
@@ -417,27 +417,13 @@ df |>
 
 It is useful to check that the rules we have derived for classifying Final Pathology, which are based on
 `thyroid_surgery_lymph_node_pathology` when available and `nodule_fna_thy` when not are correct. We can do this by
-plotting and tabulating the data.
+tabulating the data (a [heatmap](https://en.wikipedia.org/wiki/Heat_map) could be plotted that graphically shows the
+data distribution using the [`geom_tile()`](https://ggplot2.tidyverse.org/reference/geom_tile.html) geometry).
+
 
 ```{r}
-#| label: nodule-fna-thy-bar
-#| fig-cap: "Thyroid Nodule FNA"
-#| eval: true
-#| echo: false
-#| output: true
-
-df |> ggplot(aes(final_pathology, fill = final_pathology)) +
-  geom_bar() +
-  labs(x = "Thyroid Nodule FNA", y = "N") +
-  scale_fill_discrete(guide = "none") +
-  dark_theme_minimal() +
-  ## Here we wrap the text of the long labels
-  scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = 15))
-```
-
-```{r}
-#| label: surgery-pathology-nodule-fna-thy-table
-#| tbl-cap: "Surgical Lymp Node Pathology and Thyroid Nodule FNA. Percentages are by Pathology"
+#| label: surgery-pathology-nodule-fna-thy-table1
+#| tbl-cap: "Surgical Lymph Node Pathology and Thyroid Nodule FNA. Percentages are by Pathology"
 #| eval: true
 #| echo: false
 #| output: true
@@ -462,8 +448,8 @@ df |>
 We may be interested in the percentages across all observations though.
 
 ```{r}
-#| label: surgery-pathology-nodule-fna-thy-table
-#| tbl-cap: "Surgical Lymp Node Pathology and Thyroid Nodule FNA. Percentages are across all observations."
+#| label: surgery-pathology-nodule-fna-thy-table2
+#| tbl-cap: "Surgical Lymph Node Pathology and Thyroid Nodule FNA. Percentages are across all observations."
 #| eval: true
 #| echo: false
 #| output: true

@@ -1,13 +1,15 @@
 # Configuration
 config:
   # MD013 - line-length
-  line_length:
+  line-length:
     line_length: 120
     code_blocks: false
     tables: false
   html:
     allowed_elements:
       - div
+  # MD025 single-title/single-h1
+  single-title: false
 
 # Globs
 globs:

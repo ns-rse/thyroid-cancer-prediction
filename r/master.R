@@ -17,4 +17,9 @@ r_scripts <- paste(base_dir, "r", sep = "/")
 ## Clean the data
 source(paste(r_scripts, "clean.R", sep = "/"))
 
+
+## Simulate data
+source(paste(r_scripts, "simulate_data.R", sep = "/"))
+
 ## Run Statistical models
+source(paste(r_scripts, "tidymodel.R", sep = "/"))
