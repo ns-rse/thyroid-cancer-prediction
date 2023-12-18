@@ -30,6 +30,8 @@ R](https://www.tmwr.org/) goes deeper into the methods and options available. An
 books builds is [R for Data Science (2e)](https://r4ds.hadley.nz/) which should serve as a useful reference for learning
 R and adopting good practices.
 
+### Methods to Consider
+=======
 It is also recommended to read the documentation that goes with the [Tidymodels](https://www.tidymodels.org/) package,
 in particular the [Get Started](https://www.tidymodels.org/start/) page which includes a [predictive modelling case
 study](https://www.tidymodels.org/start/case-study/).
@@ -61,7 +63,7 @@ the data, often a slightly larger proportion is used for the training subset, he
 ```{r}
 #| label: test-train-split
 #| eval: true
-#| echo: false
+#| echo: true
 #| output: false
 set.seed(5039378)
 split <- rsample::initial_split(df_dummy, prop = 0.75)
@@ -214,7 +216,7 @@ Now select the model with the highest Receiver Operating Characteristic Area Und
 
 ```{r}
 #| label: lasso-kfold-best
-#| eval: true
+#| eval: false
 #| echo: true
 #| output: false
 lasso_kfold_roc_auc <- lasso_grid |>
@@ -225,7 +227,7 @@ lasso_kfold_roc_auc <- lasso_grid |>
 
 ```{r}
 #| label: lasso-kfold-fit-final
-#| eval: true
+#| eval: false
 #| echo: true
 #| output: false
 final_lasso_kfold <- workflows::finalize_workflow(
@@ -240,7 +242,7 @@ Collect metrics using the original data.
 
 ```{r}
 #| label: lasso-kfold-eval-metrics
-#| eval: true
+#| eval: false
 #| echo: true
 #| output: false
 tune::last_fit(object = final_lasso_kfold, split = split) |>
@@ -251,7 +253,7 @@ And plot the importance of variables
 
 ```{r}
 #| label: lasso-kfold-eval-importance
-#| eval: true
+#| eval: false
 #| echo: true
 #| output: false
 final_lasso_kfold |>
