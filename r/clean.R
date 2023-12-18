@@ -457,8 +457,11 @@ df <- df |>
     clinical_assessment = dplyr::case_when(clinical_assessment == "Not known" ~ NA_character_,
       .default = as.character(clinical_assessment)
     ),
+    nodule_fna_thy = dplyr::case_when(nodule_fna_thy == "Not Applicable" ~ NA_character_,
+      .default = stringr::str_sub(nodule_fna_thy, 1, 4)
+    ),
   )
-
+table(df$nodule_fna_thy)
 ## ToDo - Inspect each of the variables listed below and determine how they need handling to convert to a factor.
 ##
 ## This can be done for example by looking at the values using table()
@@ -658,11 +661,6 @@ transform(df,
 )
 ## converting other sources of referral to secondary care
 df$referral_source[df$referral_source %in% c("A&E", "Acute Medicine", "Cardiology", "Endocrinology", "Gastroenterology", "Gynaecology", "Heamatology", "Inpatient", "Oncology", "Oral & Maxillofacial", "Other", "Respiratory", "Rheumatology", "Urology")] <- "secondary care"
-table(df$referral_source)
-df$nodule_ultrasound_u_stage[df$nodule_ultrasound_u_stage %in% c("Not reported")] <- "NA"
-df$nodule_fna_thy[df$nodule_fna_thy %in% c("Not Applicable")] <- "NA"
-df$nodule_fna_thy[df$nodule_fna_thy %in% c("Thy1", "Thy1c")] <- "Thy1"
-df$nodule_fna_thy[df$nodule_fna_thy %in% c("Thy2", "Thy2c")] <- "Thy2"
 ## need to recode the values with cancer in thyroid_surgery_lymph_node_pathology_other_type varible to malignant in the thyroid_surgery_lymph_node_pathology variable
 table(df$thyroid_surgery_lymph_node_pathology) #
 ## how to add a new variable to an existing data frame, new variable will be called final_pathology
@@ -685,7 +683,13 @@ df <- within(df, final_pathology_pragmatic[nodule_fna_thy == "Thy2"] <- "Benign"
 table(df$final_pathology_pragmatic)
 table(df$data_access_group)
 ## need to remove NHS Dumfries and Galloway & Wirral from analysis as only include 4 patients
-
-
+# First count how many observations
+df |> count()
+exclude_data_access_group <- c("NHS Dumfries and Galloway", "Wirral")
+df <- df |>
+  dplyr::filter(!data_access_group %in% exclude_data_access_group)
+# Count how many observations and table data_access_group to check neither center appears
+df |> count()
+df$data_access_group |> table()
 ## Finally save the data
 saveRDS(df, file = paste(r_dir, "clean.rds", sep = "/"))
