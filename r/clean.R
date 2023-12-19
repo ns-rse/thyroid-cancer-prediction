@@ -675,12 +675,14 @@ df <- within(df, final_pathology[thyroid_surgery_lymph_node_pathology_other_type
 df <- within(df, final_pathology[thyroid_surgery_lymph_node_pathology_other_type == "incidental microPTC x 2"] <- "Malignant")
 df <- within(df, final_pathology[thyroid_surgery_lymph_node_pathology_other_type == "Non conclusive with suggestion of papillary thyroid carcinoma but not confirmed"] <- "Malignant")
 ## Need to recode observations with the value Thy2 in nodule_fna_thy & NA in final_pathology to Benign in final pathology
-df <- within(df, final_pathology[nodule_fna_thy == "Thy2" & final_pathology == "NA"] <- "Benign")
+df <- within(df, final_pathology[nodule_fna_thy == "Thy2" & is.na(final_pathology)] <- "Benign")
 ## unsure why above code does not work, should have more benign cases in final_pathology
 table(df$final_pathology)
-df$final_pathology_pragmatic <- df$final_pathology
-df <- within(df, final_pathology_pragmatic[nodule_fna_thy == "Thy2"] <- "Benign")
-table(df$final_pathology_pragmatic)
+df <- within(df, final_pathology[final_pathology == "Other cancer / Other diagnosis"] <- NA_character_)
+table(df$final_pathology)
+## useful for viewing two variables table(df$nodule_fna_thy, df$final_pathology, useNA="ifany")
+## attempt to create a new variable already done above df$final_pathology_pragmatic <- df$final_pathology
+## as above df <- within(df, final_pathology_pragmatic[nodule_fna_thy == "Thy2"] <- "Benign")
 table(df$data_access_group)
 ## need to remove NHS Dumfries and Galloway & Wirral from analysis as only include 4 patients
 # First count how many observations
