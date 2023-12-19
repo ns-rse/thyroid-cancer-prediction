@@ -155,7 +155,18 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#asa-score" id="toc-asa-score" class="nav-link" data-scroll-target="#asa-score">ASA Score</a></li>
   <li><a href="#data-access-group" id="toc-data-access-group" class="nav-link" data-scroll-target="#data-access-group">Data Access Group</a></li>
+  <li><a href="#referral-source" id="toc-referral-source" class="nav-link" data-scroll-target="#referral-source">Referral Source</a></li>
+  </ul></li>
+  <li><a href="#label-referral-source-bar" id="toc-label-referral-source-bar" class="nav-link" data-scroll-target="#label-referral-source-bar">| label: referral-source-bar</a></li>
+  <li><a href="#fig-cap-referral-source" id="toc-fig-cap-referral-source" class="nav-link" data-scroll-target="#fig-cap-referral-source">| fig-cap: “Referral Source”</a></li>
+  <li><a href="#eval-true" id="toc-eval-true" class="nav-link" data-scroll-target="#eval-true">| eval: true</a></li>
+  <li><a href="#echo-false" id="toc-echo-false" class="nav-link" data-scroll-target="#echo-false">| echo: false</a></li>
+  <li><a href="#output-true" id="toc-output-true" class="nav-link" data-scroll-target="#output-true">| output: true</a>
+  <ul class="collapse">
   <li><a href="#recruiting-clinic" id="toc-recruiting-clinic" class="nav-link" data-scroll-target="#recruiting-clinic">Recruiting Clinic</a></li>
+  <li><a href="#thyroid-nodule-fna" id="toc-thyroid-nodule-fna" class="nav-link" data-scroll-target="#thyroid-nodule-fna">Thyroid Nodule FNA</a></li>
+  <li><a href="#final-pathology" id="toc-final-pathology" class="nav-link" data-scroll-target="#final-pathology">Final Pathology</a></li>
+  <li><a href="#final-pathology-x-thyroid-nodule-fna" id="toc-final-pathology-x-thyroid-nodule-fna" class="nav-link" data-scroll-target="#final-pathology-x-thyroid-nodule-fna">Final Pathology x Thyroid Nodule FNA</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -187,7 +198,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="data" class="level2">
 <h2 class="anchored" data-anchor-id="data">Data</h2>
-<p>An ASCII CSV file (<code>Thy3000_DATA_LABELS_Raw.csv</code>** with data on 584 cases has been provided. There is no data dictionary defining what each field is nor its type available yet.</p>
+<p>An ASCII CSV file (<code>Thy3000_DATA_LABELS_Raw.csv</code>) with data on 584 cases has been provided. There is no data dictionary defining what each field is nor its type available yet.</p>
 <p><strong>NB</strong> Some of the column headers have commas (<code>,</code>) in the variable names, this can cause problems when reading CSV files. Such strings should be double-quoted which appears to be the case but something to check carefully.</p>
 <table class="table">
 <colgroup>
@@ -765,7 +776,7 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
-<p>Tabular and graphical summaries of the data provided in <code>Thy3000_DATA_LABELS_Raw.csv</code> after cleaning follow. In total there were 549 recorded from a total of 15.</p>
+<p>Tabular and graphical summaries of the data provided in <code>Thy3000_DATA_LABELS_Raw.csv</code> after cleaning we can summarise the data. In total there were 549 recorded from a total of 15.</p>
 </section>
 <section id="quantitative-variables" class="level2">
 <h2 class="anchored" data-anchor-id="quantitative-variables">Quantitative Variables</h2>
@@ -775,16 +786,6 @@ ul.task-list li input[type="checkbox"] {
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <caption>Summary statistics for quantitative variables </caption>
-<colgroup>
-<col style="width: 14%">
-<col style="width: 14%">
-<col style="width: 15%">
-<col style="width: 15%">
-<col style="width: 10%">
-<col style="width: 15%">
-<col style="width: 7%">
-<col style="width: 6%">
-</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Variable</th>
@@ -800,8 +801,8 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">age</td>
-<td style="text-align: right;">54.37177</td>
-<td style="text-align: right;">16.652001</td>
+<td style="text-align: right;">54.372</td>
+<td style="text-align: right;">16.652</td>
 <td style="text-align: right;">41</td>
 <td style="text-align: right;">54.0</td>
 <td style="text-align: right;">68.000</td>
@@ -810,8 +811,8 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td style="text-align: left;">bmi</td>
-<td style="text-align: right;">27.77239</td>
-<td style="text-align: right;">5.708315</td>
+<td style="text-align: right;">27.772</td>
+<td style="text-align: right;">5.708</td>
 <td style="text-align: right;">24</td>
 <td style="text-align: right;">27.1</td>
 <td style="text-align: right;">30.975</td>
@@ -1023,6 +1024,122 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </section>
+<section id="referral-source" class="level3">
+<h3 class="anchored" data-anchor-id="referral-source">Referral Source</h3>
+</section>
+</section>
+<section id="label-referral-source-bar" class="level1">
+<h1>| label: referral-source-bar</h1>
+</section>
+<section id="fig-cap-referral-source" class="level1">
+<h1>| fig-cap: “Referral Source”</h1>
+</section>
+<section id="eval-true" class="level1">
+<h1>| eval: true</h1>
+</section>
+<section id="echo-false" class="level1">
+<h1>| echo: false</h1>
+</section>
+<section id="output-true" class="level1">
+<h1>| output: true</h1>
+<p>df |&gt; ggplot(aes(referral_source, fill = referral_source)) + geom_bar() + labs(x = “referral_source”, y = “N”) + scale_fill_discrete(guide = “none”) + scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = 15))</p>
+<p>```</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Referral Source </caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">referral_source</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">A&amp;E</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.514</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Acute Medicine</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.514</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cardiology</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.514</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Endocrinology</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">4.452</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">GP</td>
+<td style="text-align: right;">429</td>
+<td style="text-align: right;">73.459</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gastroenterology</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">1.199</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gynaecology</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.342</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Heamatology</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.685</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Inpatient</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.342</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Oncology</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.685</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Oral &amp; Maxillofacial</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">1.027</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Other</td>
+<td style="text-align: right;">67</td>
+<td style="text-align: right;">11.473</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Respiratory</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">2.226</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Rheumatology</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">1.199</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Urology</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.685</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.685</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <section id="recruiting-clinic" class="level3">
 <h3 class="anchored" data-anchor-id="recruiting-clinic">Recruiting Clinic</h3>
 <div class="cell">
@@ -1081,6 +1198,424 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: left;">NA</td>
 <td style="text-align: right;">3</td>
 <td style="text-align: right;">0.514</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="thyroid-nodule-fna" class="level3">
+<h3 class="anchored" data-anchor-id="thyroid-nodule-fna">Thyroid Nodule FNA</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="data_files/figure-html/nodule-fna-thy-bar-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Thyroid Nodule FNA</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Thyroid Nodule FNA </caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">nodule_fna_thy</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Thy1</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: right;">11.815</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Thy2</td>
+<td style="text-align: right;">114</td>
+<td style="text-align: right;">19.521</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Thy3</td>
+<td style="text-align: right;">95</td>
+<td style="text-align: right;">16.267</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Thy4</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">2.568</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Thy5</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">2.397</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">277</td>
+<td style="text-align: right;">47.432</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="final-pathology" class="level3">
+<h3 class="anchored" data-anchor-id="final-pathology">Final Pathology</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="data_files/figure-html/final-pathology-bar-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Final Pathology</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Final Pathology </caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">final_pathology</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Benign</td>
+<td style="text-align: right;">88</td>
+<td style="text-align: right;">15.068</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Malignant</td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">12.158</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">425</td>
+<td style="text-align: right;">72.774</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="final-pathology-x-thyroid-nodule-fna" class="level3">
+<h3 class="anchored" data-anchor-id="final-pathology-x-thyroid-nodule-fna">Final Pathology x Thyroid Nodule FNA</h3>
+<p>It is useful to check that the rules we have derived for classifying Final Pathology, which are based on <code>thyroid_surgery_lymph_node_pathology</code> when available and <code>nodule_fna_thy</code> when not are correct. We can do this by tabulating the data (a <a href="https://en.wikipedia.org/wiki/Heat_map">heatmap</a> could be plotted that graphically shows the data distribution using the <a href="https://ggplot2.tidyverse.org/reference/geom_tile.html"><code>geom_tile()</code></a> geometry).</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Surgical Lymph Node Pathology and Thyroid Nodule FNA. Percentages are by Pathology </caption>
+<colgroup>
+<col style="width: 33%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 10%">
+<col style="width: 11%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Thyroid Surgery Lymph Node Pathology</th>
+<th style="text-align: left;">Thy1 (%)</th>
+<th style="text-align: left;">Thy2 (%)</th>
+<th style="text-align: left;">Thy3 (%)</th>
+<th style="text-align: left;">Thy4 (%)</th>
+<th style="text-align: left;">Thy5 (%)</th>
+<th style="text-align: left;">Missing (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Anaplastic cancer</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">1 (100.000)</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Auto immune thyroiditis</td>
+<td style="text-align: left;">1 (25.000)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">1 (25.000)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">2 (50.000)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Colloid adenoma</td>
+<td style="text-align: left;">1 (16.667)</td>
+<td style="text-align: left;">1 (16.667)</td>
+<td style="text-align: left;">2 (33.333)</td>
+<td style="text-align: left;">1 (16.667)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">1 (16.667)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Colloid goitre</td>
+<td style="text-align: left;">7 (19.444)</td>
+<td style="text-align: left;">7 (19.444)</td>
+<td style="text-align: left;">7 (19.444)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">15 (41.667)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Follicular adenoma</td>
+<td style="text-align: left;">3 (13.043)</td>
+<td style="text-align: left;">1 ( 4.348)</td>
+<td style="text-align: left;">18 (78.261)</td>
+<td style="text-align: left;">1 ( 4.348)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Follicular thyroid cancer</td>
+<td style="text-align: left;">1 ( 7.692)</td>
+<td style="text-align: left;">1 ( 7.692)</td>
+<td style="text-align: left;">10 (76.923)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">1 ( 7.692)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Graves’ disease</td>
+<td style="text-align: left;">1 (50.000)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">1 (50.000)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hürthle cell/oncocytic adenoma</td>
+<td style="text-align: left;">1 ( 9.091)</td>
+<td style="text-align: left;">2 (18.182)</td>
+<td style="text-align: left;">7 (63.636)</td>
+<td style="text-align: left;">1 ( 9.091)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hürthle cell/oncocytic carcinoma</td>
+<td style="text-align: left;">1 (20.000)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">3 (60.000)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">1 (20.000)</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Medullary thyroid cancer</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">1 (50.000)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">1 (50.000)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Other cancer / Other diagnosis</td>
+<td style="text-align: left;">2 ( 6.452)</td>
+<td style="text-align: left;">11 (35.484)</td>
+<td style="text-align: left;">9 (29.032)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">9 (29.032)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Papillary thyroid cancer</td>
+<td style="text-align: left;">5 (10.000)</td>
+<td style="text-align: left;">4 ( 8.000)</td>
+<td style="text-align: left;">15 (30.000)</td>
+<td style="text-align: left;">9 (18.000)</td>
+<td style="text-align: left;">12 (24.000)</td>
+<td style="text-align: left;">5 (10.000)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Simple cyst</td>
+<td style="text-align: left;">2 (33.333)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">4 (66.667)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">44 (11.168)</td>
+<td style="text-align: left;">87 (22.081)</td>
+<td style="text-align: left;">23 ( 5.838)</td>
+<td style="text-align: left;">2 ( 0.508)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">238 (60.406)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>We may be interested in the percentages across all observations though.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Surgical Lymph Node Pathology and Thyroid Nodule FNA. Percentages are across all observations. </caption>
+<colgroup>
+<col style="width: 33%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 10%">
+<col style="width: 11%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Thyroid Surgery Lymph Node Pathology</th>
+<th style="text-align: left;">Thy1 (%)</th>
+<th style="text-align: left;">Thy2 (%)</th>
+<th style="text-align: left;">Thy3 (%)</th>
+<th style="text-align: left;">Thy4 (%)</th>
+<th style="text-align: left;">Thy5 (%)</th>
+<th style="text-align: left;">Missing (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Anaplastic cancer</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Auto immune thyroiditis</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">2 ( 0.342)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Colloid adenoma</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">2 ( 0.342)</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Colloid goitre</td>
+<td style="text-align: left;">7 ( 1.199)</td>
+<td style="text-align: left;">7 ( 1.199)</td>
+<td style="text-align: left;">7 ( 1.199)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">15 ( 2.568)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Follicular adenoma</td>
+<td style="text-align: left;">3 ( 0.514)</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">18 ( 3.082)</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Follicular thyroid cancer</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">10 ( 1.712)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Graves’ disease</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hürthle cell/oncocytic adenoma</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">2 ( 0.342)</td>
+<td style="text-align: left;">7 ( 1.199)</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hürthle cell/oncocytic carcinoma</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">3 ( 0.514)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Medullary thyroid cancer</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Other cancer / Other diagnosis</td>
+<td style="text-align: left;">2 ( 0.342)</td>
+<td style="text-align: left;">11 ( 1.884)</td>
+<td style="text-align: left;">9 ( 1.541)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">9 ( 1.541)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Papillary thyroid cancer</td>
+<td style="text-align: left;">5 ( 0.856)</td>
+<td style="text-align: left;">4 ( 0.685)</td>
+<td style="text-align: left;">15 ( 2.568)</td>
+<td style="text-align: left;">9 ( 1.541)</td>
+<td style="text-align: left;">12 ( 2.055)</td>
+<td style="text-align: left;">5 ( 0.856)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Simple cyst</td>
+<td style="text-align: left;">2 ( 0.342)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">4 ( 0.685)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">44 ( 7.534)</td>
+<td style="text-align: left;">87 (14.897)</td>
+<td style="text-align: left;">23 ( 3.938)</td>
+<td style="text-align: left;">2 ( 0.342)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">238 (40.753)</td>
 </tr>
 </tbody>
 </table>
