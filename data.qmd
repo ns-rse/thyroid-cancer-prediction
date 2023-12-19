@@ -420,22 +420,6 @@ It is useful to check that the rules we have derived for classifying Final Patho
 plotting and tabulating the data.
 
 ```{r}
-#| label: nodule-fna-thy-bar
-#| fig-cap: "Thyroid Nodule FNA"
-#| eval: true
-#| echo: false
-#| output: true
-
-df |> ggplot(aes(final_pathology, fill = final_pathology)) +
-  geom_bar() +
-  labs(x = "Thyroid Nodule FNA", y = "N") +
-  scale_fill_discrete(guide = "none") +
-  dark_theme_minimal() +
-  ## Here we wrap the text of the long labels
-  scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = 15))
-```
-
-```{r}
 #| label: surgery-pathology-nodule-fna-thy-table
 #| tbl-cap: "Surgical Lymp Node Pathology and Thyroid Nodule FNA. Percentages are by Pathology"
 #| eval: true
