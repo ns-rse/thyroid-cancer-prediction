@@ -294,17 +294,19 @@ df |>
 
 ### Referral Source
 
-# | label: referral-source-bar
-# | fig-cap: "Referral Source"
-# | eval: true
-# | echo: false
-# | output: true
+```{r}
+#| label: referral-source-bar
+#| fig-cap: "Referral Source"
+#| eval: true
+#| echo: false
+#| output: true
 df |> ggplot(aes(referral_source, fill = referral_source)) +
   geom_bar() +
-  labs(x = "referral_source", y = "N") +
+  labs(x = "Referral Source", y = "N") +
   scale_fill_discrete(guide = "none") +
-  scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = 15))
-
+  dark_theme_minimal() +
+  ## We rotate the text on the x-axis by 90 degrees so it is legible
+  theme(axis.text.x = element_text(angle = 90))
 ```
 
 ```{r}
@@ -334,8 +336,8 @@ df |> ggplot(aes(clinic_recruiting, fill = clinic_recruiting)) +
   labs(x = "Recruiting Clinic", y = "N") +
   scale_fill_discrete(guide = "none") +
   dark_theme_minimal() +
-  ## Here we wrap the text of the long labels
-  scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = 15))
+  ## We rotate the text on the x-axis by 90 degrees so it is legible
+  theme(axis.text.x = element_text(angle = 90))
 ```
 
 ```{r}
@@ -360,7 +362,7 @@ df |>
 #| echo: false
 #| output: true
 
-df |> ggplot(aes(module_fna_thy, fill = module_fna_thy)) +
+df |> ggplot(aes(nodule_fna_thy, fill = nodule_fna_thy)) +
   geom_bar() +
   labs(x = "Thyroid Nodule FNA", y = "N") +
   scale_fill_discrete(guide = "none") +
@@ -377,7 +379,7 @@ df |> ggplot(aes(module_fna_thy, fill = module_fna_thy)) +
 #| output: true
 
 df |>
-  dplyr::count(module_fna_thy) |>
+  dplyr::count(nodule_fna_thy) |>
   dplyr::mutate("%" = prop.table(n) * 100) |>
   knitr::kable(digits = 3)
 ```
@@ -421,7 +423,7 @@ plotting and tabulating the data.
 
 ```{r}
 #| label: surgery-pathology-nodule-fna-thy-table
-#| tbl-cap: "Surgical Lymp Node Pathology and Thyroid Nodule FNA. Percentages are by Pathology"
+#| tbl-cap: "Surgical Lymph Node Pathology and Thyroid Nodule FNA. Percentages are by Pathology"
 #| eval: true
 #| echo: false
 #| output: true
@@ -446,8 +448,8 @@ df |>
 We may be interested in the percentages across all observations though.
 
 ```{r}
-#| label: surgery-pathology-nodule-fna-thy-table
-#| tbl-cap: "Surgical Lymp Node Pathology and Thyroid Nodule FNA. Percentages are across all observations."
+#| label: surgery-pathology-nodule-fna-thy-table-all
+#| tbl-cap: "Surgical Lymph Node Pathology and Thyroid Nodule FNA. Percentages are across all observations."
 #| eval: true
 #| echo: false
 #| output: true
@@ -469,4 +471,46 @@ df |>
     "Missing (%)"
   )) |>
   knitr::kable(digits = 3)
+```
+
+Tabulating the Thyroid Nodule FNA against the final prediction
+
+
+```{r}
+#| label: final-pathology-nodule-fna-thy-table-all
+#| tbl-cap: "Final Pathology and Thyroid Nodule FNA. Percentages are across all observations."
+#| eval: true
+#| echo: false
+#| output: true
+df |>
+  dplyr::group_by(final_pathology) |>
+  dplyr::count(nodule_fna_thy) |>
+  ## We ungroup the data to get percentages across all pathologies
+  dplyr::ungroup() |>
+  dplyr::mutate(
+    percent = prop.table(n) * 100,
+    "N (%)" = paste0(n, " (", format(round(percent, 3), nsmall = 3), ")")
+  ) |>
+  ## NB - We MUST now include final_pathology as the data is not grouped
+  dplyr::select(final_pathology, nodule_fna_thy, "N (%)") |>
+  tidyr::spread(final_pathology, "N (%)") |>
+  setNames(c("Nodule FNA", "Benign (%)", "Malignant (%)", "Missing (%)")) |>
+  knitr::kable(digits = 3)
+```
+
+We can make a stacked Bar chart of this, but first we filter out instances where the final pathology is missing (i.e. `NA`)
+
+```{r}
+#| label: final-pathology-nodule-fna-thy-table-bar
+#| tbl-cap: "Final Pathology and Thyroid Nodule FNA. Percentages are across all observations."
+#| eval: true
+#| echo: false
+#| output: true
+df |>
+  dplyr::filter(!is.na(final_pathology)) |>
+  ggplot(aes(nodule_fna_thy, fill = final_pathology)) +
+  geom_bar() +
+  labs(x = "Thyroid Nodule FNA", y = "N") +
+  # scale_fill_discrete(guide = "none") +
+  dark_theme_minimal()
 ```
