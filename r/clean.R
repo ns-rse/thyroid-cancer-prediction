@@ -493,11 +493,13 @@ df <- df |>
       .default = NA_character_
     ),
     ## If no surgical pathology but Thyroid Nodule DNA is Thy2 then Benign
-    final_pathology = dplyr::case_when(is.nan(final_pathology) & nodule_fna_thy == "Thy2" ~ "Benign",
+    final_pathology = dplyr::case_when(is.na(final_pathology) & nodule_fna_thy == "Thy2" ~ "Benign",
       .default = final_pathology
     )
   )
 df$final_pathology |> table(useNA = "ifany")
+
+
 ## ToDo - Inspect each of the variables listed below and determine how they need handling to convert to a factor.
 ##
 ## This can be done for example by looking at the values using table()
