@@ -156,6 +156,13 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#asa-score" id="toc-asa-score" class="nav-link" data-scroll-target="#asa-score">ASA Score</a></li>
   <li><a href="#data-access-group" id="toc-data-access-group" class="nav-link" data-scroll-target="#data-access-group">Data Access Group</a></li>
   <li><a href="#referral-source" id="toc-referral-source" class="nav-link" data-scroll-target="#referral-source">Referral Source</a></li>
+  </ul></li>
+  <li><a href="#label-referral-source-bar" id="toc-label-referral-source-bar" class="nav-link" data-scroll-target="#label-referral-source-bar">| label: referral-source-bar</a></li>
+  <li><a href="#fig-cap-referral-source" id="toc-fig-cap-referral-source" class="nav-link" data-scroll-target="#fig-cap-referral-source">| fig-cap: “Referral Source”</a></li>
+  <li><a href="#eval-true" id="toc-eval-true" class="nav-link" data-scroll-target="#eval-true">| eval: true</a></li>
+  <li><a href="#echo-false" id="toc-echo-false" class="nav-link" data-scroll-target="#echo-false">| echo: false</a></li>
+  <li><a href="#output-true" id="toc-output-true" class="nav-link" data-scroll-target="#output-true">| output: true</a>
+  <ul class="collapse">
   <li><a href="#recruiting-clinic" id="toc-recruiting-clinic" class="nav-link" data-scroll-target="#recruiting-clinic">Recruiting Clinic</a></li>
   <li><a href="#thyroid-nodule-fna" id="toc-thyroid-nodule-fna" class="nav-link" data-scroll-target="#thyroid-nodule-fna">Thyroid Nodule FNA</a></li>
   <li><a href="#final-pathology" id="toc-final-pathology" class="nav-link" data-scroll-target="#final-pathology">Final Pathology</a></li>
@@ -1019,16 +1026,24 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="referral-source" class="level3">
 <h3 class="anchored" data-anchor-id="referral-source">Referral Source</h3>
-<div class="cell">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="data_files/figure-html/referral-source-bar-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Referral Source</figcaption>
-</figure>
-</div>
-</div>
-</div>
+</section>
+</section>
+<section id="label-referral-source-bar" class="level1">
+<h1>| label: referral-source-bar</h1>
+</section>
+<section id="fig-cap-referral-source" class="level1">
+<h1>| fig-cap: “Referral Source”</h1>
+</section>
+<section id="eval-true" class="level1">
+<h1>| eval: true</h1>
+</section>
+<section id="echo-false" class="level1">
+<h1>| echo: false</h1>
+</section>
+<section id="output-true" class="level1">
+<h1>| output: true</h1>
+<p>df |&gt; ggplot(aes(referral_source, fill = referral_source)) + geom_bar() + labs(x = “referral_source”, y = “N”) + scale_fill_discrete(guide = “none”) + scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = 15))</p>
+<p>```</p>
 <div class="cell">
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
@@ -1125,7 +1140,6 @@ ul.task-list li input[type="checkbox"] {
 </table>
 </div>
 </div>
-</section>
 <section id="recruiting-clinic" class="level3">
 <h3 class="anchored" data-anchor-id="recruiting-clinic">Recruiting Clinic</h3>
 <div class="cell">
@@ -1295,7 +1309,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="final-pathology-x-thyroid-nodule-fna" class="level3">
 <h3 class="anchored" data-anchor-id="final-pathology-x-thyroid-nodule-fna">Final Pathology x Thyroid Nodule FNA</h3>
-<p>It is useful to check that the rules we have derived for classifying Final Pathology, which are based on <code>thyroid_surgery_lymph_node_pathology</code> when available and <code>nodule_fna_thy</code> when not are correct. We can do this by plotting and tabulating the data.</p>
+<p>It is useful to check that the rules we have derived for classifying Final Pathology, which are based on <code>thyroid_surgery_lymph_node_pathology</code> when available and <code>nodule_fna_thy</code> when not are correct. We can do this by tabulating the data (a <a href="https://en.wikipedia.org/wiki/Heat_map">heatmap</a> could be plotted that graphically shows the data distribution using the <a href="https://ggplot2.tidyverse.org/reference/geom_tile.html"><code>geom_tile()</code></a> geometry).</p>
 <div class="cell">
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
@@ -1605,66 +1619,6 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-<p>Tabulating the Thyroid Nodule FNA against the final prediction</p>
-<div class="cell">
-<div class="cell-output-display">
-<table class="table table-sm table-striped small">
-<caption>Final Pathology and Thyroid Nodule FNA. Percentages are across all observations. </caption>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Nodule FNA</th>
-<th style="text-align: left;">Benign (%)</th>
-<th style="text-align: left;">Malignant (%)</th>
-<th style="text-align: left;">Missing (%)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Thy1</td>
-<td style="text-align: left;">16 ( 2.740)</td>
-<td style="text-align: left;">7 ( 1.199)</td>
-<td style="text-align: left;">46 ( 7.877)</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Thy2</td>
-<td style="text-align: left;">11 ( 1.884)</td>
-<td style="text-align: left;">5 ( 0.856)</td>
-<td style="text-align: left;">98 (16.781)</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Thy3</td>
-<td style="text-align: left;">35 ( 5.993)</td>
-<td style="text-align: left;">28 ( 4.795)</td>
-<td style="text-align: left;">32 ( 5.479)</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Thy4</td>
-<td style="text-align: left;">3 ( 0.514)</td>
-<td style="text-align: left;">10 ( 1.712)</td>
-<td style="text-align: left;">2 ( 0.342)</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Thy5</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">14 ( 2.397)</td>
-<td style="text-align: left;">NA</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">23 ( 3.938)</td>
-<td style="text-align: left;">7 ( 1.199)</td>
-<td style="text-align: left;">247 (42.295)</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>We can make a stacked Bar chart of this, but first we filter out instances where the final pathology is missing (i.e.&nbsp;<code>NA</code>)</p>
-<div class="cell" data-tbl-cap="Final Pathology and Thyroid Nodule FNA. Percentages are across all observations.">
-<div class="cell-output-display">
-<p><img src="data_files/figure-html/final-pathology-nodule-fna-thy-table-bar-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 
