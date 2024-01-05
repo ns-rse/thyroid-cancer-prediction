@@ -13,15 +13,41 @@ The goal of Thyroid Cancer Prediction is to investigate and predict malignant th
 
 ## GitHub Pages
 
-This project includes a website which is written in [Quarto](https://quarto.org) and published via GitHub Pages.
+This project includes a website which is written in [Quarto](https://quarto.org) under the `doc/` directory and
+published via GitHub Pages.
 
-This includes summaries of the data which can not be included in the repository. In order to update the website you need
-to publish them locally using the [`quarto
+This includes summaries of the data as the data itself can not which can not be included in the repository.
+
+### Setup
+
+Symbolic links to the `r/` and `data/` directories that reside at the top level of this repository are required within
+the `doc/` directory.
+
+#### Linux/OSX
+
+```bash
+cd docs
+ln -s ../r .
+ln -s ../data .
+```
+
+#### Windows
+
+```bash
+cd docs
+mklink /d r ..\r
+mklink /d data ..\data
+```
+
+### Updating Pages
+
+In order to update the website you need to publish them locally using the [`quarto
 publish`](https://quarto.org/docs/publishing/github-pages.html#publish-command) command.
 
 After making any modifications to `.qmd` files you therefore need to run.
 
 ```bash
+cd docs
 quarto publish
 ```
 
