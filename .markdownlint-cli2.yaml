@@ -17,7 +17,7 @@ globs:
   - "**/*.qmd"
 
 ignores:
-  - "renv/*"
+  - "renv/**"
 
 # Fix any fixable errors
 fix: true
