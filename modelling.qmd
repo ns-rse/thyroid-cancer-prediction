@@ -31,6 +31,7 @@ books builds is [R for Data Science (2e)](https://r4ds.hadley.nz/) which should 
 R and adopting good practices.
 
 ### Methods to Consider
+
 =======
 It is also recommended to read the documentation that goes with the [Tidymodels](https://www.tidymodels.org/) package,
 in particular the [Get Started](https://www.tidymodels.org/start/) page which includes a [predictive modelling case
@@ -109,7 +110,6 @@ repeated on all samples. We can set this up using the `rsample::loo_cv()` functi
 cv_loo <- rsample::loo_cv(train)
 ```
 
-
 ### Recipe
 
 In the Tidymodels framework the starting point is to create a [Recipe](https://www.tidymodels.org/start/recipes/), this
@@ -119,7 +119,6 @@ what model is being fitted. Steps that can go into making a recipe are...
 + Define the model in terms of outcome variable and predictors.
 + Creating dummy variables for categorical variables.
 + Normalizing data, e.g. log-transformation, rescaling.
-
 
 ```{r}
 #| label: recipe
@@ -136,7 +135,6 @@ thyroid_recipe <- recipes::recipe(final_pathology_dummy ~ dummy_cat_1 + dummy_ca
 
 Once a recipe has been defined it can be added to a [workflow](https://workflows.tidymodels.org/) which will apply this
 step every time the workflow is run using the different models and post-processing steps that we will add.
-
 
 ```{r}
 #| label: workflow
@@ -213,7 +211,6 @@ lasso_grid <- tune::tune_grid(
 
 Now select the model with the highest Receiver Operating Characteristic Area Under the Curve (ROC AUC).
 
-
 ```{r}
 #| label: lasso-kfold-best
 #| eval: false
@@ -268,8 +265,6 @@ final_lasso_kfold |>
   geom_col()
 ```
 
-
-
 ### Random Forest
 
 [Random forests](https://en.wikipedia.org/wiki/Random_forest) build on the concept of regression trees by building many
@@ -304,7 +299,6 @@ and so forth (refer to the above linked article for further details).
 
 The [Receiver Operating Characteristic (ROC)](https://en.wikipedia.org/wiki/Receiver_operating_characteristic) is a
 useful graphical tool for potting the false positive rate v's the true positive rate (sensitivity).
-
 
 ## References
 

@@ -422,7 +422,6 @@ It is useful to check that the rules we have derived for classifying Final Patho
 tabulating the data (a [heatmap](https://en.wikipedia.org/wiki/Heat_map) could be plotted that graphically shows the
 data distribution using the [`geom_tile()`](https://ggplot2.tidyverse.org/reference/geom_tile.html) geometry).
 
-
 ```{r}
 #| label: surgery-pathology-nodule-fna-thy-table
 #| tbl-cap: "Surgical Lymph Node Pathology and Thyroid Nodule FNA. Percentages are by Pathology"
@@ -476,7 +475,6 @@ df |>
 ```
 
 Tabulating the Thyroid Nodule FNA against the final prediction
-
 
 ```{r}
 #| label: final-pathology-nodule-fna-thy-table-all
