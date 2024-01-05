@@ -1,6 +1,17 @@
 ---
 title: "Modelling"
+bibliography: references.bib
 ---
+
+```{r}
+#| label: tidymodel-libraries
+#| eval: true
+#| echo: false
+#| output: false
+library(tidyverse)
+library(tidymodels)
+tidymodels_prefer()
+```
 
 ## TidyModelling
 
@@ -19,12 +30,255 @@ R](https://www.tmwr.org/) goes deeper into the methods and options available. An
 books builds is [R for Data Science (2e)](https://r4ds.hadley.nz/) which should serve as a useful reference for learning
 R and adopting good practices.
 
-### Methods to Consider
+It is also recommended to read the documentation that goes with the [Tidymodels](https://www.tidymodels.org/) package,
+in particular the [Get Started](https://www.tidymodels.org/start/) page which includes a [predictive modelling case
+study](https://www.tidymodels.org/start/case-study/).
+
+### Setting up Tidymodels
+
+In the absence of the data set that is to be analysed we simulate some dummy data on which to demonstrate the methods.
+
+```{r}
+#| label: simulate
+#| eval: true
+#| echo: false
+#| output: false
+#| file: r/simulate_data.R
+```
+
+### Training and Testing
+
+To get going with Tidymodels we first need to split our data into _Testing_ and _Training_ subsets. This is done so that
+we do not have an over-fitted model as we fit the model to the training subset and then test its predictive accuracy in
+the subset that we withheld, the _test_ subset.
+
+The allocation of individuals to `train` or `test` is performed randomly and so we set a
+[seed](https://en.wikipedia.org/wiki/Random_seed) to ensure the pseudo-random number generator produces the same split
+each and every time this script is run (this makes our work reproducible). A decision has to be made about how to split
+the data, often a slightly larger proportion is used for the training subset, here we chose to use a `3:1` split
+(i.e. 75% of observations are used in the training set).
+
+```{r}
+#| label: test-train-split
+#| eval: true
+#| echo: true
+#| output: false
+set.seed(5039378)
+split <- rsample::initial_split(df_dummy, prop = 0.75)
+train <- rsample::training(split)
+test <- rsample::testing(split)
+```
+
+### Cross Validation
+
+We will still want to make some assessment of the model estimated from the training set and this is achieved by
+[resampling](https://www.tmwr.org/resampling) which involves taking subsets of our training data and fitting the models
+on those subsets and then looking at the distribution of metrics across the multiple model fits. A commonly used
+approach for this methodology is [_Cross-Validation_](https://www.tmwr.org/resampling#cv). V-fold cross-validation
+splits the data into _V_ folds, the first fold is excluded from the data set and the model assessed, then this subset is
+replaced and the second fold is excluded and the model assessed again. This is repeated until each fold has been
+excluded and the model estimated on the remainder. This method can then be repeated _R_ times where the folds are varied
+in each repetition to give a better estimate of the model parameters.
+
+The following figure gives an overview of how V-fold cross-validation works (without repetition).
+
+![V-fold cross-validation of training data. Source: [_Feature Engineering and Selection: A Practical Approach for Predictive Models_](https://www.tidymodels.org/start/resampling/)](https://bookdown.org/max/FES/figures/resampling.svg)
+
+We can set this up by passing the `train` subset into the `rsample::vflod_cv()` function and define the number of folds
+(`v`) and the number of repeats (`repeats`).
+
+```{r}
+#| label: cv-vfold
+#| eval: true
+#| echo: true
+#| output: false
+cv_folds <- rsample::vfold_cv(train, v = 10, repeats = 10)
+```
+
+Another method of cross-validation is Leave One Out where one observation is removed from the (training) data set, the
+model is fitted on the remaining samples and then used to make a prediction on the excluded sample. This is then
+repeated on all samples. We can set this up using the `rsample::loo_cv()` function.
+
+```{r}
+#| label: cv-loo
+#| eval: true
+#| echo: true
+#| output: false
+cv_loo <- rsample::loo_cv(train)
+```
+
+### Recipe
+
+In the Tidymodels framework the starting point is to create a [Recipe](https://www.tidymodels.org/start/recipes/), this
+sets up the "ingredients" for the model and defines what steps should be taken prior to fitting the model, regardless of
+what model is being fitted. Steps that can go into making a recipe are...
+
++ Define the model in terms of outcome variable and predictors.
++ Creating dummy variables for categorical variables.
++ Normalizing data, e.g. log-transformation, rescaling.
+
+```{r}
+#| label: recipe
+#| eval: true
+#| echo: true
+#| output: false
+thyroid_recipe <- recipes::recipe(final_pathology_dummy ~ dummy_cat_1 + dummy_cat_2 + V1, data = train) |>
+  recipes::step_num2factor(final_pathology_dummy, levels = c("Benign", "Malignant")) |>
+  recipes::step_dummy(dummy_cat_1, dummy_cat_2) |>
+  recipes::step_normalize(all_numeric())
+```
+
+### Workflow
+
+Once a recipe has been defined it can be added to a [workflow](https://workflows.tidymodels.org/) which will apply this
+step every time the workflow is run using the different models and post-processing steps that we will add.
+
+```{r}
+#| label: workflow
+#| eval: true
+#| echo: true
+#| output: false
+thyroid_workflow <- workflows::workflow() |>
+  workflows::add_recipe(thyroid_recipe)
+```
+
+## Methods to Consider
 
 There are a wealth of options when it comes to "Machine Learning", these days even logistic regression is grouped into
-the term! There are however a large number of more sophisticated methods for analysing the data. Their utility
+the term! There are however a large number of more sophisticated methods for analysing the data, and it is often wise to
+apply a number of methods to ensure they are converging on similar solutions rather than cherry-picking any one method.
 
-### Model Assessment
+### Logistic Regression
+
+Logistic regression, even in its most basic form is, still considered a "machine learning" algorithm. However because we
+do not know which out of an array of variable will be useful predictors and, following [Occam's
+Razor](https://en.wikipedia.org/wiki/Occam's_razor) we would tend to prefer simpler explanatory models over complex ones
+we need a method of determining what subset of variables gives good prediction. An old approach to this was to use
+[Stepwise regression](https://en.wikipedia.org/wiki/Stepwise_regression), perhaps based on univariable analyses to
+select which to use as a base but these approaches have fallen out favour for various reasons as they are ultimate
+biased (for an overview see [@Steyerberg2001Feb]).
+
+A popular alternative is the [Least Absolute Shrinkage and Selection Operator
+(LASSO)](https://en.wikipedia.org/wiki/Lasso_(statistics)) proposed by [@Tibshirani1996] which performs [L1
+regularisation](https://en.wikipedia.org/wiki/Regularized_least_squares) and allows the coefficients for variables in a
+series of fitted models to "shrink" towards zero but not drop out completely. It is similar to Ridge Regression which
+avoids over-fitting by reducing the sum of squares of the regression coefficients but unlike Ridge Regression it allows
+variables to be selected as the coefficients can (almost) drop out by virtue of their coefficients shrinking towards
+zero.
+
+#### Specify the Model
+
+Whilst we have defined the relationship between variables in the Worfklow above we now need to say what model we wish to
+use to test the relationship between variables.
+
+We first set up a simple logistic regression model using [parsnip](https://parsnip.tidymodels.org/). The `mixture`
+argument is a value `0 <= mixture <= 1` which determines how much L1 regularisation is used in the model. A value of
+`mixture = 1` is equivalent to full L1 regularisation and a LASSO model whilst a value of `mixture = 0` is equivalent to
+ridge regression.
+
+```{r}
+#| label: lasso-specification
+#| eval: true
+#| echo: true
+#| output: false
+tune_spec_lasso <- parsnip::logistic_reg(penalty = hardhat::tune(), mixture = 1) |>
+  parsnip::set_engine("glmnet")
+```
+
+#### Tuning
+
+The next step is to tune the model using the [tune::tune_grid()](https://tune.tidymodels.org/reference/tune_grid.html)
+function which will calculate accuracy or Root Mean Square Error (or other metrics) for a recipe with multiple
+samples. We defined our resamples above in two forms
+(not that we defined cross-validation as a way of sampling from our training data above).
+
+```{r}
+#| label: lasso-kfold-tune
+#| eval: true
+#| echo: true
+#| output: false
+lasso_grid <- tune::tune_grid(
+  object = workflows::add_model(thyroid_workflow, tune_spec_lasso),
+  resamples = cv_folds,
+  grid = dials::grid_regular(penalty(), levels = 50)
+)
+```
+
+#### Fit Final Model
+
+Now select the model with the highest Receiver Operating Characteristic Area Under the Curve (ROC AUC).
+
+```{r}
+#| label: lasso-kfold-best
+#| eval: false
+#| echo: true
+#| output: false
+lasso_kfold_roc_auc <- lasso_grid |>
+  tune::select_best(metric = "roc_auc")
+```
+
+...and finalize the workflow by adding this value.
+
+```{r}
+#| label: lasso-kfold-fit-final
+#| eval: false
+#| echo: true
+#| output: false
+final_lasso_kfold <- workflows::finalize_workflow(
+  workflows::add_model(thyroid_workflow, tune_spec_lasso),
+  lasso_kfold_roc_auc
+)
+```
+
+#### Model Evaluation
+
+Collect metrics using the original data.
+
+```{r}
+#| label: lasso-kfold-eval-metrics
+#| eval: false
+#| echo: true
+#| output: false
+tune::last_fit(object = final_lasso_kfold, split = split) |>
+  tune::collect_metrics()
+```
+
+And plot the importance of variables
+
+```{r}
+#| label: lasso-kfold-eval-importance
+#| eval: false
+#| echo: true
+#| output: false
+final_lasso_kfold |>
+  fit(train) |>
+  hardhat::extract_fit_parsnip() |>
+  vip::vi(lambda = highest_roc_auc_lasso$penalty) |>
+  dplyr::mutate(
+    Importance = abs(Importance),
+    Variable = fct_reorder(Variable, Importance)
+  ) |>
+  ggplot(mapping = aes(x = Importance, y = Variable, fill = Sign)) +
+  geom_col()
+```
+
+### Random Forest
+
+[Random forests](https://en.wikipedia.org/wiki/Random_forest) build on the concept of regression trees by building many
+such trees on random subsets of data and averaging them. They build "deep" trees partitioning each time until all
+individuals are classified, part of the art is deciding how "deep" to go as too many partitions results in over-fitting
+and lack of generalisability. It is in this regard an "ensemble" method as it is averaging across many possible methods.
+
+### Gradient Boosting
+
+[Gradient Boosting](https://en.wikipedia.org/wiki/Gradient_boosting) is another "ensemble" method but in contrast to
+Random Forests where deep partitioning trees are formed, gradient boosting uses "shallow" trees with simpler decision
+rules and layers are built in a stage-wise fashion. It allows a choice of loss functions for optimisation and typically
+out-performs Random Forests when it comes to prediction modelling.
+
+### Support Vector Machine
+
+## Model Assessment
 
 When considering the utility of prediction there are a number of metrics that can be used to determine how useful a
 model is. These focus on a number of terms which have very specific statistical meaning such as [Sensitivity and
@@ -42,3 +296,8 @@ and so forth (refer to the above linked article for further details).
 
 The [Receiver Operating Characteristic (ROC)](https://en.wikipedia.org/wiki/Receiver_operating_characteristic) is a
 useful graphical tool for potting the false positive rate v's the true positive rate (sensitivity).
+
+## References
+
+::: {#refs}
+:::

@@ -419,7 +419,8 @@ df |>
 
 It is useful to check that the rules we have derived for classifying Final Pathology, which are based on
 `thyroid_surgery_lymph_node_pathology` when available and `nodule_fna_thy` when not are correct. We can do this by
-plotting and tabulating the data.
+tabulating the data (a [heatmap](https://en.wikipedia.org/wiki/Heat_map) could be plotted that graphically shows the
+data distribution using the [`geom_tile()`](https://ggplot2.tidyverse.org/reference/geom_tile.html) geometry).
 
 ```{r}
 #| label: surgery-pathology-nodule-fna-thy-table
@@ -474,7 +475,6 @@ df |>
 ```
 
 Tabulating the Thyroid Nodule FNA against the final prediction
-
 
 ```{r}
 #| label: final-pathology-nodule-fna-thy-table-all
