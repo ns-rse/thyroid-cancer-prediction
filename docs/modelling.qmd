@@ -10,6 +10,7 @@ bibliography: references.bib
 #| output: false
 library(tidyverse)
 library(tidymodels)
+library(vip)
 tidymodels_prefer()
 ```
 
@@ -171,10 +172,10 @@ zero.
 Whilst we have defined the relationship between variables in the Worfklow above we now need to say what model we wish to
 use to test the relationship between variables.
 
-We first set up a simple logistic regression model using [parsnip](https://parsnip.tidymodels.org/). The `mixture` argument is a value `0 <= mixture <= 1`
-which determines how much L1 regularisation is used in the model. A value of `mixture = 1` is equivalent to full L1
-regularisation and a LASSO model whilst a value of `mixture = 0` is equivalent to full L2 regularisation and ridge
-regression.
+We first set up a simple logistic regression model using [parsnip](https://parsnip.tidymodels.org/). The `mixture`
+argument is a value `0 <= mixture <= 1` which determines how much L1 regularisation is used in the model. A value of
+`mixture = 1` is equivalent to full L1 regularisation and a LASSO model whilst a value of `mixture = 0` is equivalent to
+full L2 regularisation and ridge regression.
 
 ```{r}
 #| label: lasso-specification
@@ -224,7 +225,7 @@ lasso_kfold_roc_auc <- lasso_grid |>
 #| eval: false
 #| echo: true
 #| output: false
-final_lasso_kfold <- workflows::finalize_workflow(
+final_lasso_kfold <- tune::finalize_workflow(
   workflows::add_model(thyroid_workflow, tune_spec_lasso),
   lasso_kfold_roc_auc
 )

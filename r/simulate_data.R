@@ -65,7 +65,22 @@ dummy <- fabricatr::fabricate(
     break_labels = c("Thy1", "Thy2", "Thy3", "Thy4", "Thy5")
   )
 ) |>
-  dplyr::select(!c(pathology, sex, asa, smoker, nodule_fna))
+  dplyr::select(!c(pathology, sex, asa, smoker, nodule_fna)) |>
+  ## Convert variables to factors
+  dplyr::mutate(
+    final_pathology = case_match(
+      final_pathology,
+      0 ~ "Benign",
+      1 ~ "Malignant"
+    ),
+    final_pathology = as.factor(final_pathology),
+    gender = case_match(
+      gender,
+      0 ~ "Male",
+      1 ~ "Female"
+    ),
+    gender = as.factor(gender)
+  )
 
 var_labels <- c(
   ID = "ID",
