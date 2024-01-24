@@ -6,6 +6,7 @@ library(Hmisc)
 library(lubridate)
 library(tidymodels)
 library(tidyverse)
+library(vip)
 
 ## Set directories based on current location
 base_dir <- getwd()

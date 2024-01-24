@@ -41,31 +41,6 @@
       ],
       "Hash": "7a29697b75e027767a53fde6c903eca7"
     },
-    "GGally": {
-      "Package": "GGally",
-      "Version": "2.2.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "R",
-        "RColorBrewer",
-        "dplyr",
-        "ggplot2",
-        "ggstats",
-        "grDevices",
-        "grid",
-        "gtable",
-        "lifecycle",
-        "magrittr",
-        "plyr",
-        "progress",
-        "rlang",
-        "scales",
-        "tidyr",
-        "utils"
-      ],
-      "Hash": "5da89b9b10d98a7820adb426939900a7"
-    },
     "GPfit": {
       "Package": "GPfit",
       "Version": "1.0-8",
@@ -287,27 +262,6 @@
         "tidyr"
       ],
       "Hash": "fd25391c3c4f6ecf0fa95f1e6d15378c"
-    },
-    "broom.helpers": {
-      "Package": "broom.helpers",
-      "Version": "1.14.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "R",
-        "broom",
-        "cli",
-        "dplyr",
-        "labelled",
-        "lifecycle",
-        "purrr",
-        "rlang",
-        "stats",
-        "stringr",
-        "tibble",
-        "tidyr"
-      ],
-      "Hash": "ea30eb5d9412a4a5c2740685f680cd49"
     },
     "bslib": {
       "Package": "bslib",
@@ -662,6 +616,17 @@
       ],
       "Hash": "daf4a1246be12c1fa8c7705a0935c1a0"
     },
+    "fabricatr": {
+      "Package": "fabricatr",
+      "Version": "1.0.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "rlang"
+      ],
+      "Hash": "b129f5ea87fe414655101292ed77f71a"
+    },
     "fansi": {
       "Package": "fansi",
       "Version": "1.0.6",
@@ -866,29 +831,6 @@
         "withr"
       ],
       "Hash": "313d31eff2274ecf4c1d3581db7241f9"
-    },
-    "ggstats": {
-      "Package": "ggstats",
-      "Version": "0.5.1",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "broom.helpers",
-        "cli",
-        "dplyr",
-        "forcats",
-        "ggplot2",
-        "lifecycle",
-        "magrittr",
-        "patchwork",
-        "purrr",
-        "rlang",
-        "scales",
-        "stats",
-        "stringr",
-        "tidyr"
-      ],
-      "Hash": "006a64911e79a7dc7cbf839a57baaff4"
     },
     "glmnet": {
       "Package": "glmnet",
@@ -1265,23 +1207,6 @@
       ],
       "Hash": "b64ec208ac5bc1852b285f665d6368b3"
     },
-    "labelled": {
-      "Package": "labelled",
-      "Version": "2.12.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "R",
-        "dplyr",
-        "haven",
-        "lifecycle",
-        "rlang",
-        "stringr",
-        "tidyr",
-        "vctrs"
-      ],
-      "Hash": "1ec27c624ece6c20431e9249bd232797"
-    },
     "lattice": {
       "Package": "lattice",
       "Version": "0.22-5",
@@ -1600,17 +1525,6 @@
         "utils"
       ],
       "Hash": "01f28d4278f15c76cddbea05899c5d6f"
-    },
-    "plyr": {
-      "Package": "plyr",
-      "Version": "1.8.9",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "R",
-        "Rcpp"
-      ],
-      "Hash": "6b8177fd19982f0020743fadbfdbd933"
     },
     "prettyunits": {
       "Package": "prettyunits",

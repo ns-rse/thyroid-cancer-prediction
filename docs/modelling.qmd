@@ -10,6 +10,7 @@ bibliography: references.bib
 #| output: false
 library(tidyverse)
 library(tidymodels)
+library(vip)
 tidymodels_prefer()
 ```
 
@@ -64,7 +65,7 @@ the data, often a slightly larger proportion is used for the training subset, he
 #| echo: true
 #| output: false
 set.seed(5039378)
-split <- rsample::initial_split(df_dummy, prop = 0.75)
+split <- rsample::initial_split(dummy, prop = 0.75)
 train <- rsample::training(split)
 test <- rsample::testing(split)
 ```
@@ -122,9 +123,9 @@ what model is being fitted. Steps that can go into making a recipe are...
 #| eval: true
 #| echo: true
 #| output: false
-thyroid_recipe <- recipes::recipe(final_pathology_dummy ~ dummy_cat_1 + dummy_cat_2 + V1, data = train) |>
-  recipes::step_num2factor(final_pathology_dummy, levels = c("Benign", "Malignant")) |>
-  recipes::step_dummy(dummy_cat_1, dummy_cat_2) |>
+thyroid_recipe <- recipes::recipe(final_pathology ~ gender + nodule_size + age + asa_score + smoking_status + nodule_fna_thy, data = train) |>
+  recipes::step_num2factor(final_pathology, levels = c("Benign", "Malignant")) |>
+  recipes::step_dummy(gender, asa_score, smoking_status, nodule_fna_thy) |>
   recipes::step_normalize(all_numeric())
 ```
 
@@ -174,7 +175,7 @@ use to test the relationship between variables.
 We first set up a simple logistic regression model using [parsnip](https://parsnip.tidymodels.org/). The `mixture`
 argument is a value `0 <= mixture <= 1` which determines how much L1 regularisation is used in the model. A value of
 `mixture = 1` is equivalent to full L1 regularisation and a LASSO model whilst a value of `mixture = 0` is equivalent to
-ridge regression.
+full L2 regularisation and ridge regression.
 
 ```{r}
 #| label: lasso-specification
@@ -224,7 +225,7 @@ lasso_kfold_roc_auc <- lasso_grid |>
 #| eval: false
 #| echo: true
 #| output: false
-final_lasso_kfold <- workflows::finalize_workflow(
+final_lasso_kfold <- tune::finalize_workflow(
   workflows::add_model(thyroid_workflow, tune_spec_lasso),
   lasso_kfold_roc_auc
 )
