@@ -1,0 +1,2074 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.549">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Thyroid Cancer Prediction - Data Description</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Thyroid Cancer Prediction</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.qmd"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="dropdown-header">
+ <span class="menu-text">reproducibility.qmd</span></li>
+  <li class="dropdown-header">
+ <span class="menu-text">literature.qmd</span></li>
+  <li class="dropdown-header">
+ <span class="menu-text">data.qmd</span></li>
+  <li class="dropdown-header">
+ <span class="menu-text">modelling.qmd</span></li>
+  <li class="dropdown-header">
+ <span class="menu-text">citations.qmd</span></li>
+  <li class="dropdown-header">
+ <span class="menu-text">links.qmd</span></li>
+  <li class="dropdown-header">
+ <span class="menu-text">about.qmd</span></li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/ns-rse/thyroid-cancer-prediction"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Data Description</li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#source" id="toc-source" class="nav-link active" data-scroll-target="#source">Source</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
+  <li><a href="#quantitative-variables" id="toc-quantitative-variables" class="nav-link" data-scroll-target="#quantitative-variables">Quantitative Variables</a>
+  <ul class="collapse">
+  <li><a href="#statistics" id="toc-statistics" class="nav-link" data-scroll-target="#statistics">Statistics</a></li>
+  <li><a href="#age" id="toc-age" class="nav-link" data-scroll-target="#age">Age</a></li>
+  <li><a href="#body-mass-index-bmi" id="toc-body-mass-index-bmi" class="nav-link" data-scroll-target="#body-mass-index-bmi">Body Mass Index (BMI)</a></li>
+  <li><a href="#nodule-maximum-diameter" id="toc-nodule-maximum-diameter" class="nav-link" data-scroll-target="#nodule-maximum-diameter">Nodule Maximum Diameter</a></li>
+  </ul></li>
+  <li><a href="#categorical-variables" id="toc-categorical-variables" class="nav-link" data-scroll-target="#categorical-variables">Categorical Variables</a>
+  <ul class="collapse">
+  <li><a href="#asa-score" id="toc-asa-score" class="nav-link" data-scroll-target="#asa-score">ASA Score</a></li>
+  <li><a href="#data-access-group" id="toc-data-access-group" class="nav-link" data-scroll-target="#data-access-group">Data Access Group</a></li>
+  <li><a href="#referral-source" id="toc-referral-source" class="nav-link" data-scroll-target="#referral-source">Referral Source</a></li>
+  <li><a href="#recruiting-clinic" id="toc-recruiting-clinic" class="nav-link" data-scroll-target="#recruiting-clinic">Recruiting Clinic</a></li>
+  <li><a href="#thyroid-nodule-fna" id="toc-thyroid-nodule-fna" class="nav-link" data-scroll-target="#thyroid-nodule-fna">Thyroid Nodule FNA</a></li>
+  <li><a href="#final-pathology" id="toc-final-pathology" class="nav-link" data-scroll-target="#final-pathology">Final Pathology</a></li>
+  <li><a href="#final-pathology-x-thyroid-nodule-fna" id="toc-final-pathology-x-thyroid-nodule-fna" class="nav-link" data-scroll-target="#final-pathology-x-thyroid-nodule-fna">Final Pathology x Thyroid Nodule FNA</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Data Description</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Details of the data set.</p>
+<section id="source" class="level2">
+<h2 class="anchored" data-anchor-id="source">Source</h2>
+<p>The data is derived from specialist Thyroid cancer units where patients presenting with symptoms (e.g.&nbsp;nodules) are assessed in greater detail and decisions are made as to whether imaging or further biopsies are required.</p>
+</section>
+<section id="data" class="level2">
+<h2 class="anchored" data-anchor-id="data">Data</h2>
+<p>An ASCII CSV file (<code>Thy3000_DATA_LABELS_Raw.csv</code>) with data on 584 cases has been provided. There is no data dictionary defining what each field is nor its type available yet.</p>
+<p><strong>NB</strong> Some of the column headers have commas (<code>,</code>) in the variable names, this can cause problems when reading CSV files. Such strings should be double-quoted which appears to be the case but something to check carefully.</p>
+<table class="table">
+<colgroup>
+<col style="width: 72%">
+<col style="width: 3%">
+<col style="width: 14%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable (as received)</th>
+<th>Type</th>
+<th>Description</th>
+<th>Renamed to…</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Record ID</code></td>
+<td><code>str</code></td>
+<td>Unique identifier.</td>
+<td><code>record_id</code></td>
+</tr>
+<tr class="even">
+<td><code>Data Access Group</code></td>
+<td><code>str</code></td>
+<td>Center</td>
+<td><code>center</code></td>
+</tr>
+<tr class="odd">
+<td><code>Study ID</code></td>
+<td><code>str</code></td>
+<td>Study Identifiers.</td>
+<td><code>study_id</code></td>
+</tr>
+<tr class="even">
+<td><code>1.1 Date of referral</code></td>
+<td><code>date</code></td>
+<td>Date of referral</td>
+<td><code>referral_date</code></td>
+</tr>
+<tr class="odd">
+<td><code>1.2 Which clinic was the patient recruited from?</code></td>
+<td><code>str</code></td>
+<td>Recruting clinic.</td>
+<td><code>recruiting_clinic</code></td>
+</tr>
+<tr class="even">
+<td><code>If Other</code></td>
+<td><code>str</code></td>
+<td>Other referring clinic.</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>1.3. The date the patient was seen in clinic</code></td>
+<td><code>date</code></td>
+<td>Date patient was seen in clinic.</td>
+<td><code>clinc_date</code></td>
+</tr>
+<tr class="even">
+<td><code>1.4 Referral source</code></td>
+<td><code>str</code></td>
+<td>Source of referral</td>
+<td><code>referral_source</code></td>
+</tr>
+<tr class="odd">
+<td><code>"If Other please specify</code></td>
+<td><code>str</code></td>
+<td>Other referring source</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>"1.4.1 If GP was it 2-week wait referral?"</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>1.5. Presentation</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>Complete?</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>2.1. Age of the patient when seen in clinic</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>2.2. Body Mass Index of patient</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>2.3. Smoking status</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>2.4. Previous neck irradiation</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>2.5 American Society of Anaesthesiologist (ASA) score</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>Complete?</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>3.1. Presentation (choice=Neck symptoms)</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>3.1. Presentation (choice=Incidental lesion on imaging)</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>3.1. Presentation (choice=HypErthyroidism on thyroid function test)</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>3.1. Presentation (choice=HypOthyroidism on thyroid function test)</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>3.1. Presentation (choice=Symptoms of abnormal thyroid function)</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>3.1. Presentation (choice=Not known)</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>3.1. Presentation (choice=Other)</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>If other please specify"</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>3.1.1 Symptomatology (choice=No symptoms)</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>"3.1.1 Symptomatology (choice=Neck lump (noted by patient family or doctor))"</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>3.1.1 Symptomatology (choice=Compressive symptoms (breathing or swallowing difficulty or voice change))</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>3.1.1 Symptomatology (choice=Symptoms of thyroid dysfunction)</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>3.1.1 Symptomatology (choice=Other)</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>"If other please specify"</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>3.1.2 Was this nodule found incidentally on imaging?</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>"If yes what imaging"</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>3.2 Clinical Assessment</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>3.2.1 Retrosternal on clinical examination</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>3.2.2 Palpable lymphadenopathy</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>3.2.3 Patient perception of rapid growth of nodule</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>3.4 Thyroid function tests done within 3 months of presentation to clinic</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>3.5 Ultrasound performed</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>3.5.1 Reported maximum diameter of the largest thyroid nodule on ultrasound in millimetres</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>3.5.2 Description of thyroid nodule(s) on ultrasound</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>"3.5.3 If Ultrasound performed</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>U stage reported: "</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>"3.5.4 If Ultrasound performed</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>TIRADS reported "</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>"3.5.5 If Ultrasound performed</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>was lymphadenopathy documented"</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>3.5.6 Elastography performed</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>3.5.7 CT neck performed</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>3.5.8 If CT neck performed reason for performing it (choice=Extrathyroid extention/local invasion)</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>3.5.8 If CT neck performed reason for performing it (choice=Retrosternal extension/plan surgical approach)</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>3.5.8 If CT neck performed reason for performing it (choice=Extent of lymphadenopathy)</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>3.5.8 If CT neck performed reason for performing it (choice=Tracheal compression)</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>3.5.8 If CT neck performed reason for performing it (choice=Not known)</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>3.5.8 If CT neck performed reason for performing it (choice=Unrelated to thyroid pathology)</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>3.5.9 MRI neck performed</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>3.5.10 If MRI neck performed reason for performing it (choice=Extrathyroid extention/local invasion)</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>3.5.10 If MRI neck performed reason for performing it (choice=Retrosternal extension/plan surgical approach)</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>3.5.10 If MRI neck performed reason for performing it (choice=Extent of lymphadenopathy)</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>3.5.10 If MRI neck performed reason for performing it (choice=Tracheal compression)</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>3.5.10 If MRI neck performed reason for performing it (choice=Not known)</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>3.5.10 If MRI neck performed reason for performing it (choice=Unrelated to thyroid pathology)</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>3.5.11 Iodine-123 scan performed</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>3.6. FNA of thyroid nodule performed (either at time of ultrasound or later)</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>3.6.1 If FNA performed was Thy or Bethesda stage reported"</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>3.6.1.1 Thy result</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>3.6.1.2 Bethesda result</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>3.7 Core biopsy performed</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>3.8 FNA of lymph node performed</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>3.8.1 If FNA lymph node performed result</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>Complete?</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>4.1 Initial management decision</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>4.2 Date of decision (either clinic letter or MDT date)</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>4.3 Date of surgery or start of other treatment (if interventional)</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>4.4. In case of no intervention was a routine review offered</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>4.4.1 If yes what was the planned interval (in weeks)</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>4.4.2 Was Ultrasound repeated at routine review?</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>4.4.3 Was FNA repeated at routine review</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>4.4.4 If routine review performed was management strategy changed at review</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>4.4.4.1 If management strategy changed at review revised management decision</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>"4.4.4.2 If yes reason for change in management"</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>If other</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>4.4.4.3 If no change in management decision: date last seen by 'thyroid' team</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>"4.4.4.4 If no change in management strategy at review</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>confirm management plan when last seen"</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>4.4.5 Patient was signposted to appropriate patient SUPPORT organisation and/or provided with written PATIENT information about thyroid nodules (including leaflets)</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>Complete?</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>5.1 Type of thyroid surgery</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>5.1.1 Lymph node dissection done at this surgery</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>5.1.2 Pathology</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>"If other cancer/other diagnosis please state"</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>Complete?</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Tabular and graphical summaries of the data provided in <code>Thy3000_DATA_LABELS_Raw.csv</code> after cleaning we can summarise the data. In total there were 549 recorded from a total of 15.</p>
+</section>
+<section id="quantitative-variables" class="level2">
+<h2 class="anchored" data-anchor-id="quantitative-variables">Quantitative Variables</h2>
+<section id="statistics" class="level3">
+<h3 class="anchored" data-anchor-id="statistics">Statistics</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Summary statistics for quantitative variables</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: right;">Mean</th>
+<th style="text-align: right;">SD</th>
+<th style="text-align: right;">Lower IQR</th>
+<th style="text-align: right;">Median</th>
+<th style="text-align: right;">Upper IQR</th>
+<th style="text-align: right;">Min</th>
+<th style="text-align: right;">Max</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">age</td>
+<td style="text-align: right;">54.372</td>
+<td style="text-align: right;">16.652</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: right;">54.0</td>
+<td style="text-align: right;">68.000</td>
+<td style="text-align: right;">12.0</td>
+<td style="text-align: right;">91</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">bmi</td>
+<td style="text-align: right;">27.772</td>
+<td style="text-align: right;">5.708</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">27.1</td>
+<td style="text-align: right;">30.975</td>
+<td style="text-align: right;">17.1</td>
+<td style="text-align: right;">50</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="age" class="level3">
+<h3 class="anchored" data-anchor-id="age">Age</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="data_files/figure-html/age-hist-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Distribution of Ages at referral</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="body-mass-index-bmi" class="level3">
+<h3 class="anchored" data-anchor-id="body-mass-index-bmi">Body Mass Index (BMI)</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="data_files/figure-html/bmi-hist-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Distribution of Body Mass Index (BMI)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="nodule-maximum-diameter" class="level3">
+<h3 class="anchored" data-anchor-id="nodule-maximum-diameter">Nodule Maximum Diameter</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="data_files/figure-html/nodule-maximum-diameter-hist-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Distribution of Nodule Maximum Diameter (mm)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="categorical-variables" class="level2">
+<h2 class="anchored" data-anchor-id="categorical-variables">Categorical Variables</h2>
+<section id="asa-score" class="level3">
+<h3 class="anchored" data-anchor-id="asa-score">ASA Score</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="data_files/figure-html/asa-bar-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Reported ASA score</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Reported ASA score</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">asa_score</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">I</td>
+<td style="text-align: right;">189</td>
+<td style="text-align: right;">32.363</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">II</td>
+<td style="text-align: right;">204</td>
+<td style="text-align: right;">34.932</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">III</td>
+<td style="text-align: right;">72</td>
+<td style="text-align: right;">12.329</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">IV</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.514</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">116</td>
+<td style="text-align: right;">19.863</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="data-access-group" class="level3">
+<h3 class="anchored" data-anchor-id="data-access-group">Data Access Group</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="data_files/figure-html/data-access-group-bar-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Data Access Group</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Data Access Group</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">data_access_group</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Barnsley</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">5.993</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cardiff and Vale</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">7.534</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Doncaster</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">3.253</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hull</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">5.308</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NHS Dumfries and Galloway</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.685</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NHS Tayside</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">5.137</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Norfolk &amp; Norwich</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">5.137</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Portsmouth</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">5.479</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Royal Berkshire</td>
+<td style="text-align: right;">106</td>
+<td style="text-align: right;">18.151</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Salford</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">6.849</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sheffield Teaching Hospitals Foundation Trust</td>
+<td style="text-align: right;">116</td>
+<td style="text-align: right;">19.863</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">University Hospitals of North Midlands</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">9.589</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Wirral</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.685</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Wye Valley Trust</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">5.651</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.685</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="referral-source" class="level3">
+<h3 class="anchored" data-anchor-id="referral-source">Referral Source</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="data_files/figure-html/referral-source-bar-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Referral Source</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Referral Source</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">referral_source</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">A&amp;E</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.514</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Acute Medicine</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.514</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cardiology</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.514</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Endocrinology</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">4.452</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">GP</td>
+<td style="text-align: right;">429</td>
+<td style="text-align: right;">73.459</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gastroenterology</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">1.199</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gynaecology</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.342</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Heamatology</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.685</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Inpatient</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.342</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Oncology</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.685</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Oral &amp; Maxillofacial</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">1.027</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Other</td>
+<td style="text-align: right;">67</td>
+<td style="text-align: right;">11.473</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Respiratory</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">2.226</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Rheumatology</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">1.199</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Urology</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.685</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.685</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="recruiting-clinic" class="level3">
+<h3 class="anchored" data-anchor-id="recruiting-clinic">Recruiting Clinic</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="data_files/figure-html/recruiting-clinic-bar-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Recruiting Clinic</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Recruiting Clinic</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">clinic_recruiting</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ENT</td>
+<td style="text-align: right;">280</td>
+<td style="text-align: right;">47.945</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">GP</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">4.281</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">General surgery (including endocrine surgery)</td>
+<td style="text-align: right;">131</td>
+<td style="text-align: right;">22.432</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Joint thyroid</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">12.842</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Medicine</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">10.103</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Other</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">1.884</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.514</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="thyroid-nodule-fna" class="level3">
+<h3 class="anchored" data-anchor-id="thyroid-nodule-fna">Thyroid Nodule FNA</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="data_files/figure-html/nodule-fna-thy-bar-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Thyroid Nodule FNA</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Thyroid Nodule FNA</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">nodule_fna_thy</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Thy1</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: right;">11.815</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Thy2</td>
+<td style="text-align: right;">114</td>
+<td style="text-align: right;">19.521</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Thy3</td>
+<td style="text-align: right;">95</td>
+<td style="text-align: right;">16.267</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Thy4</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">2.568</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Thy5</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">2.397</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">277</td>
+<td style="text-align: right;">47.432</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="final-pathology" class="level3">
+<h3 class="anchored" data-anchor-id="final-pathology">Final Pathology</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="data_files/figure-html/final-pathology-bar-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Final Pathology</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Final Pathology</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">final_pathology</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Benign</td>
+<td style="text-align: right;">186</td>
+<td style="text-align: right;">31.849</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Malignant</td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">12.158</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">327</td>
+<td style="text-align: right;">55.993</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="final-pathology-x-thyroid-nodule-fna" class="level3">
+<h3 class="anchored" data-anchor-id="final-pathology-x-thyroid-nodule-fna">Final Pathology x Thyroid Nodule FNA</h3>
+<p>It is useful to check that the rules we have derived for classifying Final Pathology, which are based on <code>thyroid_surgery_lymph_node_pathology</code> when available and <code>nodule_fna_thy</code> when not are correct. We can do this by tabulating the data (a <a href="https://en.wikipedia.org/wiki/Heat_map">heatmap</a> could be plotted that graphically shows the data distribution using the <a href="https://ggplot2.tidyverse.org/reference/geom_tile.html"><code>geom_tile()</code></a> geometry).</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Surgical Lymph Node Pathology and Thyroid Nodule FNA. Percentages are by Pathology</caption>
+<colgroup>
+<col style="width: 33%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 10%">
+<col style="width: 11%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Thyroid Surgery Lymph Node Pathology</th>
+<th style="text-align: left;">Thy1 (%)</th>
+<th style="text-align: left;">Thy2 (%)</th>
+<th style="text-align: left;">Thy3 (%)</th>
+<th style="text-align: left;">Thy4 (%)</th>
+<th style="text-align: left;">Thy5 (%)</th>
+<th style="text-align: left;">Missing (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Anaplastic cancer</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">1 (100.000)</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Auto immune thyroiditis</td>
+<td style="text-align: left;">1 (25.000)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">1 (25.000)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">2 (50.000)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Colloid adenoma</td>
+<td style="text-align: left;">1 (16.667)</td>
+<td style="text-align: left;">1 (16.667)</td>
+<td style="text-align: left;">2 (33.333)</td>
+<td style="text-align: left;">1 (16.667)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">1 (16.667)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Colloid goitre</td>
+<td style="text-align: left;">7 (19.444)</td>
+<td style="text-align: left;">7 (19.444)</td>
+<td style="text-align: left;">7 (19.444)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">15 (41.667)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Follicular adenoma</td>
+<td style="text-align: left;">3 (13.043)</td>
+<td style="text-align: left;">1 ( 4.348)</td>
+<td style="text-align: left;">18 (78.261)</td>
+<td style="text-align: left;">1 ( 4.348)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Follicular thyroid cancer</td>
+<td style="text-align: left;">1 ( 7.692)</td>
+<td style="text-align: left;">1 ( 7.692)</td>
+<td style="text-align: left;">10 (76.923)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">1 ( 7.692)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Graves’ disease</td>
+<td style="text-align: left;">1 (50.000)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">1 (50.000)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hürthle cell/oncocytic adenoma</td>
+<td style="text-align: left;">1 ( 9.091)</td>
+<td style="text-align: left;">2 (18.182)</td>
+<td style="text-align: left;">7 (63.636)</td>
+<td style="text-align: left;">1 ( 9.091)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hürthle cell/oncocytic carcinoma</td>
+<td style="text-align: left;">1 (20.000)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">3 (60.000)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">1 (20.000)</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Medullary thyroid cancer</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">1 (50.000)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">1 (50.000)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Other cancer / Other diagnosis</td>
+<td style="text-align: left;">2 ( 6.452)</td>
+<td style="text-align: left;">11 (35.484)</td>
+<td style="text-align: left;">9 (29.032)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">9 (29.032)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Papillary thyroid cancer</td>
+<td style="text-align: left;">5 (10.000)</td>
+<td style="text-align: left;">4 ( 8.000)</td>
+<td style="text-align: left;">15 (30.000)</td>
+<td style="text-align: left;">9 (18.000)</td>
+<td style="text-align: left;">12 (24.000)</td>
+<td style="text-align: left;">5 (10.000)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Simple cyst</td>
+<td style="text-align: left;">2 (33.333)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">4 (66.667)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">44 (11.168)</td>
+<td style="text-align: left;">87 (22.081)</td>
+<td style="text-align: left;">23 ( 5.838)</td>
+<td style="text-align: left;">2 ( 0.508)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">238 (60.406)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>We may be interested in the percentages across all observations though.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Surgical Lymph Node Pathology and Thyroid Nodule FNA. Percentages are across all observations.</caption>
+<colgroup>
+<col style="width: 33%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 10%">
+<col style="width: 11%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Thyroid Surgery Lymph Node Pathology</th>
+<th style="text-align: left;">Thy1 (%)</th>
+<th style="text-align: left;">Thy2 (%)</th>
+<th style="text-align: left;">Thy3 (%)</th>
+<th style="text-align: left;">Thy4 (%)</th>
+<th style="text-align: left;">Thy5 (%)</th>
+<th style="text-align: left;">Missing (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Anaplastic cancer</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Auto immune thyroiditis</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">2 ( 0.342)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Colloid adenoma</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">2 ( 0.342)</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Colloid goitre</td>
+<td style="text-align: left;">7 ( 1.199)</td>
+<td style="text-align: left;">7 ( 1.199)</td>
+<td style="text-align: left;">7 ( 1.199)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">15 ( 2.568)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Follicular adenoma</td>
+<td style="text-align: left;">3 ( 0.514)</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">18 ( 3.082)</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Follicular thyroid cancer</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">10 ( 1.712)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Graves’ disease</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hürthle cell/oncocytic adenoma</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">2 ( 0.342)</td>
+<td style="text-align: left;">7 ( 1.199)</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hürthle cell/oncocytic carcinoma</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">3 ( 0.514)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Medullary thyroid cancer</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">1 ( 0.171)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Other cancer / Other diagnosis</td>
+<td style="text-align: left;">2 ( 0.342)</td>
+<td style="text-align: left;">11 ( 1.884)</td>
+<td style="text-align: left;">9 ( 1.541)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">9 ( 1.541)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Papillary thyroid cancer</td>
+<td style="text-align: left;">5 ( 0.856)</td>
+<td style="text-align: left;">4 ( 0.685)</td>
+<td style="text-align: left;">15 ( 2.568)</td>
+<td style="text-align: left;">9 ( 1.541)</td>
+<td style="text-align: left;">12 ( 2.055)</td>
+<td style="text-align: left;">5 ( 0.856)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Simple cyst</td>
+<td style="text-align: left;">2 ( 0.342)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">4 ( 0.685)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">44 ( 7.534)</td>
+<td style="text-align: left;">87 (14.897)</td>
+<td style="text-align: left;">23 ( 3.938)</td>
+<td style="text-align: left;">2 ( 0.342)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">238 (40.753)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Tabulating the Thyroid Nodule FNA against the final prediction</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Final Pathology and Thyroid Nodule FNA. Percentages are across all observations.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Nodule FNA</th>
+<th style="text-align: left;">Benign (%)</th>
+<th style="text-align: left;">Malignant (%)</th>
+<th style="text-align: left;">Missing (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Thy1</td>
+<td style="text-align: left;">16 ( 2.740)</td>
+<td style="text-align: left;">7 ( 1.199)</td>
+<td style="text-align: left;">46 ( 7.877)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Thy2</td>
+<td style="text-align: left;">109 (18.664)</td>
+<td style="text-align: left;">5 ( 0.856)</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Thy3</td>
+<td style="text-align: left;">35 ( 5.993)</td>
+<td style="text-align: left;">28 ( 4.795)</td>
+<td style="text-align: left;">32 ( 5.479)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Thy4</td>
+<td style="text-align: left;">3 ( 0.514)</td>
+<td style="text-align: left;">10 ( 1.712)</td>
+<td style="text-align: left;">2 ( 0.342)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Thy5</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">14 ( 2.397)</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">23 ( 3.938)</td>
+<td style="text-align: left;">7 ( 1.199)</td>
+<td style="text-align: left;">247 (42.295)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>We can make a stacked Bar chart of this, but first we filter out instances where the final pathology is missing (i.e.&nbsp;<code>NA</code>)</p>
+<div class="cell" data-tbl-cap="Final Pathology and Thyroid Nodule FNA. Percentages are across all observations.">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="data_files/figure-html/final-pathology-nodule-fna-thy-table-bar-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
