@@ -239,7 +239,7 @@ Collect metrics using the original data.
 #| label: lasso-kfold-eval-metrics
 #| eval: false
 #| echo: true
-#| output: false
+#| output: true
 tune::last_fit(object = final_lasso_kfold, split = split) |>
   tune::collect_metrics()
 ```
@@ -250,7 +250,7 @@ And plot the importance of variables
 #| label: lasso-kfold-eval-importance
 #| eval: false
 #| echo: true
-#| output: false
+#| output: true
 final_lasso_kfold |>
   fit(train) |>
   hardhat::extract_fit_parsnip() |>
