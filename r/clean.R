@@ -687,6 +687,7 @@ df <- df |> dplyr::mutate(
   )
 )
 df$thyroid_surgery |> table()
+df$clinic_recruiting |> table()
 
 
 ## thyroid_surgery_lymph_node_pathology
