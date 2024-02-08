@@ -693,6 +693,22 @@ df <- df |>
 # Count how many observations and table data_access_group to check neither center appears
 df |> count()
 df$data_access_group |> table()
-view(df)
+
+library(tableone)
+p_charac <- select(df, c(
+  "age", "bmi", "referral_source", "two_week_wait_referral", "smoking_status",
+  "previous_neck_irradiation", "asa_score"
+))
+CreateTableOne(
+  data = p_charac, vars = c(
+    "age", "bmi",
+    "referral_source",
+    "two_week_wait_referral",
+    "smoking_status",
+    "previous_neck_irradiation",
+    "asa_score"
+  ),
+  factorVars = c("previous_neck_irradiation")
+)
 ## Finally save the data
 saveRDS(df, file = paste(r_dir, "clean.rds", sep = "/"))
