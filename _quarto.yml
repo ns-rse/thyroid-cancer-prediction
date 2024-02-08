@@ -10,6 +10,7 @@ website:
       - reproducibility.qmd
       - literature.qmd
       - data.qmd
+      - sheffield.qmd
       - modelling.qmd
       - citations.qmd
       - links.qmd

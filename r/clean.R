@@ -693,5 +693,6 @@ df <- df |>
 # Count how many observations and table data_access_group to check neither center appears
 df |> count()
 df$data_access_group |> table()
+view(df)
 ## Finally save the data
 saveRDS(df, file = paste(r_dir, "clean.rds", sep = "/"))
