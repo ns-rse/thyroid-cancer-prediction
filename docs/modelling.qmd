@@ -9,6 +9,7 @@ bibliography: references.bib
 #| echo: false
 #| output: false
 library(ggdark)
+library(kernlab)
 library(tidyverse)
 library(tidymodels)
 library(vip)
@@ -168,6 +169,14 @@ avoids over-fitting by reducing the sum of squares of the regression coefficient
 variables to be selected as the coefficients can (almost) drop out by virtue of their coefficients shrinking towards
 zero.
 
+Another popular alternative is [Ridge Regression](https://en.wikipedia.org/wiki/Ridge_regression) which uses L2
+regularisation and is useful when there are predictor variables that are co-linear (i.e. correlated).
+
+It is possible to combine L1 and L2 regularisation in what is known as [Elastic
+Net](https://en.wikipedia.org/wiki/Elastic_net_regularization) which combines both L1 and L2 regularisation in a linear
+manner.
+
+
 #### Specify the Model
 
 Whilst we have defined the relationship between variables in the Worfklow above we now need to say what model we wish to
@@ -265,12 +274,113 @@ final_lasso_kfold |>
   dark_theme_minimal()
 ```
 
+#### ROC Curves
+
+We can use the [yardstick](https://yardstick.tidymodels.org/index.html) package to facilitate visualising the [Receiver
+operating characteristic](https://en.wikipedia.org/wiki/Receiver_operating_characteristic) curve of fitted models.
+
+**TODO** Add plotting of ROC curves and assessing predictive capcity in the test data.
+
+
+The Tidymodel framework allows us to use the same workflow that we setup to easily run other types of modelling. Here
+we use a Random Forest to classify. Random Forests itteratively search through the variables to work out which provides the best method of classifying people into either "Malignant" or "Be
+nign". It tries all variables in
+## turn. For binary variables such as gender this is straight-forward. For conti
+nuous variables a number of different
+## thresholds for dichotomising the variable are tested for each possible split
+and the optimal cut-point is selected.
+## This process is repeated so that after for example after selecting gender to
+be a strong predictor the remaining
+## variables will tested for their predictive ability and the best selected. The
+ number of trees that are created and tested is defined by the 'trees' parameter which here is set to 100.
+label: random-forest-specify
+
 ### Random Forest
 
 [Random forests](https://en.wikipedia.org/wiki/Random_forest) build on the concept of regression trees by building many
-such trees on random subsets of data and averaging them. They build "deep" trees partitioning each time until all
-individuals are classified, part of the art is deciding how "deep" to go as too many partitions results in over-fitting
-and lack of generalisability. It is in this regard an "ensemble" method as it is averaging across many possible methods.
+such trees on random subsets of data and averaging them. They build "deep" trees partitioning the data each time testing
+to see which variable provides the optimal split (best prediction into the "Malignant"/"Benign" categorisation). Adding
+splits each at each recursive branch until all individuals are classified. Part of the art is deciding how "deep" to go
+as too many partitions results in over-fitting and lack of generalisability.
+
+For binary variables such as `gender` this is straigh-forward but for continuous variables different thresholds for
+splitting are tested and the optimal point is selected.
+
+This whole process is repeated a number of times building lots of trees (i.e. random forests) and it is in this regard
+an "ensemble" method as it is averaging across many possible methods.
+
+``` {r}
+#| label: random-forest-specify
+#| eval: true
+#| echo: true
+#| output: false
+rf_tune <- parsnip::rand_forest(
+  mtry = tune(),
+  trees = 100,
+  min_n = tune()
+) |>
+  set_mode("classification") |>
+  set_engine("ranger", importance = "impurity")
+```
+
+As before the process is repeated using Cross validation.
+``` {r}
+#| label: random-forest-tune
+#| eval: true
+#| echo: true
+#| output: false
+rf_grid <- tune::tune_grid(
+  add_model(thyroid_workflow, rf_tune),
+  resamples = cv_folds, ## cv_loo,
+  grid = grid_regular(mtry(range = c(5, 10)), # smaller ranges will run quicker
+    min_n(range = c(2, 25)),
+    levels = 3
+  )
+)
+```
+...and the best model based on the ROC AUC selected...
+
+``` {r}
+#| label: random-forest-model
+#| eval: true
+#| echo: true
+#| output: false
+rf_highest_roc_auc <- rf_grid |>
+  select_best("roc_auc")
+final_rf <- tune::finalize_workflow(
+  add_model(thyroid_workflow, rf_tune),
+  rf_highest_roc_auc
+)
+```
+
+...and the metrics calculated.
+
+``` {r}
+#| label: random-forest-evaluate
+#| eval: true
+#| echo: true
+#| output: false
+tune::last_fit(final_rf, split) |>
+  tune::collect_metrics()
+```
+
+``` {r}
+#| label: rf-kfold-eval-importance
+#| eval: false
+#| echo: true
+#| output: false
+final_rf |>
+  fit(train) |>
+  hardhat::extract_fit_parsnip() |>
+  vip::vi(lambda = final_rf$penalty) |>
+  dplyr::mutate(
+    Importance = abs(Importance),
+    Variable = fct_reorder(Variable, Importance)
+  ) |>
+  ggplot(mapping = aes(x = Importance, y = Variable, fill = Sign)) +
+  geom_col() +
+  dark_theme_minimal()
+```
 
 ### Gradient Boosting
 
@@ -280,6 +390,66 @@ rules and layers are built in a stage-wise fashion. It allows a choice of loss f
 out-performs Random Forests when it comes to prediction modelling.
 
 ### Support Vector Machine
+
+Yet another modelling approach is [Support Vector Machines (SVMs)](https://en.wikipedia.org/wiki/Support_vector_machine)
+and again we step through the process of specify the model using the
+[`svm_rbf()`](https://parsnip.tidymodels.org/reference/svm_rbf.html) function which aims to "_maximize the width of the
+margin between classes using a nonlinear class boundary_"
+
+``` {r}
+#| label: svm-specify
+#| eval: true
+#| echo: true
+#| output: false
+svm_tune_spec <- parsnip::svm_rbf(cost = tune()) |>
+  set_engine("kernlab") |>
+  set_mode("classification")
+```
+
+The hyperparameters are then tuned, in effect running the model in multiple subsets of the cross-validation to get a
+"best fit".
+
+``` {r}
+#| label: svm-tune-hyperparameters
+#| eval: true
+#| echo: true
+#| output: false
+svm_grid <- tune::tune_grid(
+  workflows::add_model(thyroid_workflow, svm_tune_spec),
+  resamples = cv_folds, ## cv_loo,
+  grid = dials::grid_regular(cost(), levels = 20)
+)
+```
+
+The best fit is selected and fit to the overall training data set.
+``` {r}
+#| label: svm-model
+#| eval: true
+#| echo: true
+#| output: false
+svm_highest_roc_auc <- svm_grid |>
+  tune::select_best("roc_auc")
+final_scm <- tune::finalize_workflow(
+  add_model(thyroid_workflow, svm_tune_spec),
+  svm_highest_roc_auc
+)
+```
+
+Finally an assessment is made on the accuracy
+
+``` {r}
+#| label: svm-evaluate
+#| eval: true
+#| echo: true
+#| output: false
+tune::last_fit(final_rf, split,
+  metrics = metric_set(roc_auc, accuracy, f_meas)
+) |>
+  tune::collect_metrics()
+```
+
+Create a confusion matrix
+
 
 ## Model Assessment
 
