@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -45,7 +45,13 @@ ul.task-list li input[type="checkbox"] {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -54,6 +60,7 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -68,9 +75,9 @@ ul.task-list li input[type="checkbox"] {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Thyroid Cancer Prediction</span>
     </a>
@@ -82,60 +89,67 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html" rel="" target="">
- <span class="menu-text">Home</span></a>
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./reproducibility.html" rel="" target="">
- <span class="menu-text">Reproducibility</span></a>
+    <a class="nav-link" href="./reproducibility.html"> 
+<span class="menu-text">Reproducibility</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./literature.html" rel="" target="">
- <span class="menu-text">Literature</span></a>
+    <a class="nav-link" href="./literature.html"> 
+<span class="menu-text">Literature</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./data.html" rel="" target="" aria-current="page">
- <span class="menu-text">Data Description</span></a>
+    <a class="nav-link active" href="./data.html" aria-current="page"> 
+<span class="menu-text">Data Description</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./modelling.html" rel="" target="">
- <span class="menu-text">Modelling</span></a>
+    <a class="nav-link" href="./modelling.html"> 
+<span class="menu-text">Modelling</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./citations.html" rel="" target="">
- <span class="menu-text">Citations</span></a>
+    <a class="nav-link" href="./citations.html"> 
+<span class="menu-text">Citations</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./links.html" rel="" target="">
- <span class="menu-text">Links</span></a>
+    <a class="nav-link" href="./links.html"> 
+<span class="menu-text">Links</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html" rel="" target="">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools ms-auto">
-</div>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/ns-rse/thyroid-cancer-prediction"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Data Description</li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Data Description</li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
     </div>
   </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -156,13 +170,6 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#asa-score" id="toc-asa-score" class="nav-link" data-scroll-target="#asa-score">ASA Score</a></li>
   <li><a href="#data-access-group" id="toc-data-access-group" class="nav-link" data-scroll-target="#data-access-group">Data Access Group</a></li>
   <li><a href="#referral-source" id="toc-referral-source" class="nav-link" data-scroll-target="#referral-source">Referral Source</a></li>
-  </ul></li>
-  <li><a href="#label-referral-source-bar" id="toc-label-referral-source-bar" class="nav-link" data-scroll-target="#label-referral-source-bar">| label: referral-source-bar</a></li>
-  <li><a href="#fig-cap-referral-source" id="toc-fig-cap-referral-source" class="nav-link" data-scroll-target="#fig-cap-referral-source">| fig-cap: “Referral Source”</a></li>
-  <li><a href="#eval-true" id="toc-eval-true" class="nav-link" data-scroll-target="#eval-true">| eval: true</a></li>
-  <li><a href="#echo-false" id="toc-echo-false" class="nav-link" data-scroll-target="#echo-false">| echo: false</a></li>
-  <li><a href="#output-true" id="toc-output-true" class="nav-link" data-scroll-target="#output-true">| output: true</a>
-  <ul class="collapse">
   <li><a href="#recruiting-clinic" id="toc-recruiting-clinic" class="nav-link" data-scroll-target="#recruiting-clinic">Recruiting Clinic</a></li>
   <li><a href="#thyroid-nodule-fna" id="toc-thyroid-nodule-fna" class="nav-link" data-scroll-target="#thyroid-nodule-fna">Thyroid Nodule FNA</a></li>
   <li><a href="#final-pathology" id="toc-final-pathology" class="nav-link" data-scroll-target="#final-pathology">Final Pathology</a></li>
@@ -189,7 +196,9 @@ ul.task-list li input[type="checkbox"] {
   </div>
   
 
+
 </header>
+
 
 <p>Details of the data set.</p>
 <section id="source" class="level2">
@@ -776,7 +785,7 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
-<p>Tabular and graphical summaries of the data provided in <code>Thy3000_DATA_LABELS_Raw.csv</code> after cleaning we can summarise the data. In total there were 549 recorded from a total of 15.</p>
+<p>Tabular and graphical summaries of the data provided in <code>Thy3000_DATA_LABELS_Raw.csv</code> after cleaning we can summarise the data. In total there were 541 recorded from a total of 13.</p>
 </section>
 <section id="quantitative-variables" class="level2">
 <h2 class="anchored" data-anchor-id="quantitative-variables">Quantitative Variables</h2>
@@ -785,7 +794,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="cell">
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
-<caption>Summary statistics for quantitative variables </caption>
+<caption>Summary statistics for quantitative variables</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Variable</th>
@@ -801,21 +810,21 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">age</td>
-<td style="text-align: right;">54.372</td>
-<td style="text-align: right;">16.652</td>
-<td style="text-align: right;">41</td>
-<td style="text-align: right;">54.0</td>
+<td style="text-align: right;">54.518</td>
+<td style="text-align: right;">16.683</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">54.00</td>
 <td style="text-align: right;">68.000</td>
 <td style="text-align: right;">12.0</td>
 <td style="text-align: right;">91</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">bmi</td>
-<td style="text-align: right;">27.772</td>
-<td style="text-align: right;">5.708</td>
+<td style="text-align: right;">27.760</td>
+<td style="text-align: right;">5.720</td>
 <td style="text-align: right;">24</td>
-<td style="text-align: right;">27.1</td>
-<td style="text-align: right;">30.975</td>
+<td style="text-align: right;">27.05</td>
+<td style="text-align: right;">30.925</td>
 <td style="text-align: right;">17.1</td>
 <td style="text-align: right;">50</td>
 </tr>
@@ -831,7 +840,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="data_files/figure-html/age-hist-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Distribution of Ages at referral</figcaption>
+<figcaption>Distribution of Ages at referral</figcaption>
 </figure>
 </div>
 </div>
@@ -844,7 +853,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="data_files/figure-html/bmi-hist-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Distribution of Body Mass Index (BMI)</figcaption>
+<figcaption>Distribution of Body Mass Index (BMI)</figcaption>
 </figure>
 </div>
 </div>
@@ -857,7 +866,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="data_files/figure-html/nodule-maximum-diameter-hist-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Distribution of Nodule Maximum Diameter (mm)</figcaption>
+<figcaption>Distribution of Nodule Maximum Diameter (mm)</figcaption>
 </figure>
 </div>
 </div>
@@ -873,7 +882,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="data_files/figure-html/asa-bar-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Reported ASA score</figcaption>
+<figcaption>Reported ASA score</figcaption>
 </figure>
 </div>
 </div>
@@ -881,7 +890,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="cell">
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
-<caption>Reported ASA score </caption>
+<caption>Reported ASA score</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;">asa_score</th>
@@ -892,28 +901,28 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">I</td>
-<td style="text-align: right;">189</td>
-<td style="text-align: right;">32.363</td>
+<td style="text-align: right;">186</td>
+<td style="text-align: right;">32.292</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">II</td>
-<td style="text-align: right;">204</td>
-<td style="text-align: right;">34.932</td>
+<td style="text-align: right;">201</td>
+<td style="text-align: right;">34.896</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">III</td>
-<td style="text-align: right;">72</td>
-<td style="text-align: right;">12.329</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: right;">12.153</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">IV</td>
 <td style="text-align: right;">3</td>
-<td style="text-align: right;">0.514</td>
+<td style="text-align: right;">0.521</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">NA</td>
 <td style="text-align: right;">116</td>
-<td style="text-align: right;">19.863</td>
+<td style="text-align: right;">20.139</td>
 </tr>
 </tbody>
 </table>
@@ -927,7 +936,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="data_files/figure-html/data-access-group-bar-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Data Access Group</figcaption>
+<figcaption>Data Access Group</figcaption>
 </figure>
 </div>
 </div>
@@ -935,7 +944,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="cell">
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
-<caption>Data Access Group </caption>
+<caption>Data Access Group</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;">data_access_group</th>
@@ -947,77 +956,67 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td style="text-align: left;">Barnsley</td>
 <td style="text-align: right;">35</td>
-<td style="text-align: right;">5.993</td>
+<td style="text-align: right;">6.076</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Cardiff and Vale</td>
 <td style="text-align: right;">44</td>
-<td style="text-align: right;">7.534</td>
+<td style="text-align: right;">7.639</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Doncaster</td>
 <td style="text-align: right;">19</td>
-<td style="text-align: right;">3.253</td>
+<td style="text-align: right;">3.299</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Hull</td>
 <td style="text-align: right;">31</td>
-<td style="text-align: right;">5.308</td>
+<td style="text-align: right;">5.382</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">NHS Dumfries and Galloway</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">0.685</td>
-</tr>
-<tr class="even">
 <td style="text-align: left;">NHS Tayside</td>
 <td style="text-align: right;">30</td>
-<td style="text-align: right;">5.137</td>
+<td style="text-align: right;">5.208</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">Norfolk &amp; Norwich</td>
 <td style="text-align: right;">30</td>
-<td style="text-align: right;">5.137</td>
+<td style="text-align: right;">5.208</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">Portsmouth</td>
 <td style="text-align: right;">32</td>
-<td style="text-align: right;">5.479</td>
+<td style="text-align: right;">5.556</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">Royal Berkshire</td>
 <td style="text-align: right;">106</td>
-<td style="text-align: right;">18.151</td>
+<td style="text-align: right;">18.403</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">Salford</td>
 <td style="text-align: right;">40</td>
-<td style="text-align: right;">6.849</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Sheffield Teaching Hospitals Foundation Trust</td>
-<td style="text-align: right;">116</td>
-<td style="text-align: right;">19.863</td>
+<td style="text-align: right;">6.944</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">University Hospitals of North Midlands</td>
-<td style="text-align: right;">56</td>
-<td style="text-align: right;">9.589</td>
+<td style="text-align: left;">Sheffield Teaching Hospitals Foundation Trust</td>
+<td style="text-align: right;">116</td>
+<td style="text-align: right;">20.139</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Wirral</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">0.685</td>
+<td style="text-align: left;">University Hospitals of North Midlands</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">9.722</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Wye Valley Trust</td>
 <td style="text-align: right;">33</td>
-<td style="text-align: right;">5.651</td>
+<td style="text-align: right;">5.729</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">NA</td>
 <td style="text-align: right;">4</td>
-<td style="text-align: right;">0.685</td>
+<td style="text-align: right;">0.694</td>
 </tr>
 </tbody>
 </table>
@@ -1026,28 +1025,20 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="referral-source" class="level3">
 <h3 class="anchored" data-anchor-id="referral-source">Referral Source</h3>
-</section>
-</section>
-<section id="label-referral-source-bar" class="level1">
-<h1>| label: referral-source-bar</h1>
-</section>
-<section id="fig-cap-referral-source" class="level1">
-<h1>| fig-cap: “Referral Source”</h1>
-</section>
-<section id="eval-true" class="level1">
-<h1>| eval: true</h1>
-</section>
-<section id="echo-false" class="level1">
-<h1>| echo: false</h1>
-</section>
-<section id="output-true" class="level1">
-<h1>| output: true</h1>
-<p>df |&gt; ggplot(aes(referral_source, fill = referral_source)) + geom_bar() + labs(x = “referral_source”, y = “N”) + scale_fill_discrete(guide = “none”) + scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = 15))</p>
-<p>```</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="data_files/figure-html/referral-source-bar-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Referral Source</figcaption>
+</figure>
+</div>
+</div>
+</div>
 <div class="cell">
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
-<caption>Referral Source </caption>
+<caption>Referral Source</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;">referral_source</th>
@@ -1057,89 +1048,25 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">A&amp;E</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">0.514</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Acute Medicine</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">0.514</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Cardiology</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">0.514</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Endocrinology</td>
-<td style="text-align: right;">26</td>
-<td style="text-align: right;">4.452</td>
-</tr>
-<tr class="odd">
 <td style="text-align: left;">GP</td>
-<td style="text-align: right;">429</td>
-<td style="text-align: right;">73.459</td>
+<td style="text-align: right;">423</td>
+<td style="text-align: right;">73.438</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Gastroenterology</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: right;">1.199</td>
+<td style="text-align: left;">secondary care</td>
+<td style="text-align: right;">149</td>
+<td style="text-align: right;">25.868</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Gynaecology</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">0.342</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Heamatology</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">0.685</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Inpatient</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">0.342</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Oncology</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">0.685</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Oral &amp; Maxillofacial</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">1.027</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Other</td>
-<td style="text-align: right;">67</td>
-<td style="text-align: right;">11.473</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Respiratory</td>
-<td style="text-align: right;">13</td>
-<td style="text-align: right;">2.226</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Rheumatology</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: right;">1.199</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Urology</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">0.685</td>
-</tr>
-<tr class="even">
 <td style="text-align: left;">NA</td>
 <td style="text-align: right;">4</td>
-<td style="text-align: right;">0.685</td>
+<td style="text-align: right;">0.694</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
+</section>
 <section id="recruiting-clinic" class="level3">
 <h3 class="anchored" data-anchor-id="recruiting-clinic">Recruiting Clinic</h3>
 <div class="cell">
@@ -1147,7 +1074,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="data_files/figure-html/recruiting-clinic-bar-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Recruiting Clinic</figcaption>
+<figcaption>Recruiting Clinic</figcaption>
 </figure>
 </div>
 </div>
@@ -1155,7 +1082,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="cell">
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
-<caption>Recruiting Clinic </caption>
+<caption>Recruiting Clinic</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;">clinic_recruiting</th>
@@ -1166,38 +1093,38 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">ENT</td>
-<td style="text-align: right;">280</td>
-<td style="text-align: right;">47.945</td>
+<td style="text-align: right;">277</td>
+<td style="text-align: right;">48.090</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">GP</td>
 <td style="text-align: right;">25</td>
-<td style="text-align: right;">4.281</td>
+<td style="text-align: right;">4.340</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">General surgery (including endocrine surgery)</td>
-<td style="text-align: right;">131</td>
-<td style="text-align: right;">22.432</td>
+<td style="text-align: right;">127</td>
+<td style="text-align: right;">22.049</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Joint thyroid</td>
 <td style="text-align: right;">75</td>
-<td style="text-align: right;">12.842</td>
+<td style="text-align: right;">13.021</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Medicine</td>
-<td style="text-align: right;">59</td>
-<td style="text-align: right;">10.103</td>
+<td style="text-align: right;">58</td>
+<td style="text-align: right;">10.069</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Other</td>
 <td style="text-align: right;">11</td>
-<td style="text-align: right;">1.884</td>
+<td style="text-align: right;">1.910</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">NA</td>
 <td style="text-align: right;">3</td>
-<td style="text-align: right;">0.514</td>
+<td style="text-align: right;">0.521</td>
 </tr>
 </tbody>
 </table>
@@ -1211,7 +1138,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="data_files/figure-html/nodule-fna-thy-bar-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Thyroid Nodule FNA</figcaption>
+<figcaption>Thyroid Nodule FNA</figcaption>
 </figure>
 </div>
 </div>
@@ -1219,7 +1146,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="cell">
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
-<caption>Thyroid Nodule FNA </caption>
+<caption>Thyroid Nodule FNA</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;">nodule_fna_thy</th>
@@ -1230,33 +1157,33 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Thy1</td>
-<td style="text-align: right;">69</td>
-<td style="text-align: right;">11.815</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">11.458</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Thy2</td>
-<td style="text-align: right;">114</td>
-<td style="text-align: right;">19.521</td>
+<td style="text-align: right;">113</td>
+<td style="text-align: right;">19.618</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Thy3</td>
-<td style="text-align: right;">95</td>
-<td style="text-align: right;">16.267</td>
+<td style="text-align: right;">94</td>
+<td style="text-align: right;">16.319</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Thy4</td>
-<td style="text-align: right;">15</td>
-<td style="text-align: right;">2.568</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">2.431</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Thy5</td>
 <td style="text-align: right;">14</td>
-<td style="text-align: right;">2.397</td>
+<td style="text-align: right;">2.431</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">NA</td>
-<td style="text-align: right;">277</td>
-<td style="text-align: right;">47.432</td>
+<td style="text-align: right;">275</td>
+<td style="text-align: right;">47.743</td>
 </tr>
 </tbody>
 </table>
@@ -1270,7 +1197,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="data_files/figure-html/final-pathology-bar-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Final Pathology</figcaption>
+<figcaption>Final Pathology</figcaption>
 </figure>
 </div>
 </div>
@@ -1278,7 +1205,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="cell">
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
-<caption>Final Pathology </caption>
+<caption>Final Pathology</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;">final_pathology</th>
@@ -1289,18 +1216,18 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Benign</td>
-<td style="text-align: right;">88</td>
-<td style="text-align: right;">15.068</td>
+<td style="text-align: right;">169</td>
+<td style="text-align: right;">29.340</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Malignant</td>
-<td style="text-align: right;">71</td>
-<td style="text-align: right;">12.158</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">13.021</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">NA</td>
-<td style="text-align: right;">425</td>
-<td style="text-align: right;">72.774</td>
+<td style="text-align: right;">332</td>
+<td style="text-align: right;">57.639</td>
 </tr>
 </tbody>
 </table>
@@ -1313,7 +1240,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="cell">
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
-<caption>Surgical Lymph Node Pathology and Thyroid Nodule FNA. Percentages are by Pathology </caption>
+<caption>Surgical Lymph Node Pathology and Thyroid Nodule FNA. Percentages are by Pathology</caption>
 <colgroup>
 <col style="width: 33%">
 <col style="width: 11%">
@@ -1364,12 +1291,12 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td style="text-align: left;">Colloid goitre</td>
-<td style="text-align: left;">7 (19.444)</td>
-<td style="text-align: left;">7 (19.444)</td>
-<td style="text-align: left;">7 (19.444)</td>
+<td style="text-align: left;">7 (20.000)</td>
+<td style="text-align: left;">6 (17.143)</td>
+<td style="text-align: left;">7 (20.000)</td>
 <td style="text-align: left;">NA</td>
 <td style="text-align: left;">NA</td>
-<td style="text-align: left;">15 (41.667)</td>
+<td style="text-align: left;">15 (42.857)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Follicular adenoma</td>
@@ -1391,19 +1318,19 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Graves’ disease</td>
-<td style="text-align: left;">1 (50.000)</td>
+<td style="text-align: left;">1 (100.000)</td>
 <td style="text-align: left;">NA</td>
 <td style="text-align: left;">NA</td>
 <td style="text-align: left;">NA</td>
 <td style="text-align: left;">NA</td>
-<td style="text-align: left;">1 (50.000)</td>
+<td style="text-align: left;">NA</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Hürthle cell/oncocytic adenoma</td>
-<td style="text-align: left;">1 ( 9.091)</td>
-<td style="text-align: left;">2 (18.182)</td>
-<td style="text-align: left;">7 (63.636)</td>
-<td style="text-align: left;">1 ( 9.091)</td>
+<td style="text-align: left;">1 (10.000)</td>
+<td style="text-align: left;">2 (20.000)</td>
+<td style="text-align: left;">6 (60.000)</td>
+<td style="text-align: left;">1 (10.000)</td>
 <td style="text-align: left;">NA</td>
 <td style="text-align: left;">NA</td>
 </tr>
@@ -1436,12 +1363,12 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td style="text-align: left;">Papillary thyroid cancer</td>
-<td style="text-align: left;">5 (10.000)</td>
-<td style="text-align: left;">4 ( 8.000)</td>
-<td style="text-align: left;">15 (30.000)</td>
-<td style="text-align: left;">9 (18.000)</td>
-<td style="text-align: left;">12 (24.000)</td>
-<td style="text-align: left;">5 (10.000)</td>
+<td style="text-align: left;">5 (10.204)</td>
+<td style="text-align: left;">4 ( 8.163)</td>
+<td style="text-align: left;">15 (30.612)</td>
+<td style="text-align: left;">8 (16.327)</td>
+<td style="text-align: left;">12 (24.490)</td>
+<td style="text-align: left;">5 (10.204)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Simple cyst</td>
@@ -1454,12 +1381,12 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td style="text-align: left;">NA</td>
-<td style="text-align: left;">44 (11.168)</td>
-<td style="text-align: left;">87 (22.081)</td>
-<td style="text-align: left;">23 ( 5.838)</td>
-<td style="text-align: left;">2 ( 0.508)</td>
+<td style="text-align: left;">41 (10.513)</td>
+<td style="text-align: left;">87 (22.308)</td>
+<td style="text-align: left;">23 ( 5.897)</td>
+<td style="text-align: left;">2 ( 0.513)</td>
 <td style="text-align: left;">NA</td>
-<td style="text-align: left;">238 (60.406)</td>
+<td style="text-align: left;">237 (60.769)</td>
 </tr>
 </tbody>
 </table>
@@ -1469,7 +1396,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="cell">
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
-<caption>Surgical Lymph Node Pathology and Thyroid Nodule FNA. Percentages are across all observations. </caption>
+<caption>Surgical Lymph Node Pathology and Thyroid Nodule FNA. Percentages are across all observations.</caption>
 <colgroup>
 <col style="width: 33%">
 <col style="width: 11%">
@@ -1497,79 +1424,79 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: left;">NA</td>
 <td style="text-align: left;">NA</td>
 <td style="text-align: left;">NA</td>
-<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">1 ( 0.174)</td>
 <td style="text-align: left;">NA</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Auto immune thyroiditis</td>
-<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">1 ( 0.174)</td>
 <td style="text-align: left;">NA</td>
-<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">1 ( 0.174)</td>
 <td style="text-align: left;">NA</td>
 <td style="text-align: left;">NA</td>
-<td style="text-align: left;">2 ( 0.342)</td>
+<td style="text-align: left;">2 ( 0.347)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Colloid adenoma</td>
-<td style="text-align: left;">1 ( 0.171)</td>
-<td style="text-align: left;">1 ( 0.171)</td>
-<td style="text-align: left;">2 ( 0.342)</td>
-<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">1 ( 0.174)</td>
+<td style="text-align: left;">1 ( 0.174)</td>
+<td style="text-align: left;">2 ( 0.347)</td>
+<td style="text-align: left;">1 ( 0.174)</td>
 <td style="text-align: left;">NA</td>
-<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">1 ( 0.174)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Colloid goitre</td>
-<td style="text-align: left;">7 ( 1.199)</td>
-<td style="text-align: left;">7 ( 1.199)</td>
-<td style="text-align: left;">7 ( 1.199)</td>
+<td style="text-align: left;">7 ( 1.215)</td>
+<td style="text-align: left;">6 ( 1.042)</td>
+<td style="text-align: left;">7 ( 1.215)</td>
 <td style="text-align: left;">NA</td>
 <td style="text-align: left;">NA</td>
-<td style="text-align: left;">15 ( 2.568)</td>
+<td style="text-align: left;">15 ( 2.604)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Follicular adenoma</td>
-<td style="text-align: left;">3 ( 0.514)</td>
-<td style="text-align: left;">1 ( 0.171)</td>
-<td style="text-align: left;">18 ( 3.082)</td>
-<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">3 ( 0.521)</td>
+<td style="text-align: left;">1 ( 0.174)</td>
+<td style="text-align: left;">18 ( 3.125)</td>
+<td style="text-align: left;">1 ( 0.174)</td>
 <td style="text-align: left;">NA</td>
 <td style="text-align: left;">NA</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Follicular thyroid cancer</td>
-<td style="text-align: left;">1 ( 0.171)</td>
-<td style="text-align: left;">1 ( 0.171)</td>
-<td style="text-align: left;">10 ( 1.712)</td>
+<td style="text-align: left;">1 ( 0.174)</td>
+<td style="text-align: left;">1 ( 0.174)</td>
+<td style="text-align: left;">10 ( 1.736)</td>
 <td style="text-align: left;">NA</td>
 <td style="text-align: left;">NA</td>
-<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">1 ( 0.174)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Graves’ disease</td>
-<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">1 ( 0.174)</td>
 <td style="text-align: left;">NA</td>
 <td style="text-align: left;">NA</td>
 <td style="text-align: left;">NA</td>
 <td style="text-align: left;">NA</td>
-<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">NA</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Hürthle cell/oncocytic adenoma</td>
-<td style="text-align: left;">1 ( 0.171)</td>
-<td style="text-align: left;">2 ( 0.342)</td>
-<td style="text-align: left;">7 ( 1.199)</td>
-<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">1 ( 0.174)</td>
+<td style="text-align: left;">2 ( 0.347)</td>
+<td style="text-align: left;">6 ( 1.042)</td>
+<td style="text-align: left;">1 ( 0.174)</td>
 <td style="text-align: left;">NA</td>
 <td style="text-align: left;">NA</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Hürthle cell/oncocytic carcinoma</td>
-<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">1 ( 0.174)</td>
 <td style="text-align: left;">NA</td>
-<td style="text-align: left;">3 ( 0.514)</td>
+<td style="text-align: left;">3 ( 0.521)</td>
 <td style="text-align: left;">NA</td>
-<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">1 ( 0.174)</td>
 <td style="text-align: left;">NA</td>
 </tr>
 <tr class="even">
@@ -1577,48 +1504,112 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: left;">NA</td>
 <td style="text-align: left;">NA</td>
 <td style="text-align: left;">NA</td>
-<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">1 ( 0.174)</td>
 <td style="text-align: left;">NA</td>
-<td style="text-align: left;">1 ( 0.171)</td>
+<td style="text-align: left;">1 ( 0.174)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Other cancer / Other diagnosis</td>
-<td style="text-align: left;">2 ( 0.342)</td>
-<td style="text-align: left;">11 ( 1.884)</td>
-<td style="text-align: left;">9 ( 1.541)</td>
+<td style="text-align: left;">2 ( 0.347)</td>
+<td style="text-align: left;">11 ( 1.910)</td>
+<td style="text-align: left;">9 ( 1.562)</td>
 <td style="text-align: left;">NA</td>
 <td style="text-align: left;">NA</td>
-<td style="text-align: left;">9 ( 1.541)</td>
+<td style="text-align: left;">9 ( 1.562)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Papillary thyroid cancer</td>
-<td style="text-align: left;">5 ( 0.856)</td>
-<td style="text-align: left;">4 ( 0.685)</td>
-<td style="text-align: left;">15 ( 2.568)</td>
-<td style="text-align: left;">9 ( 1.541)</td>
-<td style="text-align: left;">12 ( 2.055)</td>
-<td style="text-align: left;">5 ( 0.856)</td>
+<td style="text-align: left;">5 ( 0.868)</td>
+<td style="text-align: left;">4 ( 0.694)</td>
+<td style="text-align: left;">15 ( 2.604)</td>
+<td style="text-align: left;">8 ( 1.389)</td>
+<td style="text-align: left;">12 ( 2.083)</td>
+<td style="text-align: left;">5 ( 0.868)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Simple cyst</td>
-<td style="text-align: left;">2 ( 0.342)</td>
+<td style="text-align: left;">2 ( 0.347)</td>
 <td style="text-align: left;">NA</td>
 <td style="text-align: left;">NA</td>
 <td style="text-align: left;">NA</td>
 <td style="text-align: left;">NA</td>
-<td style="text-align: left;">4 ( 0.685)</td>
+<td style="text-align: left;">4 ( 0.694)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">NA</td>
-<td style="text-align: left;">44 ( 7.534)</td>
-<td style="text-align: left;">87 (14.897)</td>
-<td style="text-align: left;">23 ( 3.938)</td>
-<td style="text-align: left;">2 ( 0.342)</td>
+<td style="text-align: left;">41 ( 7.118)</td>
+<td style="text-align: left;">87 (15.104)</td>
+<td style="text-align: left;">23 ( 3.993)</td>
+<td style="text-align: left;">2 ( 0.347)</td>
 <td style="text-align: left;">NA</td>
-<td style="text-align: left;">238 (40.753)</td>
+<td style="text-align: left;">237 (41.146)</td>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+<p>Tabulating the Thyroid Nodule FNA against the final prediction</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Final Pathology and Thyroid Nodule FNA. Percentages are across all observations.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Nodule FNA</th>
+<th style="text-align: left;">Benign (%)</th>
+<th style="text-align: left;">Malignant (%)</th>
+<th style="text-align: left;">Missing (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Thy1</td>
+<td style="text-align: left;">15 ( 2.604)</td>
+<td style="text-align: left;">8 ( 1.389)</td>
+<td style="text-align: left;">43 ( 7.465)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Thy2</td>
+<td style="text-align: left;">97 (16.840)</td>
+<td style="text-align: left;">5 ( 0.868)</td>
+<td style="text-align: left;">11 ( 1.910)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Thy3</td>
+<td style="text-align: left;">33 ( 5.729)</td>
+<td style="text-align: left;">31 ( 5.382)</td>
+<td style="text-align: left;">30 ( 5.208)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Thy4</td>
+<td style="text-align: left;">3 ( 0.521)</td>
+<td style="text-align: left;">9 ( 1.562)</td>
+<td style="text-align: left;">2 ( 0.347)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Thy5</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">14 ( 2.431)</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">21 ( 3.646)</td>
+<td style="text-align: left;">8 ( 1.389)</td>
+<td style="text-align: left;">246 (42.708)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>We can make a stacked Bar chart of this, but first we filter out instances where the final pathology is missing (i.e.&nbsp;<code>NA</code>)</p>
+<div class="cell" data-tbl-cap="Final Pathology and Thyroid Nodule FNA. Percentages are across all observations.">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="data_files/figure-html/final-pathology-nodule-fna-thy-table-bar-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 
@@ -1706,10 +1697,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1719,8 +1709,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1733,6 +1732,125 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1776,6 +1894,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1801,6 +1920,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1861,6 +2006,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 
