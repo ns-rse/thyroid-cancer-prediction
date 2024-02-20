@@ -710,5 +710,104 @@ CreateTableOne(
   ),
   factorVars = c("previous_neck_irradiation")
 )
+
+## clinical characteristics
+c_charac <- select(df, c(
+  "neck_symptoms", "incidental_lesion", "incidental_imaging", "incidental_imaging_type",
+  "abnormal_thyroid_function",
+  "hyperthyroidism", "hypothyroidism", "no_symptoms", "neck_lump",
+  "compressive_symptoms", "clinical_assessment", "retrosternal",
+  "palpable_lymphadenopathy", "nodule_rapid_growth"
+))
+CreateTableOne(
+  data = c_charac, vars = c(
+    "neck_symptoms", "incidental_lesion", "incidental_imaging",
+    "incidental_imaging_type",
+    "abnormal_thyroid_function",
+    "hyperthyroidism", "hypothyroidism", "no_symptoms", "neck_lump",
+    "compressive_symptoms", "clinical_assessment", "retrosternal",
+    "palpable_lymphadenopathy", "nodule_rapid_growth"
+  ),
+  factorVars = c(
+    "neck_symptoms", "incidental_lesion", "incidental_imaging",
+    "incidental_imaging_type",
+    "abnormal_thyroid_function",
+    "hyperthyroidism", "hypothyroidism", "no_symptoms", "neck_lump",
+    "compressive_symptoms", "clinical_assessment", "retrosternal",
+    "palpable_lymphadenopathy", "nodule_rapid_growth"
+  )
+)
+## ultrasound characteristics
+u_charac <- select(df, c(
+  "nodule_ultrasound_description", "nodule_maxmimum_diameter_mm", "nodule_ultrasound_u_stage",
+  "nodule_ultrasound_tirads", "nodule_ultrasound_lymphadenopathy", "elastography"
+))
+CreateTableOne(
+  data = u_charac, vars = c(
+    "nodule_ultrasound_description", "nodule_maxmimum_diameter_mm", "nodule_ultrasound_u_stage",
+    "nodule_ultrasound_tirads", "nodule_ultrasound_lymphadenopathy", "elastography"
+  ),
+  factorVars = c(
+    "nodule_ultrasound_description", "nodule_ultrasound_u_stage",
+    "nodule_ultrasound_tirads", "nodule_ultrasound_lymphadenopathy", "elastography"
+  )
+)
+## cross imaging charac
+cross_sec <- select(df, c(
+  "ct_neck", "ct_neck_local_invasion", "ct_neck_plan_surgical_approach",
+  "ct_neck_lymphadenopathy_extent", "ct_neck_tracheal_compression",
+  "mri_neck", "mri_neck_local_invasion", "mri_neckplan_surgical_approach",
+  "mri_neck_lymphadenopathy_extent", "mri_neck_tracheal_compression",
+  "iodine_scan"
+))
+CreateCatTable(data = cross_sec, vars = c(
+  "ct_neck", "ct_neck_local_invasion", "ct_neck_plan_surgical_approach",
+  "ct_neck_lymphadenopathy_extent", "ct_neck_tracheal_compression",
+  "mri_neck", "mri_neck_local_invasion", "mri_neckplan_surgical_approach",
+  "mri_neck_lymphadenopathy_extent", "mri_neck_tracheal_compression",
+  "iodine_scan"
+))
+## nodule biopsy
+biopsy <- select(df, c(
+  "nodule_fna", "nodule_fna_result", "nodule_fna_thy",
+  "nodule_fna_bethesda", "core_biopsy", "lymph_node_fna",
+  "lymph_node_fna_result"
+))
+CreateTableOne(
+  data = biopsy, vars = c(
+    "nodule_fna", "nodule_fna_result", "nodule_fna_thy",
+    "nodule_fna_bethesda", "core_biopsy", "lymph_node_fna",
+    "lymph_node_fna_result"
+  ),
+  factorVars = c(
+    "nodule_fna", "nodule_fna_result", "nodule_fna_thy",
+    "nodule_fna_bethesda", "core_biopsy", "lymph_node_fna",
+    "lymph_node_fna_result"
+  )
+)
+
+## management decision
+management <- select(df, c(
+  "initial_management_decision", "routine_review_offered",
+  "routine_review_offered_interval_weeks", "routine_review_ultrasound",
+  "routine_review_fna", "routine_review_management_strategy_review",
+  "routine_review_management_revised", "routine_review_management_revised_reason",
+  "routine_review_confirm_management_plan", "routine_review_patient_signposting_information",
+  "thyroid_surgery"
+))
+CreateTableOne(data = management, vars = c(
+  "initial_management_decision", "routine_review_offered",
+  "routine_review_offered_interval_weeks", "routine_review_ultrasound",
+  "routine_review_fna", "routine_review_management_strategy_review",
+  "routine_review_management_revised",
+  "routine_review_management_revised_reason",
+  "routine_review_confirm_management_plan",
+  "routine_review_patient_signposting_information",
+  "thyroid_surgery"
+))
+
+## pathology
+pathology <- select(df, c("thyroid_surgery_lymph_node_pathology", "final_pathology"))
+CreateTableOne(data = pathology, vars = c("thyroid_surgery_lymph_node_pathology", "final_pathology"))
 ## Finally save the data
 saveRDS(df, file = paste(r_dir, "clean.rds", sep = "/"))
