@@ -94,4 +94,4 @@ var_labels <- c(
 )
 Hmisc::label(dummy) <- as.list(var_labels[match(names(dummy), names(var_labels))])
 
-df_dummy <- cbind(df, dummy)
+# df_dummy <- cbind(df, dummy)
