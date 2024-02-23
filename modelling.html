@@ -582,7 +582,7 @@ To change them back, use invert_geom_defaults().</code></pre>
 <span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>xgboost_confmat <span class="ot">&lt;-</span> tune<span class="sc">::</span><span class="fu">last_fit</span>(final_xgboost, split) <span class="sc">|&gt;</span></span>
 <span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  tune<span class="sc">::</span><span class="fu">collect_predictions</span>() <span class="sc">|&gt;</span></span>
 <span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>  yardstick<span class="sc">::</span><span class="fu">conf_mat</span>(final_pathology, .pred_class)</span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(xgboost_confmat<span class="sc">$</span>table, <span class="at">caption=</span><span class="st">"XGBoost"</span>)</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(xgboost_confmat<span class="sc">$</span>table, <span class="at">caption =</span> <span class="st">"XGBoost"</span>)</span>
 <span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="do">## SVM</span></span>
 <span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>svm_confmat <span class="ot">&lt;-</span> tune<span class="sc">::</span><span class="fu">last_fit</span>(final_svm, split) <span class="sc">|&gt;</span></span>
 <span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>  tune<span class="sc">::</span><span class="fu">collect_predictions</span>() <span class="sc">|&gt;</span></span>
@@ -916,7 +916,7 @@ Benign</code></pre>
 <span id="cb31-35"><a href="#cb31-35" aria-hidden="true" tabindex="-1"></a>roc_svm<span class="sc">$</span>model <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"SVM ("</span>, roc_auc_svm<span class="sc">$</span>.estimate, <span class="st">")"</span>)</span>
 <span id="cb31-36"><a href="#cb31-36" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb31-37"><a href="#cb31-37" aria-hidden="true" tabindex="-1"></a><span class="do">## Combine ROC curves across all three models and plot</span></span>
-<span id="cb31-38"><a href="#cb31-38" aria-hidden="true" tabindex="-1"></a>roc_all <span class="ot">&lt;-</span> <span class="fu">rbind</span>(roc_rf, roc_lasso, roc_svm)</span>
+<span id="cb31-38"><a href="#cb31-38" aria-hidden="true" tabindex="-1"></a>roc_all <span class="ot">&lt;-</span> <span class="fu">rbind</span>(roc_lasso, roc_rf, roc_xgboost, roc_svm)</span>
 <span id="cb31-39"><a href="#cb31-39" aria-hidden="true" tabindex="-1"></a>roc_all <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span> <span class="sc">-</span> specificity, <span class="at">y =</span> sensitivity, <span class="at">color =</span> model)) <span class="sc">+</span></span>
 <span id="cb31-40"><a href="#cb31-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>() <span class="sc">+</span></span>
 <span id="cb31-41"><a href="#cb31-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">lty =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
