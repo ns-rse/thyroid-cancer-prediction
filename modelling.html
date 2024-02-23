@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -227,8 +227,11 @@ div.csl-indent {
   </ul></li>
   <li><a href="#model-assessment" id="toc-model-assessment" class="nav-link" data-scroll-target="#model-assessment">Model Assessment</a>
   <ul class="collapse">
+  <li><a href="#predictions" id="toc-predictions" class="nav-link" data-scroll-target="#predictions">Predictions</a></li>
   <li><a href="#receiver-operating-characteristics" id="toc-receiver-operating-characteristics" class="nav-link" data-scroll-target="#receiver-operating-characteristics">Receiver Operating Characteristics</a></li>
   </ul></li>
+  <li><a href="#todo" id="toc-todo" class="nav-link" data-scroll-target="#todo">TODO</a></li>
+  <li><a href="#notes" id="toc-notes" class="nav-link" data-scroll-target="#notes">Notes</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
@@ -290,11 +293,11 @@ div.csl-indent {
 <figcaption>V-fold cross-validation of training data. Source: <a href="https://www.tidymodels.org/start/resampling/"><em>Feature Engineering and Selection: A Practical Approach for Predictive Models</em></a></figcaption>
 </figure>
 </div>
-<p>We can set this up by passing the <code>train</code> subset into the <code>rsample::vflod_cv()</code> function and define the number of folds (<code>v</code>) and the number of repeats (<code>repeats</code>).</p>
+<p>We can set this up by passing the <code>train</code> subset into the <a href="https://rsample.tidymodels.org/reference/vfold_cv.html"><code>rsample::vflod_cv()</code></a> function and define the number of folds (<code>v</code>) and the number of repeats (<code>repeats</code>).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>cv_folds <span class="ot">&lt;-</span> rsample<span class="sc">::</span><span class="fu">vfold_cv</span>(train, <span class="at">v =</span> <span class="dv">10</span>, <span class="at">repeats =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Another method of cross-validation is Leave One Out where one observation is removed from the (training) data set, the model is fitted on the remaining samples and then used to make a prediction on the excluded sample. This is then repeated on all samples. We can set this up using the <code>rsample::loo_cv()</code> function.</p>
+<p>Another method of cross-validation is Leave One Out where one observation is removed from the (training) data set, the model is fitted on the remaining samples and then used to make a prediction on the excluded sample. This is then repeated on all samples. We can set this up using the <a href="https://rsample.tidymodels.org/reference/loo_cv.html"><code>rsample::loo_cv()</code></a> function.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>cv_loo <span class="ot">&lt;-</span> rsample<span class="sc">::</span><span class="fu">loo_cv</span>(train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -307,6 +310,7 @@ div.csl-indent {
 <li>Creating dummy variables for categorical variables.</li>
 <li>Normalizing data, e.g.&nbsp;log-transformation, rescaling.</li>
 </ul>
+<p>Note that we pass only the <code>train</code> data into the recipe so that models are fitted on the training data.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>thyroid_recipe <span class="ot">&lt;-</span> recipes<span class="sc">::</span><span class="fu">recipe</span>(final_pathology <span class="sc">~</span> gender <span class="sc">+</span> nodule_size <span class="sc">+</span> age <span class="sc">+</span> asa_score <span class="sc">+</span> smoking_status <span class="sc">+</span> nodule_fna_thy, <span class="at">data =</span> train) <span class="sc">|&gt;</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># recipes::step_num2factor(final_pathology, levels = c("Benign", "Malignant")) |&gt;</span></span>
@@ -335,7 +339,7 @@ div.csl-indent {
 <section id="specify-the-model" class="level4">
 <h4 class="anchored" data-anchor-id="specify-the-model">Specify the Model</h4>
 <p>Whilst we have defined the relationship between variables in the Worfklow above we now need to say what model we wish to use to test the relationship between variables.</p>
-<p>We first set up a simple logistic regression model using <a href="https://parsnip.tidymodels.org/">parsnip</a>. The <code>mixture</code> argument is a value <code>0 &lt;= mixture &lt;= 1</code> which determines how much L1 regularisation is used in the model. A value of <code>mixture = 1</code> is equivalent to full L1 regularisation and a LASSO model whilst a value of <code>mixture = 0</code> is equivalent to full L2 regularisation and ridge regression.</p>
+<p>We first set up a simple logistic regression model using <a href="https://parsnip.tidymodels.org/">parsnip</a>. The <code>mixture</code> argument is a value <code>0 &lt;= mixture &lt;= 1</code> which determines how much L1 regularisation is used in the model. A value of <code>mixture = 1</code> is equivalent to full L1 regularisation and a LASSO model whilst a value of <code>mixture = 0</code> is equivalent to full L2 regularisation and ridge regression. Here we use a <code>mixture = 1</code> which is a full LASSO model and we may wish to inspect the results of this model and only use those variables which are of some importance in subsequent modelling steps.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>tune_spec_lasso <span class="ot">&lt;-</span> parsnip<span class="sc">::</span><span class="fu">logistic_reg</span>(<span class="at">penalty =</span> hardhat<span class="sc">::</span><span class="fu">tune</span>(), <span class="at">mixture =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  parsnip<span class="sc">::</span><span class="fu">set_engine</span>(<span class="st">"glmnet"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -343,7 +347,8 @@ div.csl-indent {
 </section>
 <section id="tuning" class="level4">
 <h4 class="anchored" data-anchor-id="tuning">Tuning</h4>
-<p>The next step is to tune the model using the <a href="https://tune.tidymodels.org/reference/tune_grid.html">tune::tune_grid()</a> function which will calculate accuracy or Root Mean Square Error (or other metrics) for a recipe with multiple samples. We defined our resamples above in two forms (not that we defined cross-validation as a way of sampling from our training data above).</p>
+<p>The next step is to tune the model using the <a href="https://tune.tidymodels.org/reference/tune_grid.html"><code>tune::tune_grid()</code></a> function which will calculate accuracy or Root Mean Square Error (or other metrics) for a recipe with multiple samples. We defined our resamples above in two forms (not that we defined cross-validation as a way of sampling from our training data above).</p>
+<p>Re-sampling is performed at this stage by specifying the <code>cv_folds</code> to the <code>resamples</code> option. This gives more robust estimates of the model parameters.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>lasso_grid <span class="ot">&lt;-</span> tune<span class="sc">::</span><span class="fu">tune_grid</span>(</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">object =</span> workflows<span class="sc">::</span><span class="fu">add_model</span>(thyroid_workflow, tune_spec_lasso),</span>
@@ -354,25 +359,15 @@ div.csl-indent {
 </section>
 <section id="fit-final-model" class="level4">
 <h4 class="anchored" data-anchor-id="fit-final-model">Fit Final Model</h4>
-<p>Now select the model with the highest Receiver Operating Characteristic Area Under the Curve (ROC AUC).</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>lasso_kfold_roc_auc <span class="ot">&lt;-</span> lasso_grid <span class="sc">|&gt;</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  tune<span class="sc">::</span><span class="fu">select_best</span>(<span class="at">metric =</span> <span class="st">"roc_auc"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<p>Now select the model with the highest Receiver Operating Characteristic Area Under the Curve (ROC AUC) from the tuned grid search results.</p>
 <p>…and finalize the workflow by adding this value.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>final_lasso_kfold <span class="ot">&lt;-</span> tune<span class="sc">::</span><span class="fu">finalize_workflow</span>(</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  workflows<span class="sc">::</span><span class="fu">add_model</span>(thyroid_workflow, tune_spec_lasso),</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  lasso_kfold_roc_auc</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 </section>
 <section id="model-evaluation" class="level4">
 <h4 class="anchored" data-anchor-id="model-evaluation">Model Evaluation</h4>
 <p>Collect metrics using the original data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>tune<span class="sc">::</span><span class="fu">last_fit</span>(<span class="at">object =</span> final_lasso_kfold, <span class="at">split =</span> split) <span class="sc">|&gt;</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  tune<span class="sc">::</span><span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>tune<span class="sc">::</span><span class="fu">last_fit</span>(<span class="at">object =</span> final_lasso_kfold, <span class="at">split =</span> split) <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  tune<span class="sc">::</span><span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
   .metric  .estimator .estimate .config             
@@ -381,19 +376,19 @@ div.csl-indent {
 2 roc_auc  binary         0.455 Preprocessor1_Model1</code></pre>
 </div>
 </div>
-<p>And plot the importance of variables</p>
+<p>And plot the importance of variables, note these are <em>not</em> the same as regression coefficients, the importance values are relative to each other, although the sign indicates whether that particular variable/level increases or decreases risk.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>final_lasso_kfold <span class="sc">|&gt;</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(train) <span class="sc">|&gt;</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  hardhat<span class="sc">::</span><span class="fu">extract_fit_parsnip</span>() <span class="sc">|&gt;</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  vip<span class="sc">::</span><span class="fu">vi</span>(<span class="at">lambda =</span> lasso_kfold_roc_auc<span class="sc">$</span>penalty) <span class="sc">|&gt;</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Importance =</span> <span class="fu">abs</span>(Importance),</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Variable =</span> <span class="fu">fct_reorder</span>(Variable, Importance)</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Importance, <span class="at">y =</span> Variable, <span class="at">fill =</span> Sign)) <span class="sc">+</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dark_theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>final_lasso_kfold <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(train) <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  hardhat<span class="sc">::</span><span class="fu">extract_fit_parsnip</span>() <span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  vip<span class="sc">::</span><span class="fu">vi</span>(<span class="at">lambda =</span> lasso_kfold_roc_auc<span class="sc">$</span>penalty) <span class="sc">|&gt;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Importance =</span> <span class="fu">abs</span>(Importance),</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Variable =</span> <span class="fu">fct_reorder</span>(Variable, Importance)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Importance, <span class="at">y =</span> Variable, <span class="at">fill =</span> Sign)) <span class="sc">+</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dark_theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Inverted geom defaults of fill and color/colour.
 To change them back, use invert_geom_defaults().</code></pre>
@@ -407,103 +402,140 @@ To change them back, use invert_geom_defaults().</code></pre>
 </div>
 </div>
 </section>
-<section id="roc-curves" class="level4">
-<h4 class="anchored" data-anchor-id="roc-curves">ROC Curves</h4>
-<p>We can use the <a href="https://yardstick.tidymodels.org/index.html">yardstick</a> package to facilitate visualising the <a href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic">Receiver operating characteristic</a> curve of fitted models.</p>
-<p><strong>TODO</strong> Add plotting of ROC curves and assessing predictive capcity in the test data.</p>
-<p>The Tidymodel framework allows us to use the same workflow that we setup to easily run other types of modelling. Here we use a Random Forest to classify. Random Forests itteratively search through the variables to work out which provides the best method of classifying people into either “Malignant” or “Be nign”. It tries all variables in ## turn. For binary variables such as gender this is straight-forward. For conti nuous variables a number of different ## thresholds for dichotomising the variable are tested for each possible split and the optimal cut-point is selected. ## This process is repeated so that after for example after selecting gender to be a strong predictor the remaining ## variables will tested for their predictive ability and the best selected. The number of trees that are created and tested is defined by the ‘trees’ parameter which here is set to 100. label: random-forest-specify</p>
-</section>
 </section>
 <section id="random-forest" class="level3">
 <h3 class="anchored" data-anchor-id="random-forest">Random Forest</h3>
-<p><a href="https://en.wikipedia.org/wiki/Random_forest">Random forests</a> build on the concept of regression trees by building many such trees on random subsets of data and averaging them. They build “deep” trees partitioning the data each time testing to see which variable provides the optimal split (best prediction into the “Malignant”/“Benign” categorisation). Adding splits each at each recursive branch until all individuals are classified. Part of the art is deciding how “deep” to go as too many partitions results in over-fitting and lack of generalisability.</p>
-<p>For binary variables such as <code>gender</code> this is straigh-forward but for continuous variables different thresholds for splitting are tested and the optimal point is selected.</p>
+<p><a href="https://en.wikipedia.org/wiki/Random_forest">Random forests</a> build on the concept of regression trees by building many such trees on random subsets of data and averaging them. They build “deep” trees partitioning the data each time testing to see which variable provides the optimal split (best prediction into the <code>Malignant</code>/<code>Benign</code> categorisation). Adding splits at each recursive branch until all individuals are classified. Part of the art is deciding how “deep” to go as too many partitions results in over-fitting and lack of generalisability.</p>
+<p>Random Forests itteratively search through the variables to work out which provides the best method of classifying people into either <code>Malignant</code> or <code>Benign</code>“. It tries all variables in# turn. For binary variables such as gender this is straight-forward. For continuous variables a number of different thresholds for dichotomising the variable are tested for each possible split and the optimal cut-point is selected. This process is repeated so that after for example after selecting gender to be a strong predictor the remaining variables will tested for their predictive ability and the best selected. The number of trees that are created and tested is defined by the <code>trees</code> parameter which here is set to 100. For binary variables such as <code>gender</code> this is straigh-forward but for continuous variables different thresholds for splitting are tested and the optimal point is selected.</p>
 <p>This whole process is repeated a number of times building lots of trees (i.e.&nbsp;random forests) and it is in this regard an “ensemble” method as it is averaging across many possible methods.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>rf_tune <span class="ot">&lt;-</span> parsnip<span class="sc">::</span><span class="fu">rand_forest</span>(</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">mtry =</span> <span class="fu">tune</span>(),</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">trees =</span> <span class="dv">100</span>,</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">min_n =</span> <span class="fu">tune</span>()</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"ranger"</span>, <span class="at">importance =</span> <span class="st">"impurity"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>rf_tune <span class="ot">&lt;-</span> parsnip<span class="sc">::</span><span class="fu">rand_forest</span>(</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">mtry =</span> <span class="fu">tune</span>(),</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">trees =</span> <span class="dv">100</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">min_n =</span> <span class="fu">tune</span>()</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"ranger"</span>, <span class="at">importance =</span> <span class="st">"impurity"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>As before the process is repeated using Cross validation.</p>
+<p>As before the process is repeated using Cross validation on the training set.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>rf_grid <span class="ot">&lt;-</span> tune<span class="sc">::</span><span class="fu">tune_grid</span>(</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(thyroid_workflow, rf_tune),</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">resamples =</span> cv_folds, <span class="do">## cv_loo,</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">grid =</span> <span class="fu">grid_regular</span>(<span class="fu">mtry</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>)), <span class="co"># smaller ranges will run quicker</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">min_n</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">25</span>)),</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">levels =</span> <span class="dv">3</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>rf_grid <span class="ot">&lt;-</span> tune<span class="sc">::</span><span class="fu">tune_grid</span>(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(thyroid_workflow, rf_tune),</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">resamples =</span> cv_folds, <span class="do">## cv_loo,</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">grid =</span> <span class="fu">grid_regular</span>(<span class="fu">mtry</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>)), <span class="co"># smaller ranges will run quicker</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">min_n</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">25</span>)),</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">levels =</span> <span class="dv">3</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>…and the best model based on the ROC AUC selected…</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>rf_highest_roc_auc <span class="ot">&lt;-</span> rf_grid <span class="sc">|&gt;</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select_best</span>(<span class="st">"roc_auc"</span>)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>final_rf <span class="ot">&lt;-</span> tune<span class="sc">::</span><span class="fu">finalize_workflow</span>(</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(thyroid_workflow, rf_tune),</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  rf_highest_roc_auc</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>rf_highest_roc_auc <span class="ot">&lt;-</span> rf_grid <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select_best</span>(<span class="st">"roc_auc"</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>final_rf <span class="ot">&lt;-</span> tune<span class="sc">::</span><span class="fu">finalize_workflow</span>(</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(thyroid_workflow, rf_tune),</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  rf_highest_roc_auc</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>…and the metrics calculated.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>tune<span class="sc">::</span><span class="fu">last_fit</span>(final_rf, split) <span class="sc">|&gt;</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  tune<span class="sc">::</span><span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>tune<span class="sc">::</span><span class="fu">last_fit</span>(final_rf, split) <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  tune<span class="sc">::</span><span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  .metric  .estimator .estimate .config             
+  &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;               
+1 accuracy binary         0.639 Preprocessor1_Model1
+2 roc_auc  binary         0.528 Preprocessor1_Model1</code></pre>
+</div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>final_rf <span class="sc">|&gt;</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(train) <span class="sc">|&gt;</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  hardhat<span class="sc">::</span><span class="fu">extract_fit_parsnip</span>() <span class="sc">|&gt;</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  vip<span class="sc">::</span><span class="fu">vi</span>(<span class="at">lambda =</span> final_rf<span class="sc">$</span>penalty) <span class="sc">|&gt;</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Importance =</span> <span class="fu">abs</span>(Importance),</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Variable =</span> <span class="fu">fct_reorder</span>(Variable, Importance)</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Importance, <span class="at">y =</span> Variable, <span class="at">fill =</span> Sign)) <span class="sc">+</span></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dark_theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>final_rf <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(train) <span class="sc">|&gt;</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  hardhat<span class="sc">::</span><span class="fu">extract_fit_parsnip</span>() <span class="sc">|&gt;</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  vip<span class="sc">::</span><span class="fu">vi</span>(<span class="at">lambda =</span> final_rf<span class="sc">$</span>penalty) <span class="sc">|&gt;</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Importance =</span> <span class="fu">abs</span>(Importance),</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Variable =</span> <span class="fu">fct_reorder</span>(Variable, Importance)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Importance, <span class="at">y =</span> Variable, <span class="at">fill =</span> Sign)) <span class="sc">+</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dark_theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="gradient-boosting" class="level3">
 <h3 class="anchored" data-anchor-id="gradient-boosting">Gradient Boosting</h3>
 <p><a href="https://en.wikipedia.org/wiki/Gradient_boosting">Gradient Boosting</a> is another “ensemble” method but in contrast to Random Forests where deep partitioning trees are formed, gradient boosting uses “shallow” trees with simpler decision rules and layers are built in a stage-wise fashion. It allows a choice of loss functions for optimisation and typically out-performs Random Forests when it comes to prediction modelling.</p>
+<p>A useful article showing how to use the <a href="">XGBoost</a> package with Tidymodels (via <code>parsnip::boost_tree()</code>) is <a href="https://www.tychobra.com/posts/2020-05-19-xgboost-with-tidymodels/">here</a> and informed the development of this section.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>xgboost_model <span class="ot">&lt;-</span> parsnip<span class="sc">::</span><span class="fu">boost_tree</span>(</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">mode =</span> <span class="st">"classification"</span>,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">trees =</span> <span class="dv">100</span>,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">min_n =</span> <span class="fu">tune</span>(),</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">tree_depth =</span> <span class="fu">tune</span>(),</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">learn_rate =</span> <span class="fu">tune</span>(),</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">loss_reduction =</span> <span class="fu">tune</span>()</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"xgboost"</span>, <span class="at">objective =</span> <span class="st">"binary:logistic"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We use the <a href="https://dials.tidymodels.org/"><code>dials</code></a> package to set tuning parameters for the model along with the grid space we are to use (there are lots of options here) this helps identify the hyperparameters with the lowest prediction error.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>xgboost_params <span class="ot">&lt;-</span> dials<span class="sc">::</span><span class="fu">parameters</span>(</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">min_n</span>(),</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tree_depth</span>(),</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">learn_rate</span>(),</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">loss_reduction</span>()</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>xgboost_grid <span class="ot">&lt;-</span> dials<span class="sc">::</span><span class="fu">grid_max_entropy</span>(</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  xgboost_params,</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">size =</span> <span class="dv">10</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Finally the model is tuned</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>xgboost_tuned <span class="ot">&lt;-</span> tune<span class="sc">::</span><span class="fu">tune_grid</span>(workflows<span class="sc">::</span><span class="fu">add_model</span>(thyroid_workflow, <span class="at">spec =</span> xgboost_model),</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">resamples =</span> cv_folds,</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">grid =</span> xgboost_grid,</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">metrics =</span> yardstick<span class="sc">::</span><span class="fu">metric_set</span>(roc_auc, accuracy, ppv),</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">control =</span> tune<span class="sc">::</span><span class="fu">control_grid</span>(<span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We get the best final fit from the Gradient Boosting model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>xgboost_highest_roc_auc <span class="ot">&lt;-</span> xgboost_tuned <span class="sc">|&gt;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  tune<span class="sc">::</span><span class="fu">select_best</span>(<span class="st">"roc_auc"</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>final_xgboost <span class="ot">&lt;-</span> tune<span class="sc">::</span><span class="fu">finalize_workflow</span>(</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(thyroid_workflow, xgboost_model),</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  xgboost_highest_roc_auc</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="support-vector-machine" class="level3">
 <h3 class="anchored" data-anchor-id="support-vector-machine">Support Vector Machine</h3>
 <p>Yet another modelling approach is <a href="https://en.wikipedia.org/wiki/Support_vector_machine">Support Vector Machines (SVMs)</a> and again we step through the process of specify the model using the <a href="https://parsnip.tidymodels.org/reference/svm_rbf.html"><code>svm_rbf()</code></a> function which aims to “<em>maximize the width of the margin between classes using a nonlinear class boundary</em>”</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>svm_tune_spec <span class="ot">&lt;-</span> parsnip<span class="sc">::</span><span class="fu">svm_rbf</span>(<span class="at">cost =</span> <span class="fu">tune</span>()) <span class="sc">|&gt;</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"kernlab"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>svm_tune_spec <span class="ot">&lt;-</span> parsnip<span class="sc">::</span><span class="fu">svm_rbf</span>(<span class="at">cost =</span> <span class="fu">tune</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"kernlab"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The hyperparameters are then tuned, in effect running the model in multiple subsets of the cross-validation to get a “best fit”.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>svm_grid <span class="ot">&lt;-</span> tune<span class="sc">::</span><span class="fu">tune_grid</span>(</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  workflows<span class="sc">::</span><span class="fu">add_model</span>(thyroid_workflow, svm_tune_spec),</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">resamples =</span> cv_folds, <span class="do">## cv_loo,</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">grid =</span> dials<span class="sc">::</span><span class="fu">grid_regular</span>(<span class="fu">cost</span>(), <span class="at">levels =</span> <span class="dv">20</span>)</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>svm_grid <span class="ot">&lt;-</span> tune<span class="sc">::</span><span class="fu">tune_grid</span>(</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  workflows<span class="sc">::</span><span class="fu">add_model</span>(thyroid_workflow, svm_tune_spec),</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">resamples =</span> cv_folds, <span class="do">## cv_loo,</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">grid =</span> dials<span class="sc">::</span><span class="fu">grid_regular</span>(<span class="fu">cost</span>(), <span class="at">levels =</span> <span class="dv">20</span>)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The best fit is selected and fit to the overall training data set.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>svm_highest_roc_auc <span class="ot">&lt;-</span> svm_grid <span class="sc">|&gt;</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  tune<span class="sc">::</span><span class="fu">select_best</span>(<span class="st">"roc_auc"</span>)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>final_scm <span class="ot">&lt;-</span> tune<span class="sc">::</span><span class="fu">finalize_workflow</span>(</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(thyroid_workflow, svm_tune_spec),</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  svm_highest_roc_auc</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>svm_highest_roc_auc <span class="ot">&lt;-</span> svm_grid <span class="sc">|&gt;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  tune<span class="sc">::</span><span class="fu">select_best</span>(<span class="st">"roc_auc"</span>)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>final_svm <span class="ot">&lt;-</span> tune<span class="sc">::</span><span class="fu">finalize_workflow</span>(</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(thyroid_workflow, svm_tune_spec),</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  svm_highest_roc_auc</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Finally an assessment is made on the accuracy</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>tune<span class="sc">::</span><span class="fu">last_fit</span>(final_rf, split,</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">metrics =</span> <span class="fu">metric_set</span>(roc_auc, accuracy, f_meas)</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  tune<span class="sc">::</span><span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Create a confusion matrix</p>
+<!-- Finally an assessment is made on the accuracy -->
 </section>
 </section>
 <section id="model-assessment" class="level2">
@@ -530,11 +562,404 @@ To change them back, use invert_geom_defaults().</code></pre>
 </tr>
 </tbody>
 </table>
-<p>There are a wealth of metrics based on combinations of these True/False Positive/Negative including precision, recall and so forth (refer to the above linked article for further details).</p>
+<p>There are a wealth of metrics based on combinations of these True/False Positive/Negative including precision, recall and so forth (refer to the above linked article for further details). The Tidymodels package for summarising model performance is <a href="https://yardstick.tidymodels.org/">yardstick</a> and we will use that to summarise the different metrics of model performance and how predictive these are.</p>
+<p>Confusion matrices such as the above can be easily generated and even plotted using <code>yardstick::confg_mat()</code> function.</p>
+<section id="predictions" class="level3">
+<h3 class="anchored" data-anchor-id="predictions">Predictions</h3>
+<p>We could compare the predicted status with the true status in the training sample which was used to fit the data to the model, but what we are really interested in is its performance outside of this sample, i.e.&nbsp;in the <code>test</code> proportion that were held out of the model fitting process. Fortunately Tidymodels has packages that make this easy as the <a href="https://tune.tidymodels.org/reference/last_fit.html"><code>tune::last_fit()</code></a> does this automatcally when given the final fitted model and the object that splits the data into two (in this case the <code>split</code> object we created right after simluating the data).</p>
+<p>We have in fact already made predictions throughout the modelling process already when we produced the various confusion matrices but we shall repeat them for each of the fitted models so its easier to make direct comparisons.</p>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="do">## LASSO</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>lasso_confmat <span class="ot">&lt;-</span> tune<span class="sc">::</span><span class="fu">last_fit</span>(<span class="at">object =</span> final_lasso_kfold, <span class="at">split =</span> split) <span class="sc">|&gt;</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  tune<span class="sc">::</span><span class="fu">collect_predictions</span>() <span class="sc">|&gt;</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  yardstick<span class="sc">::</span><span class="fu">conf_mat</span>(final_pathology, .pred_class)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(lasso_confmat<span class="sc">$</span>table, <span class="at">caption =</span> <span class="st">"LASSO"</span>)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Random Forest</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>rf_confmat <span class="ot">&lt;-</span> tune<span class="sc">::</span><span class="fu">last_fit</span>(final_rf, split) <span class="sc">|&gt;</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  tune<span class="sc">::</span><span class="fu">collect_predictions</span>() <span class="sc">|&gt;</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  yardstick<span class="sc">::</span><span class="fu">conf_mat</span>(final_pathology, .pred_class)</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(rf_confmat<span class="sc">$</span>table, <span class="at">caption =</span> <span class="st">"Random Forest"</span>)</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="do">## XGBoost</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>xgboost_confmat <span class="ot">&lt;-</span> tune<span class="sc">::</span><span class="fu">last_fit</span>(final_xgboost, split) <span class="sc">|&gt;</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  tune<span class="sc">::</span><span class="fu">collect_predictions</span>() <span class="sc">|&gt;</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>  yardstick<span class="sc">::</span><span class="fu">conf_mat</span>(final_pathology, .pred_class)</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(xgboost_confmat<span class="sc">$</span>table, <span class="at">caption=</span><span class="st">"XGBoost"</span>)</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="do">## SVM</span></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>svm_confmat <span class="ot">&lt;-</span> tune<span class="sc">::</span><span class="fu">last_fit</span>(final_svm, split) <span class="sc">|&gt;</span></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>  tune<span class="sc">::</span><span class="fu">collect_predictions</span>() <span class="sc">|&gt;</span></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>  yardstick<span class="sc">::</span><span class="fu">conf_mat</span>(final_pathology, .pred_class)</span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(svm_confmat<span class="sc">$</span>table, <span class="at">caption =</span> <span class="st">"SVM"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell quarto-layout-panel" data-layout-ncol="4">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
+<table class="table table-sm table-striped small">
+<caption>LASSO</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">Benign</th>
+<th style="text-align: right;">Malignant</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Benign</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Malignant</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">99</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
+<table class="table table-sm table-striped small">
+<caption>Random Forest</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">Benign</th>
+<th style="text-align: right;">Malignant</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Benign</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">19</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Malignant</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">80</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
+<table class="table table-sm table-striped small">
+<caption>XGBoost</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">Benign</th>
+<th style="text-align: right;">Malignant</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Benign</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Malignant</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">99</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
+<table class="table table-sm table-striped small">
+<caption>SVM</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">Benign</th>
+<th style="text-align: right;">Malignant</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Benign</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Malignant</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">83</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: flex-start;">
+<p>Confusion matrices for fitted models</p>
+</div>
+</div>
+</div>
+<p>Confusion matrices such as these can be used to calculate an array of <a href="https://en.wikipedia.org/wiki/Sensitivity_and_specificity">statistics</a> such as sensitivity, specificity, positive and negative predicitve value, false discovery rate and soforth. The Yardstick package has a convenience method for the result of <code>yardstick::conf_mat()</code> (a yardstick confusion matrix object). In the section below these are combined across models into a single table that we print out.</p>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>lasso_confmat_summary <span class="ot">&lt;-</span> <span class="fu">summary</span>(lasso_confmat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: While computing binary `precision()`, no predicted events were detected (i.e.
+`true_positive + false_positive = 0`).
+Precision is undefined in this case, and `NA` will be returned.
+Note that 45 true event(s) actually occurred for the problematic event level,
+Benign
+While computing binary `precision()`, no predicted events were detected (i.e.
+`true_positive + false_positive = 0`).
+Precision is undefined in this case, and `NA` will be returned.
+Note that 45 true event(s) actually occurred for the problematic event level,
+Benign</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>lasso_confmat_summary<span class="sc">$</span>model <span class="ot">&lt;-</span> <span class="st">"LASSO"</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>rf_confmat_summary <span class="ot">&lt;-</span> <span class="fu">summary</span>(rf_confmat)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>rf_confmat_summary<span class="sc">$</span>model <span class="ot">&lt;-</span> <span class="st">"Random Forest"</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>xgboost_confmat_summary <span class="ot">&lt;-</span> <span class="fu">summary</span>(xgboost_confmat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: While computing binary `precision()`, no predicted events were detected (i.e.
+`true_positive + false_positive = 0`).
+Precision is undefined in this case, and `NA` will be returned.
+Note that 45 true event(s) actually occurred for the problematic event level,
+Benign
+While computing binary `precision()`, no predicted events were detected (i.e.
+`true_positive + false_positive = 0`).
+Precision is undefined in this case, and `NA` will be returned.
+Note that 45 true event(s) actually occurred for the problematic event level,
+Benign</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>xgboost_confmat_summary<span class="sc">$</span>model <span class="ot">&lt;-</span> <span class="st">"XGBoost"</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>svm_confmat_summary <span class="ot">&lt;-</span> <span class="fu">summary</span>(svm_confmat)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>svm_confmat_summary<span class="sc">$</span>model <span class="ot">&lt;-</span> <span class="st">"SVM"</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Bind these to each others by row to produce a data frame in "long format" which we tidy (remove the '.estimator')</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="do">## column and reshape.</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>model_summary <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  svm_confmat_summary,</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>  rf_confmat_summary,</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>  xgboost_confmat_summary,</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>  lasso_confmat_summary</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>drop <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">".estimator"</span>)</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>model_summary <span class="ot">&lt;-</span> model_summary[, <span class="sc">!</span>(<span class="fu">names</span>(model_summary) <span class="sc">%in%</span> drop)]</span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(model_summary) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Metric"</span>, <span class="st">"estimate"</span>, <span class="st">"model"</span>)</span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>model_summary <span class="ot">&lt;-</span> model_summary <span class="sc">|&gt;</span></span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">Metric =</span> <span class="fu">case_when</span>(</span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>    Metric <span class="sc">==</span> <span class="st">"accuracy"</span> <span class="sc">~</span> <span class="st">"Accuracy"</span>,</span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>    Metric <span class="sc">==</span> <span class="st">"kap"</span> <span class="sc">~</span> <span class="st">"Kappa"</span>,</span>
+<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a>    Metric <span class="sc">==</span> <span class="st">"sens"</span> <span class="sc">~</span> <span class="st">"Sensitivity"</span>,</span>
+<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a>    Metric <span class="sc">==</span> <span class="st">"spec"</span> <span class="sc">~</span> <span class="st">"Specificity"</span>,</span>
+<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a>    Metric <span class="sc">==</span> <span class="st">"ppv"</span> <span class="sc">~</span> <span class="st">"Positive Predictive Value"</span>,</span>
+<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a>    Metric <span class="sc">==</span> <span class="st">"npv"</span> <span class="sc">~</span> <span class="st">"Negative Predictive Value"</span>,</span>
+<span id="cb30-24"><a href="#cb30-24" aria-hidden="true" tabindex="-1"></a>    Metric <span class="sc">==</span> <span class="st">"mcc"</span> <span class="sc">~</span> <span class="st">"Matthews Correlation Coefficient"</span>,</span>
+<span id="cb30-25"><a href="#cb30-25" aria-hidden="true" tabindex="-1"></a>    Metric <span class="sc">==</span> <span class="st">"j_index"</span> <span class="sc">~</span> <span class="st">"Youden's J-Statistic"</span>,</span>
+<span id="cb30-26"><a href="#cb30-26" aria-hidden="true" tabindex="-1"></a>    Metric <span class="sc">==</span> <span class="st">"bal_accuracy"</span> <span class="sc">~</span> <span class="st">"Balanced Accuracy"</span>,</span>
+<span id="cb30-27"><a href="#cb30-27" aria-hidden="true" tabindex="-1"></a>    Metric <span class="sc">==</span> <span class="st">"detection_prevalence"</span> <span class="sc">~</span> <span class="st">"Detection Prevelance"</span>,</span>
+<span id="cb30-28"><a href="#cb30-28" aria-hidden="true" tabindex="-1"></a>    Metric <span class="sc">==</span> <span class="st">"precision"</span> <span class="sc">~</span> <span class="st">"Precision"</span>,</span>
+<span id="cb30-29"><a href="#cb30-29" aria-hidden="true" tabindex="-1"></a>    Metric <span class="sc">==</span> <span class="st">"recall"</span> <span class="sc">~</span> <span class="st">"Recall"</span>,</span>
+<span id="cb30-30"><a href="#cb30-30" aria-hidden="true" tabindex="-1"></a>    Metric <span class="sc">==</span> <span class="st">"f_meas"</span> <span class="sc">~</span> <span class="st">"F-Measure"</span></span>
+<span id="cb30-31"><a href="#cb30-31" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb30-32"><a href="#cb30-32" aria-hidden="true" tabindex="-1"></a>tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(model_summary, <span class="at">names_from =</span> <span class="st">"model"</span>, <span class="at">values_from =</span> <span class="st">"estimate"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb30-33"><a href="#cb30-33" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell quarto-layout-panel" data-layout-ncol="1">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<table class="table table-sm table-striped small">
+<caption>Summary Statistics of Model Accuracy</caption>
+<colgroup>
+<col style="width: 45%">
+<col style="width: 13%">
+<col style="width: 19%">
+<col style="width: 11%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Metric</th>
+<th style="text-align: right;">SVM</th>
+<th style="text-align: right;">Random Forest</th>
+<th style="text-align: right;">XGBoost</th>
+<th style="text-align: right;">LASSO</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Accuracy</td>
+<td style="text-align: right;">0.6319444</td>
+<td style="text-align: right;">0.6319444</td>
+<td style="text-align: right;">0.6875</td>
+<td style="text-align: right;">0.6875</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kappa</td>
+<td style="text-align: right;">0.0185185</td>
+<td style="text-align: right;">0.0577778</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">0.0000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sensitivity</td>
+<td style="text-align: right;">0.1777778</td>
+<td style="text-align: right;">0.2444444</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">0.0000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Specificity</td>
+<td style="text-align: right;">0.8383838</td>
+<td style="text-align: right;">0.8080808</td>
+<td style="text-align: right;">1.0000</td>
+<td style="text-align: right;">1.0000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Positive Predictive Value</td>
+<td style="text-align: right;">0.3333333</td>
+<td style="text-align: right;">0.3666667</td>
+<td style="text-align: right;">NaN</td>
+<td style="text-align: right;">NaN</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Negative Predictive Value</td>
+<td style="text-align: right;">0.6916667</td>
+<td style="text-align: right;">0.7017544</td>
+<td style="text-align: right;">0.6875</td>
+<td style="text-align: right;">0.6875</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Matthews Correlation Coefficient</td>
+<td style="text-align: right;">0.0201008</td>
+<td style="text-align: right;">0.0599486</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Youden’s J-Statistic</td>
+<td style="text-align: right;">0.0161616</td>
+<td style="text-align: right;">0.0525253</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">0.0000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Balanced Accuracy</td>
+<td style="text-align: right;">0.5080808</td>
+<td style="text-align: right;">0.5262626</td>
+<td style="text-align: right;">0.5000</td>
+<td style="text-align: right;">0.5000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Detection Prevelance</td>
+<td style="text-align: right;">0.1666667</td>
+<td style="text-align: right;">0.2083333</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">0.0000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Precision</td>
+<td style="text-align: right;">0.3333333</td>
+<td style="text-align: right;">0.3666667</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Recall</td>
+<td style="text-align: right;">0.1777778</td>
+<td style="text-align: right;">0.2444444</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">0.0000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">F-Measure</td>
+<td style="text-align: right;">0.2318841</td>
+<td style="text-align: right;">0.2933333</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
 <section id="receiver-operating-characteristics" class="level3">
 <h3 class="anchored" data-anchor-id="receiver-operating-characteristics">Receiver Operating Characteristics</h3>
-<p>The <a href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic">Receiver Operating Characteristic (ROC)</a> is a useful graphical tool for potting the false positive rate v’s the true positive rate (sensitivity).</p>
+<p>We can use the <a href="https://yardstick.tidymodels.org/index.html">yardstick</a> package to facilitate visualising the [ReceThe <a href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic">Receiver Operating Characteristic (ROC)</a> is a useful graphical tool for potting the false positive rate v’s the true positive rate (sensitivity). The <a href="https://yardstick.tidymodels.org/reference/roc_curve.html"><code>roc_curve()</code></a> function in yardstick makes plotting the ROC curvers relatively straight-forward.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ROC : LASSO</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>roc_auc_lasso <span class="ot">&lt;-</span> tune<span class="sc">::</span><span class="fu">last_fit</span>(final_lasso_kfold, split) <span class="sc">|&gt;</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  tune<span class="sc">::</span><span class="fu">collect_predictions</span>() <span class="sc">|&gt;</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  yardstick<span class="sc">::</span><span class="fu">roc_auc</span>(final_pathology, .pred_Malignant)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>roc_lasso <span class="ot">&lt;-</span> tune<span class="sc">::</span><span class="fu">last_fit</span>(final_lasso_kfold, split) <span class="sc">|&gt;</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  tune<span class="sc">::</span><span class="fu">collect_predictions</span>() <span class="sc">|&gt;</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  yardstick<span class="sc">::</span><span class="fu">roc_curve</span>(<span class="at">truth =</span> final_pathology, .pred_Malignant)</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>roc_lasso<span class="sc">$</span>model <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"LASSO ("</span>, roc_auc_lasso<span class="sc">$</span>.estimate, <span class="st">")"</span>)</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="do">## ROC : Random Forest</span></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>roc_auc_rf <span class="ot">&lt;-</span> tune<span class="sc">::</span><span class="fu">last_fit</span>(final_rf, split) <span class="sc">|&gt;</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>  tune<span class="sc">::</span><span class="fu">collect_predictions</span>() <span class="sc">|&gt;</span></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>  yardstick<span class="sc">::</span><span class="fu">roc_auc</span>(final_pathology, .pred_Malignant)</span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>roc_rf <span class="ot">&lt;-</span> tune<span class="sc">::</span><span class="fu">last_fit</span>(final_rf, split) <span class="sc">|&gt;</span></span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>  tune<span class="sc">::</span><span class="fu">collect_predictions</span>() <span class="sc">|&gt;</span></span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>  yardstick<span class="sc">::</span><span class="fu">roc_curve</span>(<span class="at">truth =</span> final_pathology, .pred_Malignant)</span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>roc_rf<span class="sc">$</span>model <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"Random Forest ("</span>, roc_auc_rf<span class="sc">$</span>.estimate, <span class="st">")"</span>)</span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a><span class="do">## ROC : Random XGBoost</span></span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>roc_auc_xgboost <span class="ot">&lt;-</span> tune<span class="sc">::</span><span class="fu">last_fit</span>(final_xgboost, split) <span class="sc">|&gt;</span></span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>  tune<span class="sc">::</span><span class="fu">collect_predictions</span>() <span class="sc">|&gt;</span></span>
+<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a>  yardstick<span class="sc">::</span><span class="fu">roc_auc</span>(final_pathology, .pred_Malignant)</span>
+<span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a>roc_xgboost <span class="ot">&lt;-</span> tune<span class="sc">::</span><span class="fu">last_fit</span>(final_xgboost, split) <span class="sc">|&gt;</span></span>
+<span id="cb31-24"><a href="#cb31-24" aria-hidden="true" tabindex="-1"></a>  tune<span class="sc">::</span><span class="fu">collect_predictions</span>() <span class="sc">|&gt;</span></span>
+<span id="cb31-25"><a href="#cb31-25" aria-hidden="true" tabindex="-1"></a>  yardstick<span class="sc">::</span><span class="fu">roc_curve</span>(<span class="at">truth =</span> final_pathology, .pred_Malignant)</span>
+<span id="cb31-26"><a href="#cb31-26" aria-hidden="true" tabindex="-1"></a>roc_xgboost<span class="sc">$</span>model <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"XGBoost ("</span>, roc_auc_xgboost<span class="sc">$</span>.estimate, <span class="st">")"</span>)</span>
+<span id="cb31-27"><a href="#cb31-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-28"><a href="#cb31-28" aria-hidden="true" tabindex="-1"></a><span class="do">## ROC : SVM</span></span>
+<span id="cb31-29"><a href="#cb31-29" aria-hidden="true" tabindex="-1"></a>roc_auc_svm <span class="ot">&lt;-</span> tune<span class="sc">::</span><span class="fu">last_fit</span>(final_svm, split) <span class="sc">|&gt;</span></span>
+<span id="cb31-30"><a href="#cb31-30" aria-hidden="true" tabindex="-1"></a>  tune<span class="sc">::</span><span class="fu">collect_predictions</span>() <span class="sc">|&gt;</span></span>
+<span id="cb31-31"><a href="#cb31-31" aria-hidden="true" tabindex="-1"></a>  yardstick<span class="sc">::</span><span class="fu">roc_auc</span>(final_pathology, .pred_Malignant)</span>
+<span id="cb31-32"><a href="#cb31-32" aria-hidden="true" tabindex="-1"></a>roc_svm <span class="ot">&lt;-</span> tune<span class="sc">::</span><span class="fu">last_fit</span>(final_svm, split) <span class="sc">|&gt;</span></span>
+<span id="cb31-33"><a href="#cb31-33" aria-hidden="true" tabindex="-1"></a>  tune<span class="sc">::</span><span class="fu">collect_predictions</span>() <span class="sc">|&gt;</span></span>
+<span id="cb31-34"><a href="#cb31-34" aria-hidden="true" tabindex="-1"></a>  yardstick<span class="sc">::</span><span class="fu">roc_curve</span>(<span class="at">truth =</span> final_pathology, .pred_Malignant)</span>
+<span id="cb31-35"><a href="#cb31-35" aria-hidden="true" tabindex="-1"></a>roc_svm<span class="sc">$</span>model <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"SVM ("</span>, roc_auc_svm<span class="sc">$</span>.estimate, <span class="st">")"</span>)</span>
+<span id="cb31-36"><a href="#cb31-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-37"><a href="#cb31-37" aria-hidden="true" tabindex="-1"></a><span class="do">## Combine ROC curves across all three models and plot</span></span>
+<span id="cb31-38"><a href="#cb31-38" aria-hidden="true" tabindex="-1"></a>roc_all <span class="ot">&lt;-</span> <span class="fu">rbind</span>(roc_rf, roc_lasso, roc_svm)</span>
+<span id="cb31-39"><a href="#cb31-39" aria-hidden="true" tabindex="-1"></a>roc_all <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span> <span class="sc">-</span> specificity, <span class="at">y =</span> sensitivity, <span class="at">color =</span> model)) <span class="sc">+</span></span>
+<span id="cb31-40"><a href="#cb31-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>() <span class="sc">+</span></span>
+<span id="cb31-41"><a href="#cb31-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">lty =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb31-42"><a href="#cb31-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>() <span class="sc">+</span></span>
+<span id="cb31-43"><a href="#cb31-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dark_theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="modelling_files/figure-html/predictions-roc-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>ROC Curves</figcaption>
+</figure>
+</div>
+</div>
+</div>
 </section>
+</section>
+<section id="todo" class="level2">
+<h2 class="anchored" data-anchor-id="todo">TODO</h2>
+<p>I still have some things I need to add to the above workflow…</p>
+<ul class="task-list">
+<li><label><input type="checkbox">Predictive accuracy on the training data set and comparing to the test cohorts (if the predictive accuracy is worse in the later then the models are being over-fitted).</label></li>
+<li><label><input type="checkbox">Calculate ROC AUC for each model and add to legend of ROC curve plot (see <a href="https://yardstick.tidymodels.org/reference/roc_auc.html"><code>yardstick::roc_auc()</code></a>).</label></li>
+<li><label><input type="checkbox">Add note that in the Sheffield data set the results of the LASSO may be used as a method of narrowing down which variables to use in subsequent models.</label></li>
+<li><label><input type="checkbox">Add in Elastic Net regression as well as LASSO.</label></li>
+<li><label><input type="checkbox">Increase the <code>tune::metric_set()</code> on which models are tuned perhaps? Most are <code>roc_auc</code> but can use <code>ppv</code>, <code>precision</code>, <code>sens</code> <code>spec</code>, <code>recall</code>, <code>accuracy</code> and others (see options under <a href="https://yardstick.tidymodels.org/reference/accuracy.html#see-also">here</a>).</label></li>
+<li><label><input type="checkbox" checked="">Remove the predictive accuracy from each subsection (at least in the output).</label></li>
+<li><label><input type="checkbox">Sort column headings for the confusion matrices using <a href="https://mine-cetinkaya-rundel.github.io/quarto-tip-a-day/posts/01-side-by-side-tables/"><code>#| tbl-subcap:       []</code></a> .</label></li>
+<li><label><input type="checkbox" checked="">Tune the XGBoost parameters, currently have the following errors</label></li>
+</ul>
+<pre><code> &gt; roc_auc_xgboost &lt;- tune::last_fit(final_xgboost, split) |&gt;
+  tune::collect_predictions() |&gt;
+  yardstick::roc_auc(final_pathology, .pred_Malignant)
++ + Error:
+! 4 arguments have been tagged for tuning in these components: model_spec.
+Please use one of the tuning functions (e.g. `tune_grid()`) to optimize them.
+Run `rlang::last_trace()` to see where the error occurred.</code></pre>
+</section>
+<section id="notes" class="level2">
+<h2 class="anchored" data-anchor-id="notes">Notes</h2>
+<p>If you want to produce a plain R script of the code chunks in this document (or any Quarto document for that matter) you can do so using <a href="https://bookdown.org/yihui/rmarkdown-cookbook/purl.html"><code>knirt::purl()</code></a> function and sections which have <code>#| purl: true</code> will be included (all sections in this page have that added, none of the other Quarto documents have that as of writing). The following will take as input <code>docs/modelling.qmd</code> and make an R script of just the code cells in <code>r/modelling.R</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">purl</span>(<span class="st">"docs/modelling.qmd"</span>, <span class="at">output =</span> <span class="st">"r/modelling.R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
