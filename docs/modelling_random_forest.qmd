@@ -1,0 +1,110 @@
+### Random Forest
+
+[Random forests](https://en.wikipedia.org/wiki/Random_forest) build on the concept of regression trees by building many
+such trees on random subsets of data and averaging them. They build "deep" trees partitioning the data each time testing
+to see which variable provides the optimal split (best prediction into the `Malignant`/`Benign` categorisation). Adding
+splits at each recursive branch until all individuals are classified. Part of the art is deciding how "deep" to go
+as too many partitions results in over-fitting and lack of generalisability.
+
+Random Forests itteratively search through the variables to work out which provides the best method of classifying
+people into either `Malignant` or `Benign`". It tries all variables in# turn. For binary variables such as gender this
+is straight-forward. For continuous variables a number of different thresholds for dichotomising the variable are
+tested for each possible split and the optimal cut-point is selected. This process is repeated so that after for example
+after selecting gender to be a strong predictor the remaining variables will tested for their predictive ability and the
+best selected. The number of trees that are created and tested is defined by the `trees` parameter which here is set
+to 100. For binary variables such as `gender` this is straigh-forward but for continuous variables different thresholds
+for splitting are tested and the optimal point is selected.
+
+This whole process is repeated a number of times building lots of trees (i.e. random forests) and it is in this regard
+an "ensemble" method as it is averaging across many possible methods.
+
+``` {r}
+#| label: random-forest-specify
+#| purl: true
+#| eval: true
+#| echo: true
+#| output: false
+rf_tune_spec <- parsnip::rand_forest(
+  mtry = tune(),
+  trees = 100,
+  min_n = tune()
+) |>
+  set_mode("classification") |>
+  set_engine("ranger", importance = "impurity")
+```
+
+As before the process is repeated using Cross validation on the training set.
+
+``` {r}
+#| label: random-forest-tune
+#| purl: true
+#| eval: true
+#| echo: true
+#| output: false
+#| cache: true
+rf_grid <- tune::tune_grid(
+  add_model(thyroid_workflow, rf_tune_spec),
+  resamples = cv_folds, ## cv_loo,
+  grid = grid_regular(mtry(range = c(5, 10)), # smaller ranges will run quicker
+    min_n(range = c(2, 25)),
+    levels = 3
+  )
+)
+```
+...and the best model based on the ROC AUC selected...
+
+``` {r}
+#| label: random-forest-model
+#| purl: true
+#| eval: true
+#| echo: true
+#| output: false
+rf_highest_roc_auc <- rf_grid |>
+  select_best("roc_auc")
+final_rf <- tune::finalize_workflow(
+  add_model(thyroid_workflow, rf_tune_spec),
+  rf_highest_roc_auc
+)
+```
+
+...and the metrics calculated, although this step is deferred to the end when all models are summarised.
+
+``` {r}
+#| label: random-forest-evaluate
+#| purl: true
+#| eval: false
+#| echo: true
+#| output: true
+tune::last_fit(final_rf, split) |>
+  tune::collect_metrics(metrics)
+```
+
+``` {r}
+#| label: rf-save
+#| purl: true
+#| eval: true
+#| echo: true
+#| output: false
+save(rf_tune_spec, rf_grid, final_rf, rf_highest_roc_auc, file = "data/r/rf.RData")
+```
+
+The following would plot the importance of each value in the Random Forest model.
+
+``` {r}
+#| label: random-forest-kfold-eval-importance
+#| purl: true
+#| eval: false
+#| echo: true
+#| output: true
+final_rf |>
+  fit(train) |>
+  hardhat::extract_fit_parsnip() |>
+  vip::vip(lambda = final_rf$penalty) |>
+  dplyr::mutate(
+    Importance = abs(Importance),
+    Variable = fct_reorder(Variable, Importance)
+  ) |>
+  ggplot(mapping = aes(x = Importance, y = Variable, fill = Sign)) +
+  # geom_col() +
+  dark_theme_minimal()
+ ```

@@ -17,146 +17,12 @@ library(tidyverse)
 library(tidymodels)
 library(vip)
 tidymodels_prefer()
+
+# Set the metrics we wish to summarise
+metrics <- c("roc_auc", "ppv", "npv")
 ```
 
-## TidyModelling
-
-The [R](https://www.r-project.org) packages included in the [Tidymodels](https://www.tidymodels.org/) provide an
-excellent framework for undertaking the modelling aspect of the work.
-
-A very useful training workshop was held 2023-10-18 as part of the [R in Pharma](https://rinpharma.com/) event. [Nicola
-Rennie](https://nrennie.rbind.io/) has made her material is available on-line and it provides a good starting point for
-applying the various modelling methodologies to prediction of Thyroid cancer.
-
-+ [Slides](https://nrennie.github.io/r-pharma-2023-tidymodels/#/title-slide)
-+ [GitHub Repo](https://github.com/nrennie/r-pharma-2023-tidymodels)
-
-Whilst this provides an excellent introduction to the Tidy Modelling framework the book [Tidy Modeling with
-R](https://www.tmwr.org/) goes deeper into the methods and options available. Another useful reference on which this
-books builds is [R for Data Science (2e)](https://r4ds.hadley.nz/) which should serve as a useful reference for learning
-R and adopting good practices.
-
-It is also recommended to read the documentation that goes with the [Tidymodels](https://www.tidymodels.org/) package,
-in particular the [Get Started](https://www.tidymodels.org/start/) page which includes a [predictive modelling case
-study](https://www.tidymodels.org/start/case-study/).
-
-### Setting up Tidymodels
-
-In the absence of the data set that is to be analysed we simulate some dummy data on which to demonstrate the methods.
-
-```{r}
-#| label: simulate
-#| purl: true
-#| eval: true
-#| echo: false
-#| output: false
-#| file: r/simulate_data.R
-source("r/simulate_data.R")
-```
-
-### Training and Testing
-
-To get going with Tidymodels we first need to split our data into _Testing_ and _Training_ subsets. This is done so that
-we do not have an over-fitted model as we fit the model to the training subset and then test its predictive accuracy in
-the subset that we withheld, the _test_ subset.
-
-The allocation of individuals to `train` or `test` is performed randomly and so we set a
-[seed](https://en.wikipedia.org/wiki/Random_seed) to ensure the pseudo-random number generator produces the same split
-each and every time this script is run (this makes our work reproducible). A decision has to be made about how to split
-the data, often a slightly larger proportion is used for the training subset, here we chose to use a `3:1` split
-(i.e. 75% of observations are used in the training set).
-
-```{r}
-#| label: test-train-split
-#| purl: true
-#| eval: true
-#| echo: true
-#| output: false
-set.seed(5039378)
-split <- rsample::initial_split(dummy, prop = 0.75)
-train <- rsample::training(split)
-test <- rsample::testing(split)
-```
-
-### Cross Validation
-
-We will still want to make some assessment of the model estimated from the training set and this is achieved by
-[resampling](https://www.tmwr.org/resampling) which involves taking subsets of our training data and fitting the models
-on those subsets and then looking at the distribution of metrics across the multiple model fits. A commonly used
-approach for this methodology is [_Cross-Validation_](https://www.tmwr.org/resampling#cv). V-fold cross-validation
-splits the data into _V_ folds, the first fold is excluded from the data set and the model assessed, then this subset is
-replaced and the second fold is excluded and the model assessed again. This is repeated until each fold has been
-excluded and the model estimated on the remainder. This method can then be repeated _R_ times where the folds are varied
-in each repetition to give a better estimate of the model parameters.
-
-The following figure gives an overview of how V-fold cross-validation works (without repetition).
-
-![V-fold cross-validation of training data. Source: [_Feature Engineering and Selection: A Practical Approach for Predictive Models_](https://www.tidymodels.org/start/resampling/)](https://bookdown.org/max/FES/figures/resampling.svg)
-
-We can set this up by passing the `train` subset into the
-[`rsample::vflod_cv()`](https://rsample.tidymodels.org/reference/vfold_cv.html) function and define the number of folds
-(`v`) and the number of repeats (`repeats`).
-
-```{r}
-#| label: cv-vfold
-#| purl: true
-#| eval: true
-#| echo: true
-#| output: false
-cv_folds <- rsample::vfold_cv(train, v = 10, repeats = 10)
-```
-
-Another method of cross-validation is Leave One Out where one observation is removed from the (training) data set, the
-model is fitted on the remaining samples and then used to make a prediction on the excluded sample. This is then
-repeated on all samples. We can set this up using the
-[`rsample::loo_cv()`](https://rsample.tidymodels.org/reference/loo_cv.html) function.
-
-```{r}
-#| label: cv-loo
-#| purl: true
-#| eval: true
-#| echo: true
-#| output: false
-cv_loo <- rsample::loo_cv(train)
-```
-
-### Recipe
-
-In the Tidymodels framework the starting point is to create a [Recipe](https://www.tidymodels.org/start/recipes/), this
-sets up the "ingredients" for the model and defines what steps should be taken prior to fitting the model, regardless of
-what model is being fitted. Steps that can go into making a recipe are...
-
-+ Define the model in terms of outcome variable and predictors.
-+ Creating dummy variables for categorical variables.
-+ Normalizing data, e.g. log-transformation, rescaling.
-
-Note that we pass only the `train` data into the recipe so that models are fitted on the training data.
-```{r}
-#| label: recipe
-#| purl: true
-#| eval: true
-#| echo: true
-#| output: false
-thyroid_recipe <- recipes::recipe(final_pathology ~ gender + nodule_size + age + asa_score + smoking_status + nodule_fna_thy, data = train) |>
-  # recipes::step_num2factor(final_pathology, levels = c("Benign", "Malignant")) |>
-  recipes::step_dummy(gender, asa_score, smoking_status, nodule_fna_thy) |>
-  recipes::step_normalize(all_numeric())
-```
-
-### Workflow
-
-Once a recipe has been defined it can be added to a [workflow](https://workflows.tidymodels.org/) which will apply this
-step every time the workflow is run using the different models and post-processing steps that we will add.
-
-```{r}
-#| label: workflow
-#| purl: true
-#| eval: true
-#| echo: true
-#| output: false
-thyroid_workflow <- workflows::workflow() |>
-  workflows::add_recipe(thyroid_recipe)
-```
+{{< include modelling_tidymodel.qmd >}}
 
 ## Methods to Consider
 
@@ -164,386 +30,13 @@ There are a wealth of options when it comes to "Machine Learning", these days ev
 the term! There are however a large number of more sophisticated methods for analysing the data, and it is often wise to
 apply a number of methods to ensure they are converging on similar solutions rather than cherry-picking any one method.
 
-### Logistic Regression
-
-Logistic regression, even in its most basic form is, still considered a "machine learning" algorithm. However because we
-do not know which out of an array of variable will be useful predictors and, following [Occam's
-Razor](https://en.wikipedia.org/wiki/Occam's_razor) we would tend to prefer simpler explanatory models over complex ones
-we need a method of determining what subset of variables gives good prediction. An old approach to this was to use
-[Stepwise regression](https://en.wikipedia.org/wiki/Stepwise_regression), perhaps based on univariable analyses to
-select which to use as a base but these approaches have fallen out favour for various reasons as they are ultimate
-biased (for an overview see [@Steyerberg2001Feb]).
-
-A popular alternative is the [Least Absolute Shrinkage and Selection Operator
-(LASSO)](https://en.wikipedia.org/wiki/Lasso_(statistics)) proposed by [@Tibshirani1996] which performs [L1
-regularisation](https://en.wikipedia.org/wiki/Regularized_least_squares) and allows the coefficients for variables in a
-series of fitted models to "shrink" towards zero but not drop out completely. It is similar to Ridge Regression which
-avoids over-fitting by reducing the sum of squares of the regression coefficients but unlike Ridge Regression it allows
-variables to be selected as the coefficients can (almost) drop out by virtue of their coefficients shrinking towards
-zero.
-
-Another popular alternative is [Ridge Regression](https://en.wikipedia.org/wiki/Ridge_regression) which uses L2
-regularisation and is useful when there are predictor variables that are co-linear (i.e. correlated).
-
-It is possible to combine L1 and L2 regularisation in what is known as [Elastic
-Net](https://en.wikipedia.org/wiki/Elastic_net_regularization) which combines both L1 and L2 regularisation in a linear
-manner.
+{{< include modelling_lasso.qmd >}}
+{{< include modelling_random_forest.qmd >}}
+{{< include modelling_xgboost.qmd >}}
+{{< include modelling_elastic_net.qmd >}}
+{{< include modelling_svm.qmd >}}
 
 
-#### Specify the Model
-
-Whilst we have defined the relationship between variables in the Worfklow above we now need to say what model we wish to
-use to test the relationship between variables.
-
-We first set up a simple logistic regression model using [parsnip](https://parsnip.tidymodels.org/). The `mixture`
-argument is a value `0 <= mixture <= 1` which determines how much L1 regularisation is used in the model. A value of
-`mixture = 1` is equivalent to full L1 regularisation and a LASSO model whilst a value of `mixture = 0` is equivalent to
-full L2 regularisation and ridge regression. Here we use a `mixture = 1` which is a full LASSO model and we may wish to
-inspect the results of this model and only use those variables which are of some importance in subsequent modelling
-steps.
-
-```{r}
-#| label: lasso-specification
-#| purl: true
-#| eval: true
-#| echo: true
-#| output: false
-tune_spec_lasso <- parsnip::logistic_reg(penalty = hardhat::tune(), mixture = 1) |>
-  parsnip::set_engine("glmnet")
-```
-
-#### Tuning
-
-The next step is to tune the model using the [`tune::tune_grid()`](https://tune.tidymodels.org/reference/tune_grid.html)
-function which will calculate accuracy or Root Mean Square Error (or other metrics) for a recipe with multiple
-samples. We defined our resamples above in two forms (not that we defined cross-validation as a way of sampling from our
-training data above).
-
-Re-sampling is performed at this stage by specifying the `cv_folds` to the `resamples` option. This gives more robust
-estimates of the model parameters.
-
-```{r}
-#| label: lasso-kfold-tune
-#| purl: true
-#| eval: true
-#| echo: true
-#| output: false
-lasso_grid <- tune::tune_grid(
-  object = workflows::add_model(thyroid_workflow, tune_spec_lasso),
-  resamples = cv_folds,
-  grid = dials::grid_regular(penalty(), levels = 50)
-)
-```
-
-#### Fit Final Model
-
-Now select the model with the highest Receiver Operating Characteristic Area Under the Curve (ROC AUC) from the tuned
-grid search results.
-
-```{r}
-#| label: lasso-kfold-best
-#| purl: true
-#| eval: true
-#| echo: false
-#| output: false
-lasso_kfold_roc_auc <- lasso_grid |>
-  tune::select_best(metric = "roc_auc")
-```
-
-...and finalize the workflow by adding this value.
-
-```{r}
-#| label: lasso-kfold-fit-final
-#| purl: true
-#| eval: true
-#| echo: false
-#| output: false
-final_lasso_kfold <- tune::finalize_workflow(
-  workflows::add_model(thyroid_workflow, tune_spec_lasso),
-  lasso_kfold_roc_auc
-)
-```
-
-#### Model Evaluation
-
-Collect metrics using the original data.
-
-```{r}
-#| label: lasso-kfold-eval-metrics
-#| purl: true
-#| eval: true
-#| echo: true
-#| output: true
-tune::last_fit(object = final_lasso_kfold, split = split) |>
-  tune::collect_metrics()
-```
-
-And plot the importance of variables, note these are _not_ the same as regression coefficients, the importance values
-are relative to each other, although the sign indicates whether that particular variable/level increases or decreases
-risk.
-
-```{r}
-#| label: lasso-kfold-eval-importance
-#| purl: true
-#| eval: true
-#| echo: true
-#| output: true
-final_lasso_kfold |>
-  fit(train) |>
-  hardhat::extract_fit_parsnip() |>
-  vip::vi(lambda = lasso_kfold_roc_auc$penalty) |>
-  dplyr::mutate(
-    Importance = abs(Importance),
-    Variable = fct_reorder(Variable, Importance)
-  ) |>
-  ggplot(mapping = aes(x = Importance, y = Variable, fill = Sign)) +
-  geom_col() +
-  dark_theme_minimal()
-```
-
-### Random Forest
-
-[Random forests](https://en.wikipedia.org/wiki/Random_forest) build on the concept of regression trees by building many
-such trees on random subsets of data and averaging them. They build "deep" trees partitioning the data each time testing
-to see which variable provides the optimal split (best prediction into the `Malignant`/`Benign` categorisation). Adding
-splits at each recursive branch until all individuals are classified. Part of the art is deciding how "deep" to go
-as too many partitions results in over-fitting and lack of generalisability.
-
-Random Forests itteratively search through the variables to work out which provides the best method of classifying
-people into either `Malignant` or `Benign`". It tries all variables in# turn. For binary variables such as gender this
-is straight-forward. For continuous variables a number of different thresholds for dichotomising the variable are
-tested for each possible split and the optimal cut-point is selected. This process is repeated so that after for example
-after selecting gender to be a strong predictor the remaining variables will tested for their predictive ability and the
-best selected. The number of trees that are created and tested is defined by the `trees` parameter which here is set
-to 100. For binary variables such as `gender` this is straigh-forward but for continuous variables different thresholds
-for splitting are tested and the optimal point is selected.
-
-This whole process is repeated a number of times building lots of trees (i.e. random forests) and it is in this regard
-an "ensemble" method as it is averaging across many possible methods.
-
-``` {r}
-#| label: random-forest-specify
-#| purl: true
-#| eval: true
-#| echo: true
-#| output: false
-rf_tune <- parsnip::rand_forest(
-  mtry = tune(),
-  trees = 100,
-  min_n = tune()
-) |>
-  set_mode("classification") |>
-  set_engine("ranger", importance = "impurity")
-```
-
-As before the process is repeated using Cross validation on the training set.
-
-``` {r}
-#| label: random-forest-tune
-#| purl: true
-#| eval: true
-#| echo: true
-#| output: false
-rf_grid <- tune::tune_grid(
-  add_model(thyroid_workflow, rf_tune),
-  resamples = cv_folds, ## cv_loo,
-  grid = grid_regular(mtry(range = c(5, 10)), # smaller ranges will run quicker
-    min_n(range = c(2, 25)),
-    levels = 3
-  )
-)
-```
-...and the best model based on the ROC AUC selected...
-
-``` {r}
-#| label: random-forest-model
-#| purl: true
-#| eval: true
-#| echo: true
-#| output: false
-rf_highest_roc_auc <- rf_grid |>
-  select_best("roc_auc")
-final_rf <- tune::finalize_workflow(
-  add_model(thyroid_workflow, rf_tune),
-  rf_highest_roc_auc
-)
-```
-
-...and the metrics calculated.
-
-``` {r}
-#| label: random-forest-evaluate
-#| purl: true
-#| eval: true
-#| echo: true
-#| output: true
-tune::last_fit(final_rf, split) |>
-  tune::collect_metrics()
-```
-
-``` {r}
-#| label: rf-kfold-eval-importance
-#| purl: true
-#| eval: false
-#| echo: true
-#| output: true
-final_rf |>
-  fit(train) |>
-  hardhat::extract_fit_parsnip() |>
-  vip::vi(lambda = final_rf$penalty) |>
-  dplyr::mutate(
-    Importance = abs(Importance),
-    Variable = fct_reorder(Variable, Importance)
-  ) |>
-  ggplot(mapping = aes(x = Importance, y = Variable, fill = Sign)) +
-  geom_col() +
-  dark_theme_minimal()
-```
-
-### Gradient Boosting
-
-[Gradient Boosting](https://en.wikipedia.org/wiki/Gradient_boosting) is another "ensemble" method but in contrast to
-Random Forests where deep partitioning trees are formed, gradient boosting uses "shallow" trees with simpler decision
-rules and layers are built in a stage-wise fashion. It allows a choice of loss functions for optimisation and typically
-out-performs Random Forests when it comes to prediction modelling.
-
-A useful article showing how to use the [XGBoost]() package with Tidymodels (via `parsnip::boost_tree()`) is
-[here](https://www.tychobra.com/posts/2020-05-19-xgboost-with-tidymodels/) and informed the development of this section.
-
-``` {r}
-#| label: xgboost-model
-#| purl: true
-#| eval: true
-#| echo: true
-#| output: false
-xgboost_model <- parsnip::boost_tree(
-  mode = "classification",
-  trees = 100,
-  min_n = tune(),
-  tree_depth = tune(),
-  learn_rate = tune(),
-  loss_reduction = tune()
-) |>
-  set_engine("xgboost", objective = "binary:logistic")
-```
-
-We use the [`dials`](https://dials.tidymodels.org/) package to set tuning parameters for the model along with the grid
-space we are to use (there are lots of options here) this helps identify the hyperparameters with the lowest prediction
-error.
-
-``` {r}
-#| label: xgboost-params-grid
-#| purl: true
-#| eval: true
-#| echo: true
-#| output: false
-xgboost_params <- dials::parameters(
-  min_n(),
-  tree_depth(),
-  learn_rate(),
-  loss_reduction()
-)
-xgboost_grid <- dials::grid_max_entropy(
-  xgboost_params,
-  size = 10
-)
-```
-
-Finally the model is tuned
-
-``` {r}
-#| label: xgboost-tuning
-#| purl: true
-#| eval: true
-#| echo: true
-#| output: false
-xgboost_tuned <- tune::tune_grid(workflows::add_model(thyroid_workflow, spec = xgboost_model),
-  resamples = cv_folds,
-  grid = xgboost_grid,
-  metrics = yardstick::metric_set(roc_auc, accuracy, ppv),
-  control = tune::control_grid(verbose = FALSE)
-)
-```
-
-We get the best final fit from the Gradient Boosting model.
-
-
-``` {r}
-#| label: xgboost-final
-#| purl: true
-#| eval: true
-#| echo: true
-#| output: false
-xgboost_highest_roc_auc <- xgboost_tuned |>
-  tune::select_best("roc_auc")
-final_xgboost <- tune::finalize_workflow(
-  add_model(thyroid_workflow, xgboost_model),
-  xgboost_highest_roc_auc
-)
-```
-
-### Support Vector Machine
-
-Yet another modelling approach is [Support Vector Machines (SVMs)](https://en.wikipedia.org/wiki/Support_vector_machine)
-and again we step through the process of specify the model using the
-[`svm_rbf()`](https://parsnip.tidymodels.org/reference/svm_rbf.html) function which aims to "_maximize the width of the
-margin between classes using a nonlinear class boundary_"
-
-``` {r}
-#| label: svm-specify
-#| purl: true
-#| eval: true
-#| echo: true
-#| output: false
-svm_tune_spec <- parsnip::svm_rbf(cost = tune()) |>
-  set_engine("kernlab") |>
-  set_mode("classification")
-```
-
-The hyperparameters are then tuned, in effect running the model in multiple subsets of the cross-validation to get a
-"best fit".
-
-``` {r}
-#| label: svm-tune-hyperparameters
-#| purl: true
-#| eval: true
-#| echo: true
-#| output: false
-svm_grid <- tune::tune_grid(
-  workflows::add_model(thyroid_workflow, svm_tune_spec),
-  resamples = cv_folds, ## cv_loo,
-  grid = dials::grid_regular(cost(), levels = 20)
-)
-```
-
-The best fit is selected and fit to the overall training data set.
-``` {r}
-#| label: svm-model
-#| purl: true
-#| eval: true
-#| echo: true
-#| output: false
-svm_highest_roc_auc <- svm_grid |>
-  tune::select_best("roc_auc")
-final_svm <- tune::finalize_workflow(
-  add_model(thyroid_workflow, svm_tune_spec),
-  svm_highest_roc_auc
-)
-```
-
-<!-- Finally an assessment is made on the accuracy -->
-
-``` {r}
-#| label: svm-evaluate
-#| purl: true
-#| eval: false
-#| echo: false
-#| output: false
-tune::last_fit(final_svm, split,
-  metrics = yardstick::metric_set(roc_auc, accuracy, ppv)
-) |>
-  tune::collect_metrics()
-```
 
 ## Model Assessment
 
@@ -564,187 +57,31 @@ model performance and how predictive these are.
 Confusion matrices such as the above can be easily generated and even plotted using `yardstick::confg_mat()` function.
 
 
-### Predictions
-
-We could compare the predicted status with the true status in the training sample which was used to fit the data to the
-model, but what we are really interested in is its performance outside of this sample, i.e. in the `test` proportion
-that were held out of the model fitting process. Fortunately Tidymodels has packages that make this easy as the
-[`tune::last_fit()`](https://tune.tidymodels.org/reference/last_fit.html) does this automatcally when given the final
-fitted model and the object that splits the data into two (in this case the `split` object we created right after
-simluating the data).
-
-We have in fact already made predictions throughout the modelling process already when we produced the various confusion
-matrices but we shall repeat them for each of the fitted models so its easier to make direct comparisons.
-
-``` {r}
-#| label: predictions-confusion-matrix
-#| purl: true
-#| eval: true
-#| echo: true
-#| output: true
-#| tbl-cap: Confusion matrices for fitted models
-#| layout-ncol: 4
+{{< include modelling_predictions.qmd >}}
+{{< include modelling_roc.qmd >}}
+{{< include modelling_importance.qmd >}}
 
 
-## LASSO
-lasso_confmat <- tune::last_fit(object = final_lasso_kfold, split = split) |>
-  tune::collect_predictions() |>
-  yardstick::conf_mat(final_pathology, .pred_class)
-knitr::kable(lasso_confmat$table, caption = "LASSO")
-
-## Random Forest
-rf_confmat <- tune::last_fit(final_rf, split) |>
-  tune::collect_predictions() |>
-  yardstick::conf_mat(final_pathology, .pred_class)
-knitr::kable(rf_confmat$table, caption = "Random Forest")
-
-## XGBoost
-xgboost_confmat <- tune::last_fit(final_xgboost, split) |>
-  tune::collect_predictions() |>
-  yardstick::conf_mat(final_pathology, .pred_class)
-knitr::kable(xgboost_confmat$table, caption = "XGBoost")
-
-## SVM
-svm_confmat <- tune::last_fit(final_svm, split) |>
-  tune::collect_predictions() |>
-  yardstick::conf_mat(final_pathology, .pred_class)
-knitr::kable(svm_confmat$table, caption = "SVM")
-```
-
-Confusion matrices such as these can be used to calculate an array of
-[statistics](https://en.wikipedia.org/wiki/Sensitivity_and_specificity) such as sensitivity, specificity, positive and
-negative predicitve value, false discovery rate and soforth. The Yardstick package has a convenience method for the
-result of `yardstick::conf_mat()` (a yardstick confusion matrix object). In the section below these are combined across
-models into a single table that we print out.
-
-``` {r}
-#| label: predictions-confusion-summary
-#| purl: true
-#| eval: true
-#| echo: true
-#| output: true
-#| tbl-cap: Summary Statistics of Model Accuracy
-#| layout-ncol: 1
-lasso_confmat_summary <- summary(lasso_confmat)
-lasso_confmat_summary$model <- "LASSO"
-rf_confmat_summary <- summary(rf_confmat)
-rf_confmat_summary$model <- "Random Forest"
-xgboost_confmat_summary <- summary(xgboost_confmat)
-xgboost_confmat_summary$model <- "XGBoost"
-svm_confmat_summary <- summary(svm_confmat)
-svm_confmat_summary$model <- "SVM"
-
-## Bind these to each others by row to produce a data frame in "long format" which we tidy (remove the '.estimator')
-## column and reshape.
-model_summary <- rbind(
-  svm_confmat_summary,
-  rf_confmat_summary,
-  xgboost_confmat_summary,
-  lasso_confmat_summary
-)
-drop <- c(".estimator")
-model_summary <- model_summary[, !(names(model_summary) %in% drop)]
-colnames(model_summary) <- c("Metric", "estimate", "model")
-model_summary <- model_summary |>
-  dplyr::mutate(Metric = case_when(
-    Metric == "accuracy" ~ "Accuracy",
-    Metric == "kap" ~ "Kappa",
-    Metric == "sens" ~ "Sensitivity",
-    Metric == "spec" ~ "Specificity",
-    Metric == "ppv" ~ "Positive Predictive Value",
-    Metric == "npv" ~ "Negative Predictive Value",
-    Metric == "mcc" ~ "Matthews Correlation Coefficient",
-    Metric == "j_index" ~ "Youden's J-Statistic",
-    Metric == "bal_accuracy" ~ "Balanced Accuracy",
-    Metric == "detection_prevalence" ~ "Detection Prevelance",
-    Metric == "precision" ~ "Precision",
-    Metric == "recall" ~ "Recall",
-    Metric == "f_meas" ~ "F-Measure"
-  ))
-tidyr::pivot_wider(model_summary, names_from = "model", values_from = "estimate") |>
-  knitr::kable()
-```
-
-### Receiver Operating Characteristics
-
-We can use the [yardstick](https://yardstick.tidymodels.org/index.html) package to facilitate visualising the [ReceThe
-[Receiver Operating Characteristic (ROC)](https://en.wikipedia.org/wiki/Receiver_operating_characteristic) is a useful
-graphical tool for potting the false positive rate v's the true positive rate (sensitivity). The
-[`roc_curve()`](https://yardstick.tidymodels.org/reference/roc_curve.html) function in yardstick makes plotting the ROC
-curvers relatively straight-forward.
-
-
-``` {r}
-#| label: predictions-roc
-#| purl: true
-#| eval: true
-#| echo: true
-#| output: true
-#| fig-cap: ROC Curves
-
-## ROC : LASSO
-roc_auc_lasso <- tune::last_fit(final_lasso_kfold, split) |>
-  tune::collect_predictions() |>
-  yardstick::roc_auc(final_pathology, .pred_Malignant)
-roc_lasso <- tune::last_fit(final_lasso_kfold, split) |>
-  tune::collect_predictions() |>
-  yardstick::roc_curve(truth = final_pathology, .pred_Malignant)
-roc_lasso$model <- paste0("LASSO (", roc_auc_lasso$.estimate, ")")
-
-## ROC : Random Forest
-roc_auc_rf <- tune::last_fit(final_rf, split) |>
-  tune::collect_predictions() |>
-  yardstick::roc_auc(final_pathology, .pred_Malignant)
-roc_rf <- tune::last_fit(final_rf, split) |>
-  tune::collect_predictions() |>
-  yardstick::roc_curve(truth = final_pathology, .pred_Malignant)
-roc_rf$model <- paste0("Random Forest (", roc_auc_rf$.estimate, ")")
-
-## ROC : Random XGBoost
-roc_auc_xgboost <- tune::last_fit(final_xgboost, split) |>
-  tune::collect_predictions() |>
-  yardstick::roc_auc(final_pathology, .pred_Malignant)
-roc_xgboost <- tune::last_fit(final_xgboost, split) |>
-  tune::collect_predictions() |>
-  yardstick::roc_curve(truth = final_pathology, .pred_Malignant)
-roc_xgboost$model <- paste0("XGBoost (", roc_auc_xgboost$.estimate, ")")
-
-## ROC : SVM
-roc_auc_svm <- tune::last_fit(final_svm, split) |>
-  tune::collect_predictions() |>
-  yardstick::roc_auc(final_pathology, .pred_Malignant)
-roc_svm <- tune::last_fit(final_svm, split) |>
-  tune::collect_predictions() |>
-  yardstick::roc_curve(truth = final_pathology, .pred_Malignant)
-roc_svm$model <- paste0("SVM (", roc_auc_svm$.estimate, ")")
-
-## Combine ROC curves across all three models and plot
-roc_all <- rbind(roc_lasso, roc_rf, roc_xgboost, roc_svm)
-roc_all |> ggplot(aes(x = 1 - specificity, y = sensitivity, color = model)) +
-  geom_path() +
-  geom_abline(lty = 3) +
-  coord_equal() +
-  dark_theme_minimal()
-```
 
 
 ## TODO
 
-I still have some things I need to add to the above workflow...
+I still have some things I need to add to the above workflow.
+
+### Modelling
 
 + [ ] Predictive accuracy on the training data set and comparing to the test cohorts (if the predictive accuracy is worse in
       the later then the models are being over-fitted).
-+ [ ] Calculate ROC AUC for each model and add to legend of ROC curve plot (see
++ [x] Calculate ROC AUC for each model and add to legend of ROC curve plot (see
       [`yardstick::roc_auc()`](https://yardstick.tidymodels.org/reference/roc_auc.html)).
 + [ ] Add note that in the Sheffield data set the results of the LASSO may be used as a method of narrowing down which
       variables to use in subsequent models.
++ [x] Remove variables that have zero variance in the recipe creation stage. (`step_zv(all_predictors())`)
 + [ ] Add in Elastic Net regression as well as LASSO.
 + [ ] Increase the `tune::metric_set()` on which models are tuned perhaps? Most are `roc_auc` but can use `ppv`,
       `precision`, `sens` `spec`, `recall`, `accuracy` and others (see options under
       [here](https://yardstick.tidymodels.org/reference/accuracy.html#see-also)).
 + [x] Remove the predictive accuracy from each subsection (at least in the output).
-+ [ ] Sort column headings for the confusion matrices using [`#| tbl-subcap:
-      []`](https://mine-cetinkaya-rundel.github.io/quarto-tip-a-day/posts/01-side-by-side-tables/) .
 + [x] Tune the XGBoost parameters, currently have the following errors
 
 ```
@@ -756,6 +93,16 @@ I still have some things I need to add to the above workflow...
 Please use one of the tuning functions (e.g. `tune_grid()`) to optimize them.
 Run `rlang::last_trace()` to see where the error occurred.
 ```
+
+### Quarto
+
++ [x] Enable cahcing so that rendering of output doesn't require fitting of models each time.
++ [ ] Sort column headings for the confusion matrices using [`#| tbl-subcap:
+      []`](https://mine-cetinkaya-rundel.github.io/quarto-tip-a-day/posts/01-side-by-side-tables/) .
++ [x] For some reason when I attempted moving this section to its own child document the `final_lasso_kfold` object
+      could not be found. Work around was to save the results of each model and the load them into the
+      `modelling_{predict|roc|vip}.qmd` sections.
+
 
 ## Notes
 

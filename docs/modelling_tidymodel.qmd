@@ -1,0 +1,152 @@
+## TidyModelling
+
+The [R](https://www.r-project.org) packages included in the [Tidymodels](https://www.tidymodels.org/) provide an
+excellent framework for undertaking the modelling aspect of the work.
+
+A very useful training workshop was held 2023-10-18 as part of the [R in Pharma](https://rinpharma.com/) event. [Nicola
+Rennie](https://nrennie.rbind.io/) has made her material is available on-line and it provides a good starting point for
+applying the various modelling methodologies to prediction of Thyroid cancer.
+
++ [Slides](https://nrennie.github.io/r-pharma-2023-tidymodels/#/title-slide)
++ [GitHub Repo](https://github.com/nrennie/r-pharma-2023-tidymodels)
+
+Whilst this provides an excellent introduction to the Tidy Modelling framework the book [Tidy Modeling with
+R](https://www.tmwr.org/) goes deeper into the methods and options available. They also have a series of workshops that
+you can work through in your own time.
+
++ [Machine learning with tidymodels](https://workshops.tidymodels.org/)
+
+Another useful reference on which the _Tidy Modeling with R_ builds is [R for Data Science
+(2e)](https://r4ds.hadley.nz/) which should serve as a useful reference for learning R and adopting good practices.
+
+It is also recommended to read the documentation that goes with the [Tidymodels](https://www.tidymodels.org/) package,
+in particular the [Get Started](https://www.tidymodels.org/start/) page which includes a [predictive modelling case
+study](https://www.tidymodels.org/start/case-study/).
+
+### Setting up Tidymodels
+
+In the absence of the data set that is to be analysed we simulate some dummy data on which to demonstrate the methods.
+
+```{r}
+#| label: simulate
+#| purl: true
+#| eval: true
+#| echo: false
+#| output: false
+#| file: r/simulate_data.R
+source("r/simulate_data.R")
+```
+
+### Training and Testing
+
+To get going with Tidymodels we first need to split our data into _Testing_ and _Training_ subsets. This is done so that
+we do not have an over-fitted model as we fit the model to the training subset and then test its predictive accuracy in
+the subset that we withheld, the _test_ subset.
+
+The allocation of individuals to `train` or `test` is performed randomly and so we set a
+[seed](https://en.wikipedia.org/wiki/Random_seed) to ensure the pseudo-random number generator produces the same split
+each and every time this script is run (this makes our work reproducible). A decision has to be made about how to split
+the data, often a slightly larger proportion is used for the training subset, here we chose to use a `3:1` split
+(i.e. 75% of observations are used in the training set).
+
+```{r}
+#| label: test-train-split
+#| purl: true
+#| eval: true
+#| echo: true
+#| output: false
+set.seed(5039378)
+split <- rsample::initial_split(dummy, prop = 0.75)
+train <- rsample::training(split)
+test <- rsample::testing(split)
+```
+
+### Cross Validation
+
+We will still want to make some assessment of the model estimated from the training set and this is achieved by
+[resampling](https://www.tmwr.org/resampling) which involves taking subsets of our training data and fitting the models
+on those subsets and then looking at the distribution of metrics across the multiple model fits. A commonly used
+approach for this methodology is [_Cross-Validation_](https://www.tmwr.org/resampling#cv). V-fold cross-validation
+splits the data into _V_ folds, the first fold is excluded from the data set and the model assessed, then this subset is
+replaced and the second fold is excluded and the model assessed again. This is repeated until each fold has been
+excluded and the model estimated on the remainder. This method can then be repeated _R_ times where the folds are varied
+in each repetition to give a better estimate of the model parameters.
+
+The following figure gives an overview of how V-fold cross-validation works (without repetition).
+
+![V-fold cross-validation of training data. Source: [_Feature Engineering and Selection: A Practical Approach for Predictive Models_](https://www.tidymodels.org/start/resampling/)](https://bookdown.org/max/FES/figures/resampling.svg)
+
+We can set this up by passing the `train` subset into the
+[`rsample::vflod_cv()`](https://rsample.tidymodels.org/reference/vfold_cv.html) function and define the number of folds
+(`v`) and the number of repeats (`repeats`).
+
+```{r}
+#| label: cv-vfold
+#| purl: true
+#| eval: true
+#| echo: true
+#| output: false
+cv_folds <- rsample::vfold_cv(train, v = 10, repeats = 10)
+```
+
+Another method of cross-validation is Leave One Out where one observation is removed from the (training) data set, the
+model is fitted on the remaining samples and then used to make a prediction on the excluded sample. This is then
+repeated on all samples. We can set this up using the
+[`rsample::loo_cv()`](https://rsample.tidymodels.org/reference/loo_cv.html) function.
+
+```{r}
+#| label: cv-loo
+#| purl: true
+#| eval: true
+#| echo: true
+#| output: false
+cv_loo <- rsample::loo_cv(train)
+```
+
+### Recipe
+
+In the Tidymodels framework the starting point is to create a [Recipe](https://www.tidymodels.org/start/recipes/), this
+sets up the "ingredients" for the model and defines what steps should be taken prior to fitting the model, regardless of
+what model is being fitted. Steps that can go into making a recipe are...
+
++ Define the model in terms of outcome variable and predictors.
++ Creating dummy variables for categorical variables (`recipes::step_dummy(...)`).
++ Normalizing data, e.g. log-transformation, rescaling (`recipes::step_normalize(all_numeric())`).
++ Excluding predictor variables that are invariant (`recipes::step_zv(all_predictors())`).
+
+We could perhaps remove correlated predictors using `recipes::step_corr(all_numeric_predictors(), threshold = 0.9)` but
+since we are using a LASSO to build and test out model this is not essential as LASSO should retain the strongest
+predictor out of correlated variables and reduce the coefficient of the others to nearly zero. Another approach to
+consider is the use of _Uniform Manifold Approximation and Projection_ implemented in the
+[embed::setup_umapp()](https://embed.tidymodels.org/reference/step_umap.html) function
+
+
+Note that we pass only the `train` data into the recipe so that models are fitted on the training data.
+
+```{r}
+#| label: recipe
+#| purl: true
+#| eval: true
+#| echo: true
+#| output: false
+thyroid_recipe <- recipes::recipe(final_pathology ~ gender + nodule_size + age + asa_score + smoking_status + nodule_fna_thy, data = train) |>
+  # recipes::step_num2factor(final_pathology, levels = c("Benign", "Malignant")) |>
+  recipes::step_zv(all_predictors()) |>
+  recipes::step_dummy(gender, asa_score, smoking_status, nodule_fna_thy) |>
+  recipes::step_normalize(all_numeric())
+```
+
+### Workflow
+
+Once a recipe has been defined it can be added to a [workflow](https://workflows.tidymodels.org/) which will apply this
+step every time the workflow is run using the different models and post-processing steps that we will add.
+
+```{r}
+#| label: workflow
+#| purl: true
+#| eval: true
+#| echo: true
+#| output: false
+thyroid_workflow <- workflows::workflow() |>
+  workflows::add_recipe(thyroid_recipe)
+```

@@ -1,0 +1,44 @@
+### Variable Importance
+
+We can use the [vip : Variable Importance Plots](https://koalaverse.github.io/vip/) package to plot the relative
+importance of each variable under each model that we have fitted to the data.
+
+Because we are comparing different models we shall use [model-agnostic variable
+importance](https://koalaverse.github.io/vip/articles/vip.html#model-agnostic-vi) methods to aid interpretbility and
+make the feature importance comparable and will use the Shapley metric.
+
+Shapley does not support classification (binary) outcomes so we must  obtain a predicted probability for each
+observation and setup a simple function that we can use to do so for each model
+
+``` {r}
+#| label: load-vip
+#| purl: true
+#| eval: true
+#| echo: false
+#| output: false
+load("data/r/elastic_net.RData")
+load("data/r/lasso.RData")
+load("data/r/rf.RData")
+load("data/r/svm.RData")
+load("data/r/xgboost.RData")
+```
+
+```{r}
+#| label: vip-shapely-predict
+#| purl: true
+#| eval: true
+#| echo: true
+#| output: false
+vip(lasso, method="shap", train=)
+pfun_prob <- function(object, newdata)
+    predict(object, newdata = newdata, type = "prob")[, "yes"]
+```
+
+```{r}
+#| label: lasso-vip
+#| purl: true
+#| eval: true
+#| echo: true
+#| output: false
+vip(lasso, method="shap", train=)
+```

@@ -1,0 +1,74 @@
+### Support Vector Machine
+
+Yet another modelling approach is [Support Vector Machines (SVMs)](https://en.wikipedia.org/wiki/Support_vector_machine)
+and again we step through the process of specify the model using the
+[`svm_rbf()`](https://parsnip.tidymodels.org/reference/svm_rbf.html) function which aims to "_maximize the width of the
+margin between classes using a nonlinear class boundary_"
+
+``` {r}
+#| label: svm-specify
+#| purl: true
+#| eval: true
+#| echo: true
+#| output: false
+svm_tune_spec <- parsnip::svm_rbf(cost = tune()) |>
+  set_engine("kernlab") |>
+  set_mode("classification")
+```
+
+The hyperparameters are then tuned, in effect running the model in multiple subsets of the cross-validation to get a
+"best fit".
+
+``` {r}
+#| label: svm-tune-hyperparameters
+#| purl: true
+#| eval: true
+#| echo: true
+#| output: false
+#| cache: false
+svm_grid <- tune::tune_grid(
+  workflows::add_model(thyroid_workflow, svm_tune_spec),
+  resamples = cv_folds, ## cv_loo,
+  grid = dials::grid_regular(cost(), levels = 20)
+)
+```
+
+The best fit is selected and fit to the overall training data set.
+
+``` {r}
+#| label: svm-model
+#| purl: true
+#| eval: true
+#| echo: true
+#| output: false
+#| cache: false
+svm_highest_roc_auc <- svm_grid |>
+  tune::select_best("roc_auc")
+final_svm <- tune::finalize_workflow(
+  add_model(thyroid_workflow, svm_tune_spec),
+  svm_highest_roc_auc
+)
+```
+
+Finally an assessment could made on the different metrics, but this is deferred
+
+``` {r}
+#| label: svm-evaluate
+#| purl: true
+#| eval: false
+#| echo: true
+#| output: true
+tune::last_fit(final_svm, split,
+  metrics = yardstick::metric_set(roc_auc, accuracy, ppv)
+) |>
+  tune::collect_metrics(metrics)
+```
+
+``` {r}
+#| label: svm-save
+#| purl: true
+#| eval: true
+#| echo: true
+#| output: false
+save(svm_tune_spec, svm_grid, final_svm, svm_highest_roc_auc, file = "data/r/svm.RData")
+```

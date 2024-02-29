@@ -1,0 +1,122 @@
+### Predictions
+
+We could compare the predicted status with the true status in the training sample which was used to fit the data to the
+model, but what we are really interested in is its performance outside of this sample, i.e. in the `test` proportion
+that were held out of the model fitting process. Fortunately Tidymodels has packages that make this easy as the
+[`tune::last_fit()`](https://tune.tidymodels.org/reference/last_fit.html) does this automatcally when given the final
+fitted model and the object that splits the data into two (in this case the `split` object we created right after
+simluating the data).
+
+We have in fact already made predictions throughout the modelling process already when we produced the various confusion
+matrices but we shall repeat them for each of the fitted models so its easier to make direct comparisons.
+
+``` {r}
+#| label: load-prediction
+#| purl: true
+#| eval: true
+#| echo: false
+#| output: false
+load("../data/r/elastic_net.RData")
+load("../data/r/lasso.RData")
+load("../data/r/rf.RData")
+load("../data/r/svm.RData")
+load("../data/r/xgboost.RData")
+```
+
+``` {r}
+#| label: predictions-confusion-matrix
+#| purl: true
+#| eval: true
+#| echo: true
+#| output: true
+#| tbl-cap: Confusion matrices for fitted models
+#| layout-ncol: 4
+
+
+## LASSO
+lasso_confmat <- tune::last_fit(object = final_lasso, split = split) |>
+  tune::collect_predictions() |>
+  yardstick::conf_mat(final_pathology, .pred_class)
+knitr::kable(lasso_confmat$table, caption = "LASSO")
+
+## Random Forest
+rf_confmat <- tune::last_fit(final_rf, split) |>
+  tune::collect_predictions() |>
+  yardstick::conf_mat(final_pathology, .pred_class)
+knitr::kable(rf_confmat$table, caption = "Random Forest")
+
+## XGBoost
+xgboost_confmat <- tune::last_fit(final_xgboost, split) |>
+  tune::collect_predictions() |>
+  yardstick::conf_mat(final_pathology, .pred_class)
+knitr::kable(xgboost_confmat$table, caption = "XGBoost")
+
+## Elastic Net
+elastic_net_confmat <- tune::last_fit(object = final_elastic_net, split = split) |>
+  tune::collect_predictions() |>
+  yardstick::conf_mat(final_pathology, .pred_class)
+knitr::kable(elastic_net_confmat$table, caption = "Elastic Net")
+
+## SVM
+svm_confmat <- tune::last_fit(final_svm, split) |>
+  tune::collect_predictions() |>
+  yardstick::conf_mat(final_pathology, .pred_class)
+knitr::kable(svm_confmat$table, caption = "SVM")
+```
+
+Confusion matrices such as these can be used to calculate an array of
+[statistics](https://en.wikipedia.org/wiki/Sensitivity_and_specificity) such as sensitivity, specificity, positive and
+negative predicitve value, false discovery rate and soforth. The Yardstick package has a convenience method for the
+result of `yardstick::conf_mat()` (a yardstick confusion matrix object). In the section below these are combined across
+models into a single table that we print out.
+
+``` {r}
+#| label: predictions-confusion-summary
+#| purl: true
+#| eval: true
+#| echo: true
+#| output: true
+#| tbl-cap: Summary Statistics of Model Accuracy
+#| layout-ncol: 1
+lasso_confmat_summary <- summary(lasso_confmat)
+lasso_confmat_summary$model <- "LASSO"
+rf_confmat_summary <- summary(rf_confmat)
+rf_confmat_summary$model <- "Random Forest"
+xgboost_confmat_summary <- summary(xgboost_confmat)
+xgboost_confmat_summary$model <- "XGBoost"
+elastic_net_confmat_summary <- summary(elastic_net_confmat)
+elastic_net_confmat_summary$model <- "Elastic Net"
+svm_confmat_summary <- summary(svm_confmat)
+svm_confmat_summary$model <- "SVM"
+
+## Bind these to each others by row to produce a data frame in "long format" which we tidy (remove the '.estimator')
+## column and reshape.
+model_summary <- rbind(
+  svm_confmat_summary,
+  rf_confmat_summary,
+  xgboost_confmat_summary,
+  lasso_confmat_summary,
+  elastic_net_confmat_summary
+)
+drop <- c(".estimator")
+model_summary <- model_summary[, !(names(model_summary) %in% drop)]
+colnames(model_summary) <- c("Metric", "estimate", "model")
+model_summary <- model_summary |>
+  dplyr::mutate(Metric = case_when(
+    Metric == "accuracy" ~ "Accuracy",
+    Metric == "kap" ~ "Kappa",
+    Metric == "sens" ~ "Sensitivity",
+    Metric == "spec" ~ "Specificity",
+    Metric == "ppv" ~ "Positive Predictive Value",
+    Metric == "npv" ~ "Negative Predictive Value",
+    Metric == "mcc" ~ "Matthews Correlation Coefficient",
+    Metric == "j_index" ~ "Youden's J-Statistic",
+    Metric == "bal_accuracy" ~ "Balanced Accuracy",
+    Metric == "detection_prevalence" ~ "Detection Prevelance",
+    Metric == "precision" ~ "Precision",
+    Metric == "recall" ~ "Recall",
+    Metric == "f_meas" ~ "F-Measure"
+  ))
+tidyr::pivot_wider(model_summary, names_from = "model", values_from = "estimate") |>
+  knitr::kable()
+```
