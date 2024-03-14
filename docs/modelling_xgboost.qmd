@@ -1,0 +1,115 @@
+### Gradient Boosting
+
+[Gradient Boosting](https://en.wikipedia.org/wiki/Gradient_boosting) is another "ensemble" method but in contrast to
+Random Forests where deep partitioning trees are formed, gradient boosting uses "shallow" trees with simpler decision
+rules and layers are built in a stage-wise fashion. It allows a choice of loss functions for optimisation and typically
+out-performs Random Forests when it comes to prediction modelling.
+
+A useful article showing how to use the [XGBoost]() package with Tidymodels (via `parsnip::boost_tree()`) is
+[here](https://www.tychobra.com/posts/2020-05-19-xgboost-with-tidymodels/) and informed the development of this section.
+
+**TODO** For some reason this chunk isn't evaluated. For conveneince I have added it to the next where it is. Can not
+see why it wouldn't be evaluated.
+
+``` {r}
+#| label: xgboost-model
+#| purl: true
+#| eval: true
+#| echo: false
+#| output: false
+xgboost_model <- parsnip::boost_tree(
+  mode = "classification",
+  trees = 100,
+  min_n = tune(),
+  tree_depth = tune(),
+  learn_rate = tune(),
+  loss_reduction = tune()
+) |>
+  set_engine("xgboost", objective = "binary:logistic")
+```
+
+We use the [`dials`](https://dials.tidymodels.org/) package to set tuning parameters for the model along with the grid
+space we are to use (there are lots of options here) this helps identify the hyperparameters with the lowest prediction
+error.
+
+``` {r}
+#| label: xgboost-params-grid
+#| purl: true
+#| eval: true
+#| echo: true
+#| output: false
+#| cache: true
+xgboost_model <- parsnip::boost_tree(
+  mode = "classification",
+  trees = 100,
+  min_n = tune(),
+  tree_depth = tune(),
+  learn_rate = tune(),
+  loss_reduction = tune()
+) |>
+  set_engine("xgboost", objective = "binary:logistic")
+xgboost_params <- dials::parameters(
+  min_n(),
+  tree_depth(),
+  learn_rate(),
+  loss_reduction()
+)
+xgboost_grid <- dials::grid_max_entropy(
+  xgboost_params,
+  size = 10
+)
+```
+
+Finally the model is tuned
+
+``` {r}
+#| label: xgboost-tuning
+#| purl: true
+#| eval: true
+#| echo: true
+#| output: false
+#| cache: true
+xgboost_tuned <- tune::tune_grid(workflows::add_model(thyroid_workflow, spec = xgboost_model),
+  resamples = cv_folds,
+  grid = xgboost_grid,
+  metrics = yardstick::metric_set(roc_auc, accuracy, ppv),
+  control = tune::control_grid(verbose = FALSE)
+)
+```
+
+We get the best final fit from the Gradient Boosting model.
+
+``` {r}
+#| label: xgboost-final
+#| purl: true
+#| eval: true
+#| echo: true
+#| output: false
+xgboost_highest_roc_auc <- xgboost_tuned |>
+  tune::select_best("roc_auc")
+final_xgboost <- tune::finalize_workflow(
+  add_model(thyroid_workflow, xgboost_model),
+  xgboost_highest_roc_auc
+)
+```
+
+Calculate the metrics if required (defferred until the end though).
+
+``` {r}
+#| label: xgboost-evaluate
+#| purl: true
+#| eval: false
+#| echo: true
+#| output: true
+tune::last_fit(final_xgboost, split) |>
+  tune::collect_metrics(metrics)
+```
+
+``` {r}
+#| label: xgboost-save
+#| purl: true
+#| eval: true
+#| echo: true
+#| output: false
+save(xgboost_model, xgboost_params, xgboost_grid, final_xgboost, xgboost_highest_roc_auc, file = "data/r/xgboost.RData")
+```

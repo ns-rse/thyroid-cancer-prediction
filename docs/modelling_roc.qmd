@@ -1,0 +1,82 @@
+### Receiver Operating Characteristics
+
+We can use the [yardstick](https://yardstick.tidymodels.org/index.html) package to facilitate visualising the [ReceThe
+[Receiver Operating Characteristic (ROC)](https://en.wikipedia.org/wiki/Receiver_operating_characteristic) is a useful
+graphical tool for potting the false positive rate v's the true positive rate (sensitivity). The
+[`roc_curve()`](https://yardstick.tidymodels.org/reference/roc_curve.html) function in yardstick makes plotting the ROC
+curvers relatively straight-forward.
+
+``` {r}
+#| label: load-roc
+#| purl: true
+#| eval: true
+#| echo: false
+#| output: false
+load("../data/r/elastic_net.RData")
+load("../data/r/lasso.RData")
+load("../data/r/rf.RData")
+load("../data/r/svm.RData")
+load("../data/r/xgboost.RData")
+```
+
+``` {r}
+#| label: predictions-roc
+#| purl: true
+#| eval: true
+#| echo: true
+#| output: true
+#| fig-cap: ROC Curves
+
+## ROC : LASSO
+roc_auc_lasso <- tune::last_fit(final_lasso, split) |>
+  tune::collect_predictions() |>
+  yardstick::roc_auc(final_pathology, .pred_Malignant)
+roc_lasso <- tune::last_fit(final_lasso, split) |>
+  tune::collect_predictions() |>
+  yardstick::roc_curve(truth = final_pathology, .pred_Malignant)
+roc_lasso$model <- paste0("LASSO (", roc_auc_lasso$.estimate, ")")
+
+## ROC : Random Forest
+roc_auc_rf <- tune::last_fit(final_rf, split) |>
+  tune::collect_predictions() |>
+  yardstick::roc_auc(final_pathology, .pred_Malignant)
+roc_rf <- tune::last_fit(final_rf, split) |>
+  tune::collect_predictions() |>
+  yardstick::roc_curve(truth = final_pathology, .pred_Malignant)
+roc_rf$model <- paste0("Random Forest (", roc_auc_rf$.estimate, ")")
+
+## ROC : Random XGBoost
+roc_auc_xgboost <- tune::last_fit(final_xgboost, split) |>
+  tune::collect_predictions() |>
+  yardstick::roc_auc(final_pathology, .pred_Malignant)
+roc_xgboost <- tune::last_fit(final_xgboost, split) |>
+  tune::collect_predictions() |>
+  yardstick::roc_curve(truth = final_pathology, .pred_Malignant)
+roc_xgboost$model <- paste0("XGBoost (", roc_auc_xgboost$.estimate, ")")
+
+## ROC : SVM
+roc_auc_svm <- tune::last_fit(final_svm, split) |>
+  tune::collect_predictions() |>
+  yardstick::roc_auc(final_pathology, .pred_Malignant)
+roc_svm <- tune::last_fit(final_svm, split) |>
+  tune::collect_predictions() |>
+  yardstick::roc_curve(truth = final_pathology, .pred_Malignant)
+roc_svm$model <- paste0("SVM (", roc_auc_svm$.estimate, ")")
+
+## ROC : Elastic Net
+roc_auc_elastic_net <- tune::last_fit(final_elastic_net, split) |>
+  tune::collect_predictions() |>
+  yardstick::roc_auc(final_pathology, .pred_Malignant)
+roc_elastic_net <- tune::last_fit(final_elastic_net, split) |>
+  tune::collect_predictions() |>
+  yardstick::roc_curve(truth = final_pathology, .pred_Malignant)
+roc_elastic_net$model <- paste0("Elastic Net (", roc_auc_elastic_net$.estimate, ")")
+
+## Combine ROC curves across all three models and plot
+roc_all <- rbind(roc_lasso, roc_rf, roc_xgboost, roc_svm, roc_elastic_net)
+roc_all |> ggplot(aes(x = 1 - specificity, y = sensitivity, color = model)) +
+  geom_path() +
+  geom_abline(lty = 3) +
+  coord_equal() +
+  dark_theme_minimal()
+```

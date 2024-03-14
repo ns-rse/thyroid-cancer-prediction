@@ -1,0 +1,123 @@
+### Elastic Net
+
+
+#### Specify the Model
+
+We have run logistic regression via a LASSO model at the start with a `mixture = 1` which applies full L1
+regularisation.
+
+We can instead fit an Elastic Net which combines both L1 and L2 regularisation which help reduce bias and variance in
+the model fitting. Remembering the the LASSO example the proportion of L1 regularisation (LASSO which allows shrinkage
+of coefficients) to L2 regularisation (Ridge Regression) is specified by the `maxture` value, and setting this to `0.5`
+gives a balance of the two.
+
+```{r}
+#| label: elastic-net-specification
+#| purl: true
+#| eval: true
+#| echo: true
+#| output: false
+elastic_net_tune_spec <- parsnip::logistic_reg(penalty = hardhat::tune(), mixture = 0.5) |>
+  parsnip::set_engine("glmnet")
+```
+
+#### Tuning
+
+The next step is to tune the model using the [`tune::tune_grid()`](https://tune.tidymodels.org/reference/tune_grid.html)
+function which will calculate accuracy or Root Mean Square Error (or other metrics) for a recipe with multiple
+samples. We defined our resamples above in two forms (not that we defined cross-validation as a way of sampling from our
+training data above).
+
+Re-sampling is performed at this stage by specifying the `cv_folds` to the `resamples` option. This gives more robust
+estimates of the model parameters.
+
+```{r}
+#| label: elastic-net-kfold-tune
+#| purl: true
+#| eval: true
+#| echo: true
+#| output: false
+elastic_net_grid <- tune::tune_grid(
+  object = workflows::add_model(thyroid_workflow, elastic_net_tune_spec),
+  resamples = cv_folds,
+  grid = dials::grid_regular(penalty(), levels = 50)
+)
+```
+
+#### Fit Final Model
+
+Now select the model with the highest Receiver Operating Characteristic Area Under the Curve (ROC AUC) from the tuned
+grid search results.
+
+```{r}
+#| label: elastic-net-kfold-best
+#| purl: true
+#| eval: true
+#| echo: false
+#| output: false
+#| cache: true
+elastic_net_highest_roc_auc <- elastic_net_grid |>
+  tune::select_best(metric = "roc_auc")
+```
+
+...and finalize the workflow by adding this value.
+
+```{r}
+#| label: elastic-net-kfold-fit-final
+#| purl: true
+#| eval: true
+#| echo: false
+#| output: false
+final_elastic_net <- tune::finalize_workflow(
+  workflows::add_model(thyroid_workflow, elastic_net_tune_spec),
+  elastic_net_highest_roc_auc
+)
+```
+
+#### Model Evaluation
+
+We could collect metrics and print them here, but since we are running multiple models this step is deferred to the end.
+
+```{r}
+#| label: elastic-net-kfold-eval-metrics
+#| purl: true
+#| eval: false
+#| echo: true
+#| output: true
+tune::last_fit(object = final_elastic_net, split = split) |>
+  tune::collect_metrics(metrics)
+```
+
+And plot the importance of variables, note these are _not_ the same as regression coefficients, the importance values
+are relative to each other, although the sign indicates whether that particular variable/level increases or decreases
+risk.
+
+```{r}
+#| label: elastic-net-kfold-eval-importance
+#| purl: true
+#| eval: true
+#| echo: true
+#| output: true
+final_elastic_net |>
+  fit(train) |>
+  hardhat::extract_fit_parsnip() |>
+  vip::vi(lambda = elastic_net_highest_roc_auc$penalty) |>
+  dplyr::mutate(
+    Importance = abs(Importance),
+    Variable = fct_reorder(Variable, Importance)
+  ) |>
+  ggplot(mapping = aes(x = Importance, y = Variable, fill = Sign)) +
+  geom_col() +
+  dark_theme_minimal()
+```
+
+``` {r}
+#| label: elastic-net-save
+#| purl: true
+#| eval: true
+#| echo: true
+#| output: false
+save(elastic_net_tune_spec, elastic_net_grid, final_elastic_net, elastic_net_highest_roc_auc,
+  file = "data/r/elastic_net.RData"
+)
+```
