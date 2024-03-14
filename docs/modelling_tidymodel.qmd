@@ -120,7 +120,6 @@ predictor out of correlated variables and reduce the coefficient of the others t
 consider is the use of _Uniform Manifold Approximation and Projection_ implemented in the
 [embed::setup_umapp()](https://embed.tidymodels.org/reference/step_umap.html) function
 
-
 Note that we pass only the `train` data into the recipe so that models are fitted on the training data.
 
 ```{r}

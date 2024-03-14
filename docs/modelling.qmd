@@ -36,8 +36,6 @@ apply a number of methods to ensure they are converging on similar solutions rat
 {{< include modelling_elastic_net.qmd >}}
 {{< include modelling_svm.qmd >}}
 
-
-
 ## Model Assessment
 
 When considering the utility of prediction there are a number of metrics that can be used to determine how useful a
@@ -56,13 +54,9 @@ model performance and how predictive these are.
 
 Confusion matrices such as the above can be easily generated and even plotted using `yardstick::confg_mat()` function.
 
-
 {{< include modelling_predictions.qmd >}}
 {{< include modelling_roc.qmd >}}
 {{< include modelling_importance.qmd >}}
-
-
-
 
 ## TODO
 
@@ -102,7 +96,6 @@ Run `rlang::last_trace()` to see where the error occurred.
 + [x] For some reason when I attempted moving this section to its own child document the `final_lasso_kfold` object
       could not be found. Work around was to save the results of each model and the load them into the
       `modelling_{predict|roc|vip}.qmd` sections.
-
 
 ## Notes
 

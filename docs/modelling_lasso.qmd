@@ -23,7 +23,6 @@ It is possible to combine L1 and L2 regularisation in what is known as [Elastic
 Net](https://en.wikipedia.org/wiki/Elastic_net_regularization) which combines both L1 and L2 regularisation in a linear
 manner.
 
-
 #### Specify the Model
 
 Whilst we have defined the relationship between variables in the Worfklow above we now need to say what model we wish to
