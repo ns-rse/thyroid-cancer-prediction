@@ -118,5 +118,6 @@ final_elastic_net |>
 #| echo: true
 #| output: false
 save(elastic_net_tune_spec, elastic_net_grid, final_elastic_net, elastic_net_highest_roc_auc,
-     file = "data/r/elastic_net.RData")
+  file = "data/r/elastic_net.RData"
+)
 ```

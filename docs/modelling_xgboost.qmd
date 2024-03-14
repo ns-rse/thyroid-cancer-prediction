@@ -23,9 +23,9 @@ xgboost_model <- parsnip::boost_tree(
   min_n = tune(),
   tree_depth = tune(),
   learn_rate = tune(),
-  loss_reduction = tune()) |>
+  loss_reduction = tune()
+) |>
   set_engine("xgboost", objective = "binary:logistic")
-
 ```
 
 We use the [`dials`](https://dials.tidymodels.org/) package to set tuning parameters for the model along with the grid
@@ -45,7 +45,8 @@ xgboost_model <- parsnip::boost_tree(
   min_n = tune(),
   tree_depth = tune(),
   learn_rate = tune(),
-  loss_reduction = tune()) |>
+  loss_reduction = tune()
+) |>
   set_engine("xgboost", objective = "binary:logistic")
 xgboost_params <- dials::parameters(
   min_n(),

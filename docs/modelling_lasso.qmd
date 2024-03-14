@@ -133,7 +133,7 @@ final_lasso |>
   ) |>
   ggplot(mapping = aes(x = Importance, y = Variable, fill = Sign)) +
   geom_col() +
-dark_theme_minimal()
+  dark_theme_minimal()
 ```
 
 ``` {r}

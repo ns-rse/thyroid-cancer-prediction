@@ -29,16 +29,17 @@ load("data/r/xgboost.RData")
 #| eval: true
 #| echo: true
 #| output: false
-vip(lasso, method="shap", train=)
-pfun_prob <- function(object, newdata)
-    predict(object, newdata = newdata, type = "prob")[, "yes"]
+vip(lasso, method = "shap", train = )
+pfun_prob <- function(object, newdata) {
+  predict(object, newdata = newdata, type = "prob")[, "yes"]
+}
 ```
 
 ```{r}
 #| label: lasso-vip
 #| purl: true
-#| eval: true
+#| eval: false
 #| echo: true
 #| output: false
-vip(lasso, method="shap", train=)
+vip(lasso, method = "shap", train = )
 ```
