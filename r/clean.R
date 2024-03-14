@@ -335,7 +335,11 @@ df_raw$nodule_maxmimum_diameter_mm |> table()
 
 df$nodule_maxmimum_diameter_mm |> table()
 
-
+df$routine_review_offered_interval_weeks
+df$routine_review_offered_interval_weeks <- gsub("weeks", "", df$routine_review_offered_interval_weeks)
+df$routine_review_offered_interval_weeks |> table()
+df$routine_review_offered_interval_weeks <- as.numeric(df$routine_review_offered_interval_weeks)
+df$routine_review_offered_interval_weeks |> table()
 ## Convert all binary variables Checked/Unchecked/Not Known to TRUE/FALSE/NA
 ## This uses dplyr::mutate() and instead of muitating every variable we use dply::across() to repeat the dplyr::recode()
 ## across all variables
