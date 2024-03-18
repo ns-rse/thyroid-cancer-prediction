@@ -30,4 +30,24 @@ shf <- tibble(shf_data)
 Hmisc::label(shf) <- as.list(var_labels[match(names(shf), names(var_labels))])
 ## inspect data type for each variable
 lapply(shf, typeof)
+
+## converting Yes/No columns into binary 1/0, make a list of all Yes/No Colums
+
+binary_cols <- c(
+  "incidental_nodule",
+  "palpable_nodule",
+  "rapid_enlargment",
+  "compressive_symtoms",
+  "hypertension",
+  "vocal_cord_paresis",
+  "graves_disease",
+  "hashimotos_thyroiditis",
+  "family_history_thyroid_cancer",
+  "exposure_radiation",
+  "solitary_nodule",
+  "cervical_lymphadenopathy",
+  "repeat_ultrasound",
+  "fna_done",
+  "repeat_fna_done"
+)
 view(shf)
