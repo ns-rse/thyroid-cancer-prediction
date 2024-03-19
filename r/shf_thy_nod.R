@@ -60,4 +60,13 @@ shf <- shf |>
     )
   ))
 
-view(shf)
+
+
+## converting character variables to logic
+
+convert_binary <- as.logical(binary_cols)
+
+## the above code does not appear to change the typeof variable to binary
+## unsure if that will affect analysis
+
+lapply(shf, typeof)
