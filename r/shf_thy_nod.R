@@ -81,10 +81,21 @@ shf <- shf |>
     repeat_fna_done = as.logical(repeat_fna_done)
   )
 
+## converting character variables to factor
+
+shf <- shf |>
+  dplyr::mutate(
+    gender = as.factor(gender),
+    ethnicity = as.factor(ethnicity),
+    bta_u_classification = as.factor(bta_u_classification),
+    consistency_nodule = as.factor(consistency_nodule),
+    repeat_bta_u_classification =
+      as.factor(repeat_bta_u_classification),
+    thy_classification = as.factor(thy_classification),
+    repeat_thy_classification = as.factor(repeat_thy_classification),
+    thyroid_surgery = as.factor(thyroid_surgery),
+    thyroid_histology_diagnosis = as.factor(thyroid_histology_diagnosis),
+    final_pathology = as.factor(final_pathology)
+  )
+
 lapply(shf, typeof)
-
-
-
-
-## the above code does not appear to change the typeof variable to binary
-## unsure if that will affect analysis
