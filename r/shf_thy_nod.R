@@ -60,13 +60,31 @@ shf <- shf |>
     )
   ))
 
+## converting yes/no variables to variables to logical
+
+shf <- shf |>
+  dplyr::mutate(
+    incidental_nodule = as.logical(incidental_nodule),
+    palpable_nodule = as.logical(palpable_nodule),
+    rapid_enlargment = as.logical(rapid_enlargment),
+    compressive_symtoms = as.logical(compressive_symtoms),
+    hypertension = as.logical(hypertension),
+    vocal_cord_paresis = as.logical(vocal_cord_paresis),
+    graves_disease = as.logical(graves_disease),
+    hashimotos_thyroiditis = as.logical(hashimotos_thyroiditis),
+    family_history_thyroid_cancer = as.logical(family_history_thyroid_cancer),
+    exposure_radiation = as.logical(exposure_radiation),
+    solitary_nodule = as.logical(solitary_nodule),
+    cervical_lymphadenopathy = as.logical(cervical_lymphadenopathy),
+    repeat_ultrasound = as.logical(repeat_ultrasound),
+    fna_done = as.logical(fna_done),
+    repeat_fna_done = as.logical(repeat_fna_done)
+  )
+
+lapply(shf, typeof)
 
 
-## converting character variables to logic
 
-convert_binary <- as.logical(binary_cols)
 
 ## the above code does not appear to change the typeof variable to binary
 ## unsure if that will affect analysis
-
-lapply(shf, typeof)
