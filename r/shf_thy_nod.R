@@ -50,4 +50,14 @@ binary_cols <- c(
   "fna_done",
   "repeat_fna_done"
 )
+
+shf <- shf |>
+  dplyr::mutate(across(
+    all_of(binary_cols),
+    ~ dplyr::recode(.x,
+      "Yes" = 1,
+      "No" = 0
+    )
+  ))
+
 view(shf)
