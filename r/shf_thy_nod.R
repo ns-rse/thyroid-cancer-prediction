@@ -99,3 +99,5 @@ shf <- shf |>
   )
 
 lapply(shf, typeof)
+
+table(shf$gender)
