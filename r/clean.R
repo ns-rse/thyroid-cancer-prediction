@@ -465,6 +465,13 @@ df <- df |>
       .default = stringr::str_sub(nodule_fna_thy, 1, 4)
     ),
   )
+
+df <- df |>
+  dplyr::mutate(
+    routine_review_ultrasound = as.logical(routine_review_ultrasound),
+    routine_review_fna = as.logical(routine_review_fna)
+  )
+
 table(df$nodule_fna_thy)
 ## ToDo - Inspect each of the variables listed below and determine how they need handling to convert to a factor.
 ##
