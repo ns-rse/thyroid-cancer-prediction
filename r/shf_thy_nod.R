@@ -101,3 +101,88 @@ shf <- shf |>
 lapply(shf, typeof)
 
 table(shf$gender)
+
+demo_graphics <- select(shf, c(
+  "age_at_scan", "gender", "ethnicity"
+))
+
+CreateTableOne(data = shf, vars = c("age_at_scan", "gender", "ethnicity"))
+
+clinical_vars <- select(shf, c(
+  "incidental_nodule",
+  "palpable_nodule",
+  "rapid_enlargment",
+  "compressive_symtoms",
+  "hypertension",
+  "vocal_cord_paresis",
+  "graves_disease",
+  "hashimotos_thyroiditis",
+  "family_history_thyroid_cancer",
+  "exposure_radiation"
+))
+CreateTableOne(data = clinical_vars, vars = c(
+  "incidental_nodule",
+  "palpable_nodule",
+  "rapid_enlargment",
+  "compressive_symtoms",
+  "hypertension",
+  "vocal_cord_paresis",
+  "graves_disease",
+  "hashimotos_thyroiditis",
+  "family_history_thyroid_cancer",
+  "exposure_radiation"
+))
+
+## need to check how the above deals with missing data
+
+## biochemical variables summary
+
+biochem_vars <- select(shf, c(
+  "albumin",
+  "tsh_value",
+  "lymphocytes",
+  "monocyte"
+))
+
+CreateTableOne(data = biochem_vars, vars = c(
+  "albumin",
+  "tsh_value",
+  "lymphocytes",
+  "monocyte"
+))
+
+## imaging and thyc
+
+ultrasound_char <- select(shf, c(
+  "size_nodule_mm",
+  "solitary_nodule",
+  "bta_u_classification",
+  "consistency_nodule",
+  "cervical_lymphadenopathy"
+))
+
+CreateTableOne(data = ultrasound_char, vars = c(
+  "size_nodule_mm",
+  "solitary_nodule",
+  "bta_u_classification",
+  "consistency_nodule",
+  "cervical_lymphadenopathy"
+))
+
+cytology_char <- select(shf, c(
+  "fna_done",
+  "thy_classification",
+  "repeat_fna_done",
+  "thyroid_surgery",
+  "final_pathology"
+))
+
+CreateTableOne(data = cytology_char, vars = c(
+  "fna_done",
+  "thy_classification",
+  "repeat_fna_done",
+  "thyroid_surgery",
+  "final_pathology"
+))
+
+## create dir where file is saved
