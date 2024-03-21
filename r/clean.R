@@ -836,7 +836,7 @@ df |>
   )) |>
   tbl_summary()
 
-## for above, need to convert all above variable to catogorical, not age or bmi
+## for above, need to convert all above variable to categorical, not age or bmi
 
 df$data_access_group <- as.factor(df$data_access_group)
 df$referral_source <- as.factor(df$referral_source)
