@@ -817,6 +817,39 @@ CreateTableOne(data = management, vars = c(
   "thyroid_surgery"
 ))
 
+table(df$final_pathology)
+
+library(gtsummary)
+
+## select variables that I want to evaluate for their association with final pathology
+
+df |>
+  select(c(
+    age, bmi, referral_source, two_week_wait_referral, smoking_status,
+    previous_neck_irradiation, neck_symptoms, incidental_lesion,
+    hyperthyroidism, hypothyroidism, abnormal_thyroid_function,
+    no_symptoms, neck_lump, compressive_symptoms, thyroid_dysfunction,
+    incidental_imaging, clinical_assessment, retrosternal,
+    palpable_lymphadenopathy, nodule_rapid_growth,
+    nodule_ultrasound_description, nodule_ultrasound_u_stage,
+    nodule_ultrasound_lymphadenopathy, nodule_fna_thy
+  )) |>
+  tbl_summary()
+
+## for above, need to convert all above variable to catogorical, not age or bmi
+
+df$data_access_group <- as.factor(df$data_access_group)
+df$referral_source <- as.factor(df$referral_source)
+
+df |>
+  select(c(age, data_access_group)) |>
+  tbl_summary(by = data_acess_group) |>
+  add_p()
+
+lapply(df, typeof)
+
+view(df)
+
 ## pathology
 pathology <- select(df, c("thyroid_surgery_lymph_node_pathology", "final_pathology"))
 CreateTableOne(data = pathology, vars = c("thyroid_surgery_lymph_node_pathology", "final_pathology"))
