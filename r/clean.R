@@ -477,8 +477,8 @@ table(df$nodule_fna_thy)
 ##
 ## This can be done for example by looking at the values using table()
 ##
-df$referral_source |> table()
-##
+
+
 ## Some need more cleaning than others, for example df$referral_source_other has GP etnered in multiple different ways..
 ##
 df$referral_source_other |> table()
@@ -823,7 +823,7 @@ library(gtsummary)
 
 ## select variables that I want to evaluate for their association with final pathology
 
-df |>
+factors_anal <- df |>
   select(c(
     age, bmi, referral_source, two_week_wait_referral, smoking_status,
     previous_neck_irradiation, neck_symptoms, incidental_lesion,
@@ -834,24 +834,52 @@ df |>
     nodule_ultrasound_description, nodule_ultrasound_u_stage,
     nodule_ultrasound_lymphadenopathy, nodule_fna_thy
   )) |>
-  tbl_summary()
+  tbl_summary(by = final_pathology)
 
 ## for above, need to convert all above variable to categorical, not age or bmi
 
-df$data_access_group <- as.factor(df$data_access_group)
-df$referral_source <- as.factor(df$referral_source)
+df$referral_source |> table()
+class(df$final_pathology)
+df$final_pathology <- as.factor(df$final_pathology)
+class(df$final_pathology)
 
-df |>
-  select(c(age, data_access_group)) |>
-  tbl_summary(by = data_acess_group) |>
-  add_p()
-
-lapply(df, typeof)
-
-view(df)
 
 ## pathology
 pathology <- select(df, c("thyroid_surgery_lymph_node_pathology", "final_pathology"))
 CreateTableOne(data = pathology, vars = c("thyroid_surgery_lymph_node_pathology", "final_pathology"))
+
+
+df |>
+  select(c(
+    age, bmi, referral_source,
+    two_week_wait_referral,
+    smoking_status,
+    previous_neck_irradiation,
+    final_pathology
+  )) |>
+  tbl_summary(by = final_pathology) |>
+  add_p()
+
+
+df |>
+  select(c(
+    neck_symptoms, incidental_lesion, hyperthyroidism,
+    hypothyroidism, abnormal_thyroid_function, no_symptoms,
+    neck_lump, nodule_rapid_growth, compressive_symptoms, thyroid_dysfunction,
+    final_pathology
+  )) |>
+  tbl_summary(by = final_pathology) |>
+  add_p()
+
+df |>
+  select(c(
+    incidental_imaging, clinical_assessment, retrosternal,
+    palpable_lymphadenopathy,
+    nodule_ultrasound_description, nodule_ultrasound_u_stage,
+    nodule_ultrasound_lymphadenopathy, nodule_fna_thy,
+    final_pathology
+  )) |>
+  tbl_summary(by = final_pathology) |>
+  add_p()
 ## Finally save the data
 saveRDS(df, file = paste(r_dir, "clean.rds", sep = "/"))
