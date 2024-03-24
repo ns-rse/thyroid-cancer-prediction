@@ -195,7 +195,15 @@ ultrasound_char <- select(shf, c(
   "cervical_lymphadenopathy"
 ))
 
-
+shf |>
+  select(c(
+    size_nodule_mm, solitary_nodule,
+    bta_u_classification, consistency_nodule,
+    cervical_lymphadenopathy,
+    final_pathology
+  )) |>
+  tbl_summary(by = final_pathology) |>
+  add_p()
 
 CreateTableOne(data = ultrasound_char, vars = c(
   "size_nodule_mm",
@@ -220,5 +228,12 @@ CreateTableOne(data = cytology_char, vars = c(
   "thyroid_surgery",
   "final_pathology"
 ))
+
+shf |>
+  select(c(
+    thy_classification,
+    final_pathology
+  )) |>
+  tbl_summary(by = final_pathology)
 
 ## create dir where file is saved
