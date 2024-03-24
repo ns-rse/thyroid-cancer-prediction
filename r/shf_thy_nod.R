@@ -106,6 +106,15 @@ demo_graphics <- select(shf, c(
   "age_at_scan", "gender", "ethnicity"
 ))
 
+shf |>
+  select(c(
+    age_at_scan, gender,
+    ethnicity,
+    final_pathology
+  )) |>
+  tbl_summary(by = final_pathology)
+
+
 CreateTableOne(data = shf, vars = c("age_at_scan", "gender", "ethnicity"))
 
 clinical_vars <- select(shf, c(
@@ -133,6 +142,21 @@ CreateTableOne(data = clinical_vars, vars = c(
   "exposure_radiation"
 ))
 
+shf |>
+  select(c(
+    incidental_nodule,
+    palpable_nodule,
+    rapid_enlargment,
+    compressive_symtoms,
+    hypertension,
+    vocal_cord_paresis,
+    graves_disease,
+    hashimotos_thyroiditis,
+    family_history_thyroid_cancer,
+    exposure_radiation, final_pathology
+  )) |>
+  tbl_summary(by = final_pathology) |>
+  add_p()
 ## need to check how the above deals with missing data
 
 ## biochemical variables summary
@@ -143,6 +167,16 @@ biochem_vars <- select(shf, c(
   "lymphocytes",
   "monocyte"
 ))
+
+shf |>
+  select(c(
+    albumin,
+    tsh_value,
+    lymphocytes,
+    monocyte, final_pathology
+  )) |>
+  tbl_summary(by = final_pathology) |>
+  add_p()
 
 CreateTableOne(data = biochem_vars, vars = c(
   "albumin",
@@ -160,6 +194,8 @@ ultrasound_char <- select(shf, c(
   "consistency_nodule",
   "cervical_lymphadenopathy"
 ))
+
+
 
 CreateTableOne(data = ultrasound_char, vars = c(
   "size_nodule_mm",
