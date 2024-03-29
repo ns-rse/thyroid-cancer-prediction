@@ -154,142 +154,93 @@ var_labels <- c(
   record_id = "Record ID",
   data_access_group = "Data Access Group",
   study_id = "Study ID",
-  date_referral = "1.1 Date of referral",
-  clinic_recruiting = "1.2 Which clinic was the patient recruited from?",
+  date_referral = "Date of referral",
+  clinic_recruiting = "Clinic patient recruited from?",
   clinic_recruiting_other = "If Other",
   date_clinic = "1.3. The date the patient was seen in clinic",
   referral_source = "1.4 Referral source",
   referral_source_other = "If Other, please specify",
-  two_week_wait_referral = "1.4.1 If GP, was it 2-week wait referral?",
-  presentation = "1.5. Presentation",
-  presentation_complete = "Complete?...12",
-  age = "2.1. Age of the patient when seen in clinic",
-  bmi = "2.2. Body Mass Index of patient",
-  smoking_status = "2.3. Smoking status",
-  previous_neck_irradiation = "2.4. Previous neck irradiation",
-  asa_score = "2.5 American Society of Anaesthesiologist (ASA) score",
+  two_week_wait_referral = "2-week wait referral?",
+  presentation = "Presentation",
+  presentation_complete = "Complete?",
+  age = "Age",
+  bmi = "BMI",
+  smoking_status = "Smoking status",
+  previous_neck_irradiation = "Previous neck irradiation",
+  asa_score = "ASA score",
   presentation_complete2 = "Complete?...18",
   neck_symptoms = "3.1. Presentation (choice=Neck symptoms)",
-  incidental_lesion = "3.1. Presentation (choice=Incidental lesion on imaging)",
-  hyperthyroidism = "3.1. Presentation (choice=HypErthyroidism on thyroid function test)",
-  hypothyroidism = "3.1. Presentation (choice=HypOthyroidism on thyroid function test)",
-  abnormal_thyroid_function = "3.1. Presentation (choice=Symptoms of abnormal thyroid function)",
+  incidental_lesion = "Incidental lesion",
+  hyperthyroidism = "Hyperthyroidisim",
+  hypothyroidism = "Hypothyroidism",
+  abnormal_thyroid_function = "Abnormal thyroid function)",
   presentation_not_known = "3.1. Presentation (choice=Not known)",
   presentation_other = "3.1. Presentation (choice=Other)",
   presentation_other_value = "If other, please specify...26",
-  no_symptoms = "3.1.1 Symptomatology (choice=No symptoms)",
-  neck_lump = "3.1.1 Symptomatology (choice=Neck lump (noted by patient, family or doctor))",
-  compressive_symptoms = paste0(
-    "3.1.1 Symptomatology (choice=Compressive symptoms (breathing or ",
-    "swallowing difficulty or voice change))"
-  ),
-  thyroid_dysfunction = "3.1.1 Symptomatology (choice=Symptoms of thyroid dysfunction)",
-  symptoms_other = "3.1.1 Symptomatology (choice=Other)",
-  symptoms_other_value = "If other, please specify...32",
-  incidental_imaging = "3.1.2 Was this nodule found incidentally on imaging?",
-  incidental_imaging_type = "If yes, what imaging",
+  no_symptoms = "No symptoms",
+  neck_lump = "Neck lump",
+  compressive_symptoms = paste0("Compressive symptoms"),
+  thyroid_dysfunction = "Thyroid dysfunction symptoms",
+  symptoms_other = "Other symptoms",
+  symptoms_other_value = "Other, specify",
+  incidental_imaging = "Incidental on imaging",
+  incidental_imaging_type = "Imaging modality",
   clinical_assessment = "3.2 Clinical Assessment",
-  retrosternal = "3.2.1 Retrosternal on clinical examination",
-  palpable_lymphadenopathy = "3.2.2 Palpable lymphadenopathy",
-  nodule_rapid_growth = "3.2.3 Patient perception of rapid growth of nodule",
-  thyroid_function_3months = "3.4 Thyroid function tests done within 3 months of presentation to clinic",
-  ultrasound = "3.5 Ultrasound performed",
-  nodule_maxmimum_diameter_mm = paste0(
-    "3.5.1 Reported maximum diameter of the largest thyroid nodule on ",
-    "ultrasound in millimetres"
-  ),
-  nodule_ultrasound_description = "3.5.2 Description of thyroid nodule(s) on ultrasound",
-  nodule_ultrasound_u_stage = "3.5.3 If Ultrasound performed, U stage reported:",
-  nodule_ultrasound_tirads = "3.5.4 If Ultrasound performed, TIRADS reported",
-  nodule_ultrasound_lymphadenopathy = "3.5.5 If Ultrasound performed, was lymphadenopathy documented",
-  elastography = "3.5.6 Elastography performed",
-  ct_neck = "3.5.7 CT neck performed",
-  ct_neck_local_invasion = paste0(
-    "3.5.8 If CT neck performed, reason for performing it ",
-    "(choice=Extrathyroid extention/local invasion)"
-  ),
-  ct_neck_plan_surgical_approach = paste0(
-    "3.5.8 If CT neck performed, reason for performing it ",
-    "(choice=Retrosternal extension/plan surgical approach)"
-  ),
-  ct_neck_lymphadenopathy_extent = paste0(
-    "3.5.8 If CT neck performed, reason for performing it ",
-    "(choice=Extent of lymphadenopathy)"
-  ),
-  ct_neck_tracheal_compression = paste0(
-    "3.5.8 If CT neck performed, reason for performing it ",
-    "(choice=Tracheal compression)"
-  ),
-  ct_neck_unknown = paste0(
-    "3.5.8 If CT neck performed, reason for performing it ",
-    "(choice=Not known)"
-  ),
-  ct_neck_unrelated = paste0(
-    "3.5.8 If CT neck performed, reason for performing it ",
-    "(choice=Unrelated to thyroid pathology)"
-  ),
-  mri_neck = "3.5.9 MRI neck performed",
-  mri_neck_local_invasion = paste0(
-    "3.5.10 If MRI neck performed, reason for performing it ",
-    "(choice=Extrathyroid extention/local invasion)"
-  ),
-  mri_neckplan_surgical_approach = paste0(
-    "3.5.10 If MRI neck performed, reason for performing it ",
-    "(choice=Retrosternal extension/plan surgical approach)"
-  ),
-  mri_neck_lymphadenopathy_extent = paste0(
-    "3.5.10 If MRI neck performed, reason for performing it ",
-    "(choice=Extent of lymphadenopathy)"
-  ),
-  mri_neck_tracheal_compression = paste0(
-    "3.5.10 If MRI neck performed, reason for performing it ",
-    "(choice=Tracheal compression)"
-  ),
-  mri_neck_unknown = paste0(
-    "3.5.10 If MRI neck performed, reason for performing it ",
-    "(choice=Not known)"
-  ),
-  mri_neck_unrelated = paste0(
-    "3.5.10 If MRI neck performed, reason for performing it ",
-    "(choice=Unrelated to thyroid pathology)"
-  ),
-  iodine_scan = "3.5.11 Iodine-123 scan performed",
-  nodule_fna = "3.6. FNA of thyroid nodule performed (either at time of ultrasound or later)",
-  nodule_fna_result = "3.6.1 If FNA performed, was Thy or Bethesda stage reported",
-  nodule_fna_thy = "3.6.1.1 Thy result",
-  nodule_fna_bethesda = "3.6.1.2 Bethesda result",
-  core_biopsy = "3.7 Core biopsy performed",
-  lymph_node_fna = "3.8 FNA of lymph node performed",
-  lymph_node_fna_result = "3.8.1 If FNA lymph node performed, result",
+  retrosternal = "Retrosternal extension clinically",
+  palpable_lymphadenopathy = "Palpable lymphadenopathy",
+  nodule_rapid_growth = "Rapid growth",
+  thyroid_function_3months = "TFTs done",
+  ultrasound = "Ultrasound done",
+  nodule_maxmimum_diameter_mm = "Nodule diameter",
+  nodule_ultrasound_description = "Nodule description",
+  nodule_ultrasound_u_stage = "U stage",
+  nodule_ultrasound_tirads = "TIRADS",
+  nodule_ultrasound_lymphadenopathy = "Ultrasound lymphadenopathy",
+  elastography = "Elastography done",
+  ct_neck = "CT neck done",
+  ct_neck_local_invasion = "CT for local invasion",
+  ct_neck_plan_surgical_approach = "CT surgical approach",
+  ct_neck_lymphadenopathy_extent = "CT extent of lymphadenopath",
+  ct_neck_tracheal_compression = "CT for compression",
+  ct_neck_unknown = "CT reason unknown",
+  ct_neck_unrelated = "CT unrelated to thyroid pathology",
+  mri_neck = "MRI done",
+  mri_neck_local_invasion = "MRI local invasion",
+  mri_neckplan_surgical_approach = "MRI surgical approach",
+  mri_neck_lymphadenopathy_extent = "MRI extent of lymphadenopathy",
+  mri_neck_tracheal_compression = "MRI for compression",
+  mri_neck_unknown = "MRI reason unknown",
+  mri_neck_unrelated = "MRI unrelated to thyroid pathology",
+  iodine_scan = "Iodine scan",
+  nodule_fna = "FNA done",
+  nodule_fna_result = "Thy/Bethesda stage reported",
+  nodule_fna_thy = "Thy class",
+  nodule_fna_bethesda = "Bethesda result",
+  core_biopsy = "Core biopsy",
+  lymph_node_fna = "Lymph node FNA",
+  lymph_node_fna_result = "Lymph node FNA result",
   assessment_complete = "Complete?...69",
-  initial_management_decision = "4.1 Initial management decision",
-  date_initial_management_decision = "4.2 Date of decision (either clinic letter or MDT date)",
+  initial_management_decision = "Initial management",
+  date_initial_management_decision = "Date of decision (either clinic letter or MDT date)",
   date_treatment = "4.3 Date of surgery or start of other treatment (if interventional)",
-  routine_review_offered = "4.4. In case of no intervention, was a routine review offered",
-  routine_review_offered_interval_weeks = "4.4.1 If yes, what was the planned interval (in weeks)",
-  routine_review_ultrasound = "4.4.2 Was Ultrasound repeated at routine review?",
-  routine_review_fna = "4.4.3 Was FNA repeated at routine review",
-  routine_review_management_strategy_review = paste0(
-    "4.4.4 If routine review performed, was management ",
-    "strategy changed at review"
-  ),
-  routine_review_management_revised = "4.4.4.1 If management strategy changed at review, revised management decision",
-  routine_review_management_revised_reason = "4.4.4.2 If yes, reason for change in management",
+  routine_review_offered = "Routine review if no intervention",
+  routine_review_offered_interval_weeks = "Routine review interval",
+  routine_review_ultrasound = "Repeat ultrasound at review?",
+  routine_review_fna = "Repeat FNA at routine review",
+  routine_review_management_strategy_review = "Management changed at review",
+  routine_review_management_revised = "Revised management decision",
+  routine_review_management_revised_reason = "Reason for change in management",
   routine_review_management_revised_reason_other = "If other",
   routine_review_date_last_seen = "4.4.4.3 If no change in management decision: date last seen by 'thyroid' team",
   routine_review_confirm_management_plan = paste0(
     "4.4.4.4 If no change in management strategy at review, confirm ",
     "management plan when last seen"
   ),
-  routine_review_patient_signposting_information = paste0(
-    "4.4.5 Patient was signposted to appropriate patient ",
-    "SUPPORT organisation  and/or provided with written PATIENT ",
-    "information about thyroid nodules (including leaflets)"
-  ),
+  routine_review_patient_signposting_information = "Signposting to patient information",
   routine_review_complete = "Complete?...84",
-  thyroid_surgery = "5.1 Type of thyroid surgery",
-  thyroid_surgery_lymph_node_dissection = "5.1.1 Lymph node dissection done at this surgery",
-  thyroid_surgery_lymph_node_pathology = "5.1.2 Pathology",
+  thyroid_surgery = "Thyroid surgery",
+  thyroid_surgery_lymph_node_dissection = "Neck dissection",
+  thyroid_surgery_lymph_node_pathology = "Pathology",
   thyroid_surgery_lymph_node_pathology_other_type = "If other cancer/other diagnosis, please state",
   thyroid_surgery_complete = "Complete?...89"
 )
@@ -881,5 +832,7 @@ df |>
   )) |>
   tbl_summary(by = final_pathology) |>
   add_p()
+
+view(df)
 ## Finally save the data
 saveRDS(df, file = paste(r_dir, "clean.rds", sep = "/"))
