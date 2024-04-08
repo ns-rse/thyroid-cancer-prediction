@@ -1,6 +1,5 @@
 ### Elastic Net
 
-
 #### Specify the Model
 
 We have run logistic regression via a LASSO model at the start with a `mixture = 1` which applies full L1
