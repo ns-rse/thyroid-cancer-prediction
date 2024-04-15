@@ -51,6 +51,7 @@ rf_grid <- tune::tune_grid(
   )
 )
 ```
+
 ...and the best model based on the ROC AUC selected...
 
 ``` {r}
