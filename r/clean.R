@@ -1,5 +1,11 @@
 ## Filename : clean.R
 ## Description : Load and clean raw data, saving as a .RData file for subsequent analyses.
+library(tidyverse)
+library(tableone)
+library(gtsummary)
+
+table(df$nodule_fna_thy)
+view(df)
 
 ## Read the data and convert to tibble
 df_raw <- read_csv(paste(csv_dir, "Thy3000_DATA_LABELS_Raw.csv", sep = "/"))
@@ -656,7 +662,6 @@ df <- df |>
 df |> count()
 df$data_access_group |> table()
 
-library(tableone)
 p_charac <- select(df, c(
   "age", "bmi", "referral_source", "two_week_wait_referral", "smoking_status",
   "previous_neck_irradiation", "asa_score"
@@ -675,7 +680,7 @@ CreateTableOne(
 
 ## clinical characteristics
 c_charac <- select(df, c(
-  "neck_symptoms", "incidental_lesion", "incidental_imaging", "incidental_imaging_type",
+  "neck_symptoms", "incidental_imaging", "incidental_imaging_type",
   "abnormal_thyroid_function",
   "hyperthyroidism", "hypothyroidism", "no_symptoms", "neck_lump",
   "compressive_symptoms", "clinical_assessment", "retrosternal",
@@ -683,7 +688,7 @@ c_charac <- select(df, c(
 ))
 CreateTableOne(
   data = c_charac, vars = c(
-    "neck_symptoms", "incidental_lesion", "incidental_imaging",
+    "neck_symptoms", "incidental_imaging",
     "incidental_imaging_type",
     "abnormal_thyroid_function",
     "hyperthyroidism", "hypothyroidism", "no_symptoms", "neck_lump",
@@ -691,7 +696,7 @@ CreateTableOne(
     "palpable_lymphadenopathy", "nodule_rapid_growth"
   ),
   factorVars = c(
-    "neck_symptoms", "incidental_lesion", "incidental_imaging",
+    "neck_symptoms", "incidental_imaging",
     "incidental_imaging_type",
     "abnormal_thyroid_function",
     "hyperthyroidism", "hypothyroidism", "no_symptoms", "neck_lump",
@@ -702,16 +707,15 @@ CreateTableOne(
 ## ultrasound characteristics
 u_charac <- select(df, c(
   "nodule_ultrasound_description", "nodule_maxmimum_diameter_mm", "nodule_ultrasound_u_stage",
-  "nodule_ultrasound_tirads", "nodule_ultrasound_lymphadenopathy", "elastography"
+  "nodule_ultrasound_lymphadenopathy"
 ))
 CreateTableOne(
   data = u_charac, vars = c(
     "nodule_ultrasound_description", "nodule_maxmimum_diameter_mm", "nodule_ultrasound_u_stage",
-    "nodule_ultrasound_tirads", "nodule_ultrasound_lymphadenopathy", "elastography"
+    "nodule_ultrasound_lymphadenopathy"
   ),
   factorVars = c(
-    "nodule_ultrasound_description", "nodule_ultrasound_u_stage",
-    "nodule_ultrasound_tirads", "nodule_ultrasound_lymphadenopathy", "elastography"
+    "nodule_ultrasound_description", "nodule_ultrasound_u_stage", "nodule_ultrasound_lymphadenopathy"
   )
 )
 ## cross imaging charac
@@ -731,20 +735,15 @@ CreateCatTable(data = cross_sec, vars = c(
 ))
 ## nodule biopsy
 biopsy <- select(df, c(
-  "nodule_fna", "nodule_fna_result", "nodule_fna_thy",
-  "nodule_fna_bethesda", "core_biopsy", "lymph_node_fna",
-  "lymph_node_fna_result"
+  "nodule_fna", "nodule_fna_result", "nodule_fna_thy"
 ))
 CreateTableOne(
   data = biopsy, vars = c(
     "nodule_fna", "nodule_fna_result", "nodule_fna_thy",
-    "nodule_fna_bethesda", "core_biopsy", "lymph_node_fna",
-    "lymph_node_fna_result"
+    "core_biopsy"
   ),
   factorVars = c(
-    "nodule_fna", "nodule_fna_result", "nodule_fna_thy",
-    "nodule_fna_bethesda", "core_biopsy", "lymph_node_fna",
-    "lymph_node_fna_result"
+    "nodule_fna", "nodule_fna_result", "nodule_fna_thy", "core_biopsy"
   )
 )
 
