@@ -39,8 +39,6 @@ df <- readRDS("data/r/clean.rds")
 source("r/simulate_data.R")
 
 
-
-
 ## Split Data
 ##
 ## We now split the data into test and training data using an explicit seed value to ensure we get the same results each
