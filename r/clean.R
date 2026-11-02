@@ -692,8 +692,6 @@ df$thyroid_surgery |> table()
 ## thyroid_surgery_lymph_node_pathology
 
 
-
-
 ## Free text fields
 ##
 ## presentation
