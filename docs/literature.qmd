@@ -18,7 +18,7 @@ specificity and Area Under the [Recevier Operating Characteristic
 ### Performance
 
 | Model | Accuracy | AUROC | Sensitivity | Specificity | Precision |
-|---------------|----------|--------|-------------|-------------|-----------|
+| --------------- | ---------- | -------- | ------------- | ------------- | ----------- |
 | GBM | 0.7741 | 0.8497 | **0.8750** | 0.5741 | 0.8029 |
 | Logistic | 0.7834 | 0.8422 | 0.8352 | **0.6806** | 0.8384 |
 | LDA | 0.7790 | 0.8394 | 0.8452 | 0.6477 | 0.8263 |
