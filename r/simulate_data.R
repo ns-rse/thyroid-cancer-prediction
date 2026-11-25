@@ -4,7 +4,6 @@
 ## Uses the fabricatr package https://declaredesign.org/r/fabricatr/index.html
 
 
-
 ## Load the saved data set
 library(MASS)
 library(tidyverse)
